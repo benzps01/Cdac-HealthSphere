@@ -23,9 +23,6 @@ export default function App() {
         <Route path='/about' element={<About />} />
         <Route path='/doctors' element={<Doctors />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/patientLogin' element={<PatientLogin />} />
-        <Route path='/doctorLogin' element={<DoctorLogin />} />
-        <Route path='/adminLogin' element={<AdminLogin />} />
       </Routes>
     </div>
   );
