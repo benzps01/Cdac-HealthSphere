@@ -1,29 +1,64 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../../styles/LoginPage.css'
 import img1 from '../../images/patientImg1.png'
 import img2 from '../../images/doctorImg1.png'
 import img3 from '../../images/adminImg1.png'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
+import PatientModal from './modal/PatientModal'
+import DoctorModal from './modal/DoctorModal'
+import AdminModal from './modal/AdminModal'
 
 export default function Login() {
 
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
-  const handleClick = (route) => () => {
-    navigate(route);
+  // const handleClick = (route) => () => {
+  //   navigate(route);
+  // }
+
+  const [ isPatientModalOpen, setIsPatientModalOpen ] = useState(false);
+  const [ isDoctorModalOpen, setIsDoctorModalOpen ] = useState(false);
+  const [ isAdminModalOpen, setIsAdminModalOpen ] = useState(false);
+
+  const handlePatientClick = () => {
+    setIsPatientModalOpen(true);
+  }
+
+  const closePatientModal = () => {
+    setIsPatientModalOpen(false);
+  }
+
+  const handleDoctorClick = () => {
+    setIsDoctorModalOpen(true);
+  }
+
+  const closeDoctorModal = () => {
+    setIsDoctorModalOpen(false);
+  }
+
+  const handleAdminClick = () => {
+    setIsAdminModalOpen(true);
+  }
+
+  const closeAdminModal = () => {
+    setIsAdminModalOpen(false);
   }
 
   return (
     <div className="container">
-      <span onClick={handleClick('/patientLogin')}>
+      <span onClick={handlePatientClick}>
         <img src={img1} alt="Patient"/>
       </span>
-      <span onClick={handleClick('/doctorLogin')}>
+      <span onClick={handleDoctorClick}>
         <img src={img2} alt="Doctor"/>
       </span>
-      <span onClick={handleClick('/adminLogin')}>
+      <span onClick={handleAdminClick}>
         <img src={img3} alt="Admin"/>
       </span>
+
+      <PatientModal isOpen={isPatientModalOpen} onClose={closePatientModal} />
+      <DoctorModal isOpen={isDoctorModalOpen} onClose={closeDoctorModal} />
+      <AdminModal isOpen={isAdminModalOpen} onClose={closeAdminModal} />
     </div>
   )
 }
