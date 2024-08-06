@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import '../../styles/LoginPage.css'
+//import '../../styles/PatientLogin.css'
 import img1 from '../../images/patientImg1.png'
 import img2 from '../../images/doctorImg1.png'
 import img3 from '../../images/adminImg1.png'
