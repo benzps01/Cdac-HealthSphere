@@ -6,9 +6,6 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Doctors from './pages/Doctors';
 import Login from './pages/Login';
-import PatientLogin from './pages/PatientLogin';
-import DoctorLogin from './pages/DoctorLogin';
-import AdminLogin from './pages/AdminLogin';
 
 export default function App() {
   const location = useLocation();
