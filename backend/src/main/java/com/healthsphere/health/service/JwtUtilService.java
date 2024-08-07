@@ -8,9 +8,6 @@ import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
-import com.healthsphere.health.entity.Patients;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -22,10 +19,10 @@ public class JwtUtilService {
 	@Value("${jwt.secret}")
 	private String secret;
 	
-	public String generateToken(Patients patient) {
+	public String generateToken(UserDetails user, int id) {
 		return Jwts.builder()
-				.subject(patient.getUsername())
-				.claim("id", patient.getId())
+				.subject(user.getUsername())
+				.claim("id", id)
 				.issuedAt(new Date(System.currentTimeMillis()))
 				.expiration(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
 				.signWith(getSignInKey())
@@ -59,9 +56,6 @@ public class JwtUtilService {
 		return extractClaim(token, Claims::getSubject);
 	}
 	
-//	public String extractUsertype(String token) {
-//		return extractClaim(token, claims -> claims.get("usertype", String.class));
-//	}
 	
 	private boolean isTokenExpired(String token) {
 		return extractExpiration(token).before(new Date());
