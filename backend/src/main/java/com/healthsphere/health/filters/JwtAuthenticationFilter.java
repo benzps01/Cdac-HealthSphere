@@ -9,9 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import com.healthsphere.health.service.JwtUtilService;
-import com.healthsphere.health.service.PatientService;
+import com.healthsphere.health.service.UserService;
 
 import io.micrometer.common.lang.NonNull;
 import jakarta.servlet.FilterChain;
@@ -26,8 +25,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	private JwtUtilService jwtUtilService;
 	
 	@Autowired
-	private PatientService patientService;
-	
+	private UserService userService;
 
 	@Override
 	protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain)
@@ -42,7 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		}
 		
 		if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-			UserDetails userDetails = patientService.loadUserByUsername(username);
+			UserDetails userDetails = userService.loadUserByUsername(username);
 
 			
 			if (jwtUtilService.isTokenValid(jwt, userDetails)) {
