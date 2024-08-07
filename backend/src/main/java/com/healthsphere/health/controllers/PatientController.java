@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.healthsphere.health.entity.AuthenticationResponse;
 import com.healthsphere.health.entity.Patients;
-import com.healthsphere.health.service.AuthenticationService;
+import com.healthsphere.health.service.PatientAuthenticationService;
 import com.healthsphere.health.service.JwtUtilService;
-import com.healthsphere.health.service.PatientService;
+import com.healthsphere.health.service.UserService;
 
 @RestController
 @CrossOrigin(origins="http://localhost:3000")
@@ -24,17 +24,17 @@ import com.healthsphere.health.service.PatientService;
 public class PatientController {
 	
 	@Autowired
-	private PatientService patientService;
+	private UserService userService;
 	
 	@Autowired
-	private AuthenticationService patientAuthService;
+	private PatientAuthenticationService patientAuthService;
 	
 	@Autowired
 	private JwtUtilService jwtUtilService;
 	
 	@GetMapping("/patient/{name}")
 	public ResponseEntity<Patients> getPatientByName(@PathVariable("name") String name) {
-		Patients patient = patientService.getPatientByName(name);
+		Patients patient = userService.getPatientByName(name);
 		if(patient != null)
 			return ResponseEntity.ok(patient);
 		else
@@ -68,7 +68,7 @@ public class PatientController {
 		
 		String jwt = token.substring(7);
 		String username = jwtUtilService.extractUsername(jwt);
-		Patients patient = patientService.getPatientByUsername(username);
+		Patients patient = userService.getPatientByName(username);
 		
 		if(patient != null) {
 			return ResponseEntity.ok(patient);

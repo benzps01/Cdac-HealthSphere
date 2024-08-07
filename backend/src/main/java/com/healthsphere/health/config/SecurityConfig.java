@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,14 +16,14 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.healthsphere.health.filters.JwtAuthenticationFilter;
-import com.healthsphere.health.service.PatientService;
+import com.healthsphere.health.service.UserService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
 	@Autowired
-	private PatientService patientService;
+	private UserService userService;
 	
 	
 	@Autowired
@@ -34,11 +35,10 @@ public class SecurityConfig {
 				.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(
 						req -> req
-						.requestMatchers("/health/patient/register","/health/patient/login","/health/patient")
+						.requestMatchers("/health/patient/register","/health/patient/login","/health/patient","/health/doctor/login","/health/doctor/register")
 						.permitAll()
 						.anyRequest()
 						.authenticated())
-				.userDetailsService(patientService)
 				.sessionManagement(session -> session
 						.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
@@ -53,5 +53,9 @@ public class SecurityConfig {
 	@Bean
 	public AuthenticationManager autheticationManager(AuthenticationConfiguration config) throws Exception {
 		return config.getAuthenticationManager();
+	}
+	
+	public void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
 	}
 }

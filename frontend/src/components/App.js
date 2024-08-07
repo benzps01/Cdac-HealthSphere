@@ -29,7 +29,7 @@ export default function App() {
           element={<PrivateRoute isAuthenticated={authState.isAuthenticated} />}
         >
           <Route path='/patientdashboard' element={<PatientDashboard />} />
-          {/* <Route path='/doctordashboard' element={<DoctorDashboard />} /> */}
+          <Route path='/doctordashboard' element={<DoctorDashboard />} />
         </Route>
       </Routes>
     </div>

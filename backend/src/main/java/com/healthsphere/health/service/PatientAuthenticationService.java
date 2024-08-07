@@ -11,7 +11,7 @@ import com.healthsphere.health.entity.Patients;
 import com.healthsphere.health.repository.PatientRepository;
 
 @Service
-public class AuthenticationService {
+public class PatientAuthenticationService {
 
 	@Autowired
 	private PatientRepository patientRepo;
@@ -36,18 +36,15 @@ public class AuthenticationService {
 		
 		patient = patientRepo.save(patient);
 		
-		String token = jwtUtilService.generateToken(patient);
+		String token = jwtUtilService.generateToken(patient, patient.getId());
 		return new AuthenticationResponse(token);
 	}
 	
 	public AuthenticationResponse authenticate(Patients request) {
-		System.out.println("Reached here 3");
-		System.out.println(request.getUsername());
+
 		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-		System.out.println("Authenticated user: " + request.getUsername());
-		System.out.println(request);
 		Patients patient = patientRepo.findByUsername(request.getUsername());
-		String token = jwtUtilService.generateToken(patient);
+		String token = jwtUtilService.generateToken(patient, patient.getId());
 		
 		return new AuthenticationResponse(token);
 	}
