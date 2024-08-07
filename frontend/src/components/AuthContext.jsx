@@ -7,7 +7,7 @@ export const AuthProvider = ({children}) => {
     const [authState, setAuthState] = useState({
         isAuthenticated: false,
         patient: null,
-        // doctor: null,
+        doctor: null,
     });
 
   return (
