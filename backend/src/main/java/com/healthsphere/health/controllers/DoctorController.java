@@ -19,7 +19,7 @@ import com.healthsphere.health.service.UserService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/health")
+@RequestMapping("/health/doctor")
 public class DoctorController {
 
 	@Autowired
@@ -31,7 +31,7 @@ public class DoctorController {
 	@Autowired
 	private JwtUtilService jwtUtilService;
 
-	@PostMapping("/doctor/register")
+	@PostMapping("/register")
 	public ResponseEntity<AuthenticationResponse> registerDoctor(@RequestBody Doctors doctor) {
 		try {
 			AuthenticationResponse response = doctorAuthService.register(doctor);
@@ -42,7 +42,7 @@ public class DoctorController {
 		}
 	}
 
-	@PostMapping("/doctor/login")
+	@PostMapping("/login")
 	public ResponseEntity<AuthenticationResponse> loginDoctor(@RequestBody Doctors doctor) {
 		try {
 			AuthenticationResponse response = doctorAuthService.authenticate(doctor);
@@ -53,7 +53,7 @@ public class DoctorController {
 		}
 	}
 
-	@GetMapping("/doctor")
+	@GetMapping
 	public ResponseEntity<Doctors> getDoctor(@RequestHeader("Authorization") String token) {
 		String jwt = token.substring(7);
 		String username = jwtUtilService.extractUsername(jwt);
