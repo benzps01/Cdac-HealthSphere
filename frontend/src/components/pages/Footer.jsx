@@ -2,13 +2,13 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-dark text-white">
-      <div className="container" style={{margin:"auto"}}>
+    <footer className="bg-dark text-white mt-auto" style={{height:"fit-content"}}>
+      <div className="container">
         <div className="row">
-          <div className="col-md-6 col-lg-6 col-sm-6">
+          <div className="col-md-6">
             <p>&copy; 2024 Your Company Name. All rights reserved.</p>
           </div>
-          <div className="col-md-6 col-lg-6 col-sm-6text-md-end">
+          <div className="col-md-6 text-md-end">
             <ul className="list-unstyled d-flex mb-0">
               <li className="ms-3"><a className="text-white" href="/about">About Us</a></li>
               <li className="ms-3"><a className="text-white" href="/contact">Contact</a></li>
