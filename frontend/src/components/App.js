@@ -10,6 +10,7 @@ import { useAuth } from './AuthContext';
 import PrivateRoute from './PrivateRoute';
 import PatientDashboard from './authPages/PatientDashboard';
 import DoctorDashboard from './authPages/DoctorDashboard';
+import Footer from './pages/Footer';
 
 export default function App() {
   const location = useLocation();
@@ -32,6 +33,7 @@ export default function App() {
           <Route path='/doctordashboard' element={<DoctorDashboard />} />
         </Route>
       </Routes>
+      <Footer />
     </div>
   );
 }
