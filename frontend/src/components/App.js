@@ -11,6 +11,7 @@ import PrivateRoute from './PrivateRoute';
 import PatientDashboard from './authPages/PatientDashboard';
 import DoctorDashboard from './authPages/DoctorDashboard';
 import Footer from './pages/Footer';
+import AdminDashboard from './authPages/AdminDashboard';
 
 export default function App() {
   const location = useLocation();
@@ -34,6 +35,7 @@ export default function App() {
           >
             <Route path='/patientdashboard' element={<PatientDashboard />} />
             <Route path='/doctordashboard' element={<DoctorDashboard />} />
+            <Route path='/admindashboard' element={<AdminDashboard />} />
           </Route>
         </Routes>
       </div>
