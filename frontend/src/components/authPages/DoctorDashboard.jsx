@@ -8,7 +8,7 @@ import profile from '../../images/img1.jpg';
 export default function DoctorDashboard() {
 
     const [doctor, setDoctor] = useState(null);
-    const baseUrl = 'http://localhost:7070/health';
+    const baseUrl = 'http://localhost:7070/health/doctor';
     const navigate = useNavigate();
     const { setAuthState } = useAuth();
 
@@ -21,7 +21,7 @@ export default function DoctorDashboard() {
     useEffect(() => {
         const fetchDoctorDetails = async () => {
             const token = localStorage.getItem('token');
-            const response = await axios.get(baseUrl + "/doctor",{
+            const response = await axios.get(baseUrl,{
                 headers: { Authorization: `Bearer ${token}`},
             });
             setDoctor(response.data);
@@ -38,7 +38,7 @@ export default function DoctorDashboard() {
             <img src={profile} alt="benson" className='profileImg'/>
             <h1>Welcome, Dr. {doctor.name}</h1>
             <p>Specialization: {doctor.specialization}</p>
-            <button onClick={handleLogout}>Logout</button>
+            <button onClick={handleLogout} className='logout'>Logout</button>
         </div>
     </div>
   );
