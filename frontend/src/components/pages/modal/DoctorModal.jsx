@@ -11,19 +11,19 @@ export default function DoctorModal({ isOpen, onClose }) {
   const navigate = useNavigate();
   const { setAuthState } = useAuth();
 
-  const baseUrl = 'http://localhost:7070/health';
+  const baseUrl = 'http://localhost:7070/health/doctor';
 
   const initialState = {"username":"","password":""};
 
   const handleSubmitLogin = async (e) => {
     e.preventDefault();
     try{
-      const response = await axios.post(baseUrl + '/doctor/login', loginData);
+      const response = await axios.post(baseUrl + '/login', loginData);
       const token = response.data.token;
       localStorage.setItem('token', token);
 
       const doctor = jwtDecode(token);
-      setAuthState({isAuthenticated: true, doctor, patient:null});
+      setAuthState({isAuthenticated: true, doctor, patient:null, admin:null});
       
       navigate('/doctordashboard');
       setLoginData(initialState);

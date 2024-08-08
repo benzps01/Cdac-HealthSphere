@@ -47,7 +47,7 @@ export default function PatientModal({ isOpen, onClose }) {
         localStorage.setItem('token', token);
 
         const patient = jwtDecode(token);
-        setAuthState({isAuthenticated: true, patient, doctor:null});
+        setAuthState({isAuthenticated: true, patient, doctor:null, admin:null});
         
         navigate('/patientdashboard');
         setLoginData(initialLoginState);
