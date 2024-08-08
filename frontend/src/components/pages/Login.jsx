@@ -1,21 +1,13 @@
 import React, { useState } from 'react'
 import '../../styles/LoginPage.css'
-//import '../../styles/PatientLogin.css'
 import img1 from '../../images/patientImg1.png'
 import img2 from '../../images/doctorImg1.png'
 import img3 from '../../images/adminImg1.png'
-// import { useNavigate } from 'react-router-dom'
 import PatientModal from './modal/PatientModal'
 import DoctorModal from './modal/DoctorModal'
 import AdminModal from './modal/AdminModal'
 
 export default function Login() {
-
-  //const navigate = useNavigate();
-
-  // const handleClick = (route) => () => {
-  //   navigate(route);
-  // }
 
   const [ isPatientModalOpen, setIsPatientModalOpen ] = useState(false);
   const [ isDoctorModalOpen, setIsDoctorModalOpen ] = useState(false);
