@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Carousel, Col, Container, Row } from 'react-bootstrap';
+import { Card, Carousel, Col, Row } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../styles/Home.css';
 import doctor1 from '../../images/Doctor1.png';
@@ -45,7 +45,7 @@ export default function Home() {
       <div className='container' id='abc'>
         <Row>
           <Col>
-            <div className='bg-light'>
+            <div className='test-dark'>
               <h1>Welcome to HealthSphere</h1>
               <br />
               <p>
@@ -60,7 +60,6 @@ export default function Home() {
                 </h3>
               </p>
             </div>
-            {/* </Card> */}
           </Col>
           <Col>
             <Card className='testCard square bg-primary rounded'>
@@ -74,7 +73,7 @@ export default function Home() {
       <hr />
       <br />
 
-      <div className='cardcontainer'>
+      <div className='cardcontainer' id="cardcontainer">
         <Row>
           <Col md={4}>
             <Card className='card1'>
