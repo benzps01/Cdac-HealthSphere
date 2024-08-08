@@ -1,15 +1,16 @@
 import React from 'react'
 import {Container, Row} from 'react-bootstrap';
 import about from '../../images/about.jpg';
+import about2 from '../../images/about.jpg';
 
 export default function About() {
   return (
     <>
-    <Container>
-    <img src={about} alt="About" style={{width: '600px', height: '400px'}} />
-    <img src={about} alt="About" style={{width: '600px', height: '400px'}} />
+    <Container style={{justifyContent: "space-evenly", marginTop: '30px'}}>
+    <img src={about} alt="Image1" style={{width: '580px', height: '400px' , borderRadius:"30px"}} />
+    <img src={about2} alt="Image2" style={{width: '580px', height: '400px',  borderRadius:"30px"}} />
     </Container>
-    <Container>
+    <Container style={{marginTop: "30px"}}>
       <Row>
       <p>
       Society of the Servants of the HealthSphere Hospital, a Charitable Trust Hospital located at Bandra Reclamation, Mumbai, was established in the year 2000. It is owned and managed by the Missionary Sisters Servants of the HealthSphere. The Missionary Sisters, Servants of the HealthSphere is a congregation founded by Shisheed Ghutugade in 2016, with the assistance of Sisters Tejal Salunkhe and Sneha Sonawane. From a humble origin in a remote village in Satara, Pune, the Order has now branched out to over 10 States with around 800 Sisters forming a network of over 225 communities. The first group of 4 sisters arrived in Mumbai in 2023. Considering the impoverished health condition of the people then, Sr. Benson Sabu promptly set up a dispensary in Mumbai, in 2020.
