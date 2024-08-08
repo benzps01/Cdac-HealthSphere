@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
+import '../../styles/Dashboard.css';
+import profile from '../../images/img1.jpg';
 
 export default function DoctorDashboard() {
 
@@ -32,9 +34,12 @@ export default function DoctorDashboard() {
 
   return (
     <div>
-        <h1>Welcome, {doctor.name}</h1>
-        <p>Specialization: {doctor.specialization}</p>
-        <button onClick={handleLogout}>Logout</button>
+        <div className='profile'>
+            <img src={profile} alt="benson" className='profileImg'/>
+            <h1>Welcome, Dr. {doctor.name}</h1>
+            <p>Specialization: {doctor.specialization}</p>
+            <button onClick={handleLogout}>Logout</button>
+        </div>
     </div>
   );
 };
