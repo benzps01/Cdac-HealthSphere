@@ -19,21 +19,25 @@ export default function App() {
   const { authState } = useAuth();
 
   return (
-    <div className='App'>
-      {showNavbar && <Navbar />}
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/about' element={<About />} />
-        <Route path='/doctors' element={<Doctors />} />
-        <Route path='/login' element={<Login />} />
-        <Route
-          element={<PrivateRoute isAuthenticated={authState.isAuthenticated} />}
-        >
-          <Route path='/patientdashboard' element={<PatientDashboard />} />
-          <Route path='/doctordashboard' element={<DoctorDashboard />} />
-        </Route>
-      </Routes>
+    <>
+      <div className='App'>
+        {showNavbar && <Navbar />}
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/doctors' element={<Doctors />} />
+          <Route path='/login' element={<Login />} />
+          <Route
+            element={
+              <PrivateRoute isAuthenticated={authState.isAuthenticated} />
+            }
+          >
+            <Route path='/patientdashboard' element={<PatientDashboard />} />
+            <Route path='/doctordashboard' element={<DoctorDashboard />} />
+          </Route>
+        </Routes>
+      </div>
       <Footer />
-    </div>
+    </>
   );
 }
