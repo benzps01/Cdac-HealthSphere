@@ -1,8 +1,10 @@
-.cardcontainer {
-    margin-bottom: 25px;
-}
-
 #abc{
     margin:auto;
     justify-content: space-between;
+}
+
+#cardcontainer{
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
 }

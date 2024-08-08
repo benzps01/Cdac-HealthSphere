@@ -12,6 +12,6 @@
     border: 3px solid rgb(0, 146, 39);
 }
 
-button{
+button.logout{
     width: 150px;
 }
