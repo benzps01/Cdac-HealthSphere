@@ -8,6 +8,7 @@ export const AuthProvider = ({children}) => {
         isAuthenticated: false,
         patient: null,
         doctor: null,
+        admin: null
     });
 
   return (
