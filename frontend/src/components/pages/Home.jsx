@@ -2,29 +2,34 @@ import React from 'react';
 import { Card, Carousel, Col, Row } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../styles/Home.css';
-import doctor1 from '../../images/Doctor1.png';
-import home from '../../images/home.png';
-import hospital from '../../images/hospital.jpg';
+import Building from '../../images/Building.jpg';
+import Beds from '../../images/Beds.jpg';
+import Surgery from '../../images/Surgery.jpg';
 import hospital1 from '../../images/Hospital1.jpg';
-import doc1 from '../../images/docpic.jpeg';
-import doc2 from '../../images/docpic1.jpeg';
-import doc3 from '../../images/docpic2.jpeg';
+import Neurology from '../../images/Neurology.jpg';
+import Heart from '../../images/Heart.jpg';
+import Nephrology from '../../images/Nephrologist.jpg';
+import Ophthamologist from '../../images/Opthamologist.jpg';
 
-export default function Home() {
+export default function Home(){
   return (
     <div>
       <Carousel className='imgs' slide={false}>
         <Carousel.Item interval={2000}>
           <img
-            src={doctor1}
+            src={Building}
             alt='Doctor'
             className='d-block w-100'
             style={{ height: 'auto', maxWidth: '100%' }}
           />
+          <div className='custom-text-overlay'>
+            <h1>Welcome To HealthSphere</h1>
+            <p>We provide our patients the Best Care</p>
+           </div>
         </Carousel.Item>
         <Carousel.Item interval={2000}>
           <img
-            src={home}
+            src={Beds}
             alt='Cardiology'
             className='d-block w-100'
             style={{ height: 'auto', maxWidth: '100%' }}
@@ -33,7 +38,7 @@ export default function Home() {
 
         <Carousel.Item interval={2000}>
           <img
-            src={hospital}
+            src={Surgery}
             alt='Cardiology'
             className='d-block w-100'
             style={{ height: 'auto', maxWidth: '100%' }}
@@ -68,37 +73,41 @@ export default function Home() {
           </Col>
         </Row>
       </div>
-
       <br />
       <hr />
-      <br />
-
       <div className='cardcontainer' id="cardcontainer">
+        <h2 className='Jumbotron'style={{textAlign:'center'}}>Center of Excellence</h2>
+        <br />
         <Row>
-          <Col md={4}>
+          <Col md={3}>
             <Card className='card1'>
-              <Card.Img src={doc1} />
+              <Card.Img src={Neurology} />
               <Card.Body>
-                <Card.Title>Doctor</Card.Title>
-                <Card.Subtitle>Doctor Name</Card.Subtitle>
+                <Card.Title style={{textAlign:'center'}}>Neurologist</Card.Title>
               </Card.Body>
             </Card>
           </Col>
-          <Col md={4}>
+          <Col md={3}>
             <Card className='card2'>
-              <Card.Img src={doc2} />
+              <Card.Img src={Heart} />
               <Card.Body>
-                <Card.Title>Doctor</Card.Title>
-                <Card.Subtitle>Doctor Name</Card.Subtitle>
+                <Card.Title style={{textAlign:'center'}}>Cardiologist</Card.Title>
               </Card.Body>
             </Card>
           </Col>
-          <Col md={4}>
-            <Card className='card4'>
-              <Card.Img src={doc3} />
+          <Col md={3}>
+            <Card className='card3'>
+              <Card.Img src={Nephrology} />
               <Card.Body>
-                <Card.Title>Doctor</Card.Title>
-                <Card.Subtitle>Doctor Name</Card.Subtitle>
+                <Card.Title style={{textAlign:'center'}}>Nephrologist</Card.Title>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={3}>
+            <Card className='card4'>
+              <Card.Img src={Ophthamologist} />
+              <Card.Body>
+                <Card.Title style={{textAlign:'center'}}>Ophthalmologist</Card.Title>
               </Card.Body>
             </Card>
           </Col>
