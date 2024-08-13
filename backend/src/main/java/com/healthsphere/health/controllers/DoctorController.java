@@ -57,13 +57,10 @@ public class DoctorController {
 	public ResponseEntity<Doctors> getDoctor(@RequestHeader("Authorization") String token) {
 		String jwt = token.substring(7);
 		String username = jwtUtilService.extractUsername(jwt);
-		System.out.println("Extracted username: " + username);
 		Doctors doctor = userService.getDoctorByName(username);
-		
 		if (doctor != null) {
 			return ResponseEntity.ok(doctor);
 		} else {
-			System.out.println("Doctor not found for username: " + username);
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 	}

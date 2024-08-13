@@ -28,11 +28,9 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Doctors doctor = doctorRepo.findByUsername(username);
-        System.out.println(doctor.toString());
         if (doctor != null) {
             return doctor;
         }
-        System.out.println("Reached here");
         Patients patient = patientRepo.findByUsername(username);
         if (patient != null) {
             return patient;
