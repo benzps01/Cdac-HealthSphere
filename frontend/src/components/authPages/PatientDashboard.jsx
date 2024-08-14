@@ -32,8 +32,8 @@ export default function PatientDashboard() {
 
   return (
     <div>
-        <h1>Welcome, {patient.name}</h1>
-        <p>Phone Number: {patient.mobile}</p>
+        <h1>Welcome, {patient.firstname}</h1>
+        <p>Phone Number: {patient.mobileno}</p>
         <button onClick={handleLogout} className='logout'>Logout</button>
     </div>
   );
