@@ -57,7 +57,7 @@ public class PatientController {
 		
 		String jwt = token.substring(7);
 		String username = jwtUtilService.extractUsername(jwt);
-		Patients patient = (Patients) userService.loadUserByUsername(username);
+		Patients patient = userService.getPatientByUserName(username);
 		
 		if(patient != null) {
 			return ResponseEntity.ok(patient);
