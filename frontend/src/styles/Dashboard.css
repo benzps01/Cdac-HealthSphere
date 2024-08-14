@@ -1,17 +1,66 @@
+.dashboard-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.accordion-container{
+    width: 80%;
+}
+
+.accordion-item{
+    margin-bottom: 20px;
+}
+
+.accordion-content{
+    padding: 50px;
+    
+}
+
+.accordion-header{
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .profile{
-    background-color: yellow;
+    background-color: rgb(139, 209, 202);
     width: 300px;
+    height: 728px;
 }
 
 .profileImg{
     margin-top: 50px;
-    margin-left: 30px;
+    margin-left: 50px;
     width: 200px;
     height: 200px;
     border-radius: 100px;
     border: 3px solid rgb(0, 146, 39);
 }
 
+.content{
+    margin-top: 10px;
+    margin-left: 30px;
+    width: 240px;
+    font-size: 20px;
+}
+
 button.logout{
-    width: 150px;
+    width: 200px;
+    margin-left: 15%;
+    margin-top: 40%;
+}
+
+button.view{
+    width: 200px;
+    margin-left: 15%;
+}
+
+button.calendar{
+    width: 200px;
+    margin-left: 15%;
+}
+
+button.treated{
+    width: 200px;
 }

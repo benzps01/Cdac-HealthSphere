@@ -12,6 +12,7 @@ import PatientDashboard from './authPages/PatientDashboard';
 import DoctorDashboard from './authPages/DoctorDashboard';
 import Footer from './pages/Footer';
 import AdminDashboard from './authPages/AdminDashboard';
+import AccordionUsage from './authPages/AccordionUsage';
 
 export default function App() {
   const location = useLocation();
@@ -35,11 +36,12 @@ export default function App() {
           >
             <Route path='/patientdashboard' element={<PatientDashboard />} />
             <Route path='/doctordashboard' element={<DoctorDashboard />} />
+            <Route path='/AccordionUsage' element={<AccordionUsage />} />
             <Route path='/admindashboard' element={<AdminDashboard />} />
           </Route>
         </Routes>
       </div>
-      <Footer />
+      {showNavbar && <Footer />}
     </>
   );
 }
