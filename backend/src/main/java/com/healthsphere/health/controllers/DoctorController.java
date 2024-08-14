@@ -67,7 +67,7 @@ public class DoctorController {
 	public ResponseEntity<Doctors> getDoctor(@RequestHeader("Authorization") String token) {
 		String jwt = token.substring(7);
 		String username = jwtUtilService.extractUsername(jwt);
-		Doctors doctor = (Doctors) userService.loadUserByUsername(username);
+		Doctors doctor = userService.getDoctorByUserName(username);
 		if (doctor != null) {
 			return ResponseEntity.ok(doctor);
 		} else {
