@@ -32,7 +32,7 @@ public class AdminAuthenticationService {
 		
 		admin = adminRepo.save(admin);
 		
-		String token = jwtUtilService.generateToken(admin, admin.getId());
+		String token = jwtUtilService.generateToken(admin, admin.getAdminid());
 		return new AuthenticationResponse(token);
 	}
 	
@@ -40,7 +40,7 @@ public class AdminAuthenticationService {
 		authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 		Admin admin = adminRepo.findByUsername(request.getUsername());
 		
-		String token = jwtUtilService.generateToken(admin, admin.getId());
+		String token = jwtUtilService.generateToken(admin, admin.getAdminid());
 		return new AuthenticationResponse(token);
 	}
 	
