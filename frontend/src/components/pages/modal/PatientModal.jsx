@@ -9,7 +9,7 @@ export default function PatientModal({ isOpen, onClose }) {
 
     const [ showRegister, setShowRegister ] = useState(false);
     const [ loginData, setLoginData ] = useState({"username":"","password":""})
-    const [ registerData, setRegisterData ] = useState({"name":"", "username":"","mobile":"","email":"", "bloodgroup":"", "password":""})
+    const [ registerData, setRegisterData ] = useState({"firstname":"", "lastname":"", "username":"","mobileno":"","email":"", "bloodgroup":"", "password":"","address":"","emergencycontact":"","dateofbirth":""})
     const [ successMessage, setSuccessMessage ] = useState("");
     const navigate = useNavigate();
     const { setAuthState } = useAuth(); 
@@ -21,7 +21,7 @@ export default function PatientModal({ isOpen, onClose }) {
     const url = 'http://localhost:7070/health';
 
     const initialLoginState = {"username":"","password":""}
-    const initialRegisterState = {"name":"", "username":"","mobile":"","email":"", "bloodgroup":"", "password":""};
+    const initialRegisterState = {"firstname":"", "lastname":"", "username":"","mobileno":"","email":"", "bloodgroup":"", "password":"","address":"","emergencycontact":"", "dateofbirth":""};
 
     const handleRegisterClick = () => {
         setLoginData(initialLoginState);
@@ -98,12 +98,21 @@ export default function PatientModal({ isOpen, onClose }) {
             <h2>Register</h2>
             <input 
               type='text' 
-              placeholder='Name' 
+              placeholder='First Name' 
               autoFocus 
               required
-              value={registerData.name}
+              value={registerData.firstname}
               onChange={handleRegisterChange}
-              name='name'
+              name='firstname'
+            />
+            <input 
+              type='text' 
+              placeholder='Last Name' 
+              autoFocus 
+              required
+              value={registerData.lastname}
+              onChange={handleRegisterChange}
+              name='lastname'
             />
             <input 
               type='text' 
@@ -129,8 +138,8 @@ export default function PatientModal({ isOpen, onClose }) {
                   placeholder='Mobile'
                   required
                   onChange={handleRegisterChange}
-                  value={registerData.mobile}
-                  name='mobile'
+                  value={registerData.mobileno}
+                  name='mobileno'
                 />
             </div>
               <div className='flex-item'>
@@ -168,6 +177,38 @@ export default function PatientModal({ isOpen, onClose }) {
                   onChange={handleRegisterChange}
                   value={registerData.confirmPassword}
                   name='confirmPassword'
+                />
+              </div>
+            </div>
+            <input 
+                type='text' 
+                placeholder='Address' 
+                autoFocus 
+                required
+                value={registerData.address}
+                onChange={handleRegisterChange}
+                name='address'
+            />
+            <div className='flex-container'>
+              <div className='flex-item'>
+              <input 
+                type='text' 
+                placeholder='Emergency Contact' 
+                autoFocus 
+                required
+                value={registerData.emergencycontact}
+                onChange={handleRegisterChange}
+                name='emergencycontact'
+            />
+            </div>
+              <div className='flex-item'>
+                <input 
+                  type='date' 
+                  placeholder='Date Of Birth' 
+                  required
+                  onChange={handleRegisterChange}
+                  value={registerData.dateofbirth}
+                  name='dateofbirth'
                 />
               </div>
             </div>
