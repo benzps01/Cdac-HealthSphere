@@ -55,7 +55,7 @@ public class AdminController {
 	public ResponseEntity<Admin> getAdmin(@RequestHeader("Authorization") String token){
 		String jwt = token.substring(7);
 		String username = jwtUtilService.extractUsername(jwt);
-		Admin admin = userService.getAdminByUsername(username);
+		Admin admin = (Admin) userService.loadUserByUsername(username);
 		
 		if(admin != null) {
 			return ResponseEntity.ok(admin);
