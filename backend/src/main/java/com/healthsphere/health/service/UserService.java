@@ -31,7 +31,6 @@ public class UserService implements UserDetailsService {
         if (doctor != null) {
             return doctor;
         }
-        
         Patients patient = patientRepo.findByUsername(username);
         if (patient != null) {
             return patient;
@@ -43,17 +42,5 @@ public class UserService implements UserDetailsService {
         }
         
         throw new UsernameNotFoundException("User not found");
-    }
-
-    public Doctors getDoctorByName(String name) {
-        return doctorRepo.findByName(name);
-    }
-
-    public Patients getPatientByName(String name) {
-        return patientRepo.findByName(name);
-    }
-    
-    public Admin getAdminByUsername(String username) {
-    	return adminRepo.findByUsername(username);
     }
 }
