@@ -20,7 +20,7 @@ public class Admin implements UserDetails{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
-	private int id;
+	private int adminid;
 	
 	@Column
 	private String username;
@@ -28,12 +28,12 @@ public class Admin implements UserDetails{
 	@Column
 	private String password;
 	
-	public int getId() {
-		return id;
+	public int getAdminid() {
+		return adminid;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setAdminid(int adminid) {
+		this.adminid = adminid;
 	}
 
 	public String getUsername() {
@@ -55,33 +55,13 @@ public class Admin implements UserDetails{
 	
 	@Override
 	public String toString() {
-		return "Admin [id=" + id + ", username=" + username + ", password=" + password + "]";
+		return "Admin [adminid=" + adminid + ", username=" + username + ", password=" + password + "]";
 	}
 
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return null;
-	}
-	
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
-	
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
-	
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
-	
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
 	}
 
 }
