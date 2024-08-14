@@ -27,16 +27,20 @@ public class PatientAuthenticationService {
 	
 	public AuthenticationResponse register(Patients request) {
 		Patients patient = new Patients();
-		patient.setName(request.getName());
 		patient.setUsername(request.getUsername());
-		patient.setEmail(request.getEmail());
-		patient.setMobile(request.getMobile()); 
-		patient.setBloodgroup(request.getBloodgroup());
 		patient.setPassword(passwordEncoder.encode(request.getPassword()));
+		patient.setFirstname(request.getFirstname());
+		patient.setLastname(request.getLastname());
+		patient.setDateofbirth(request.getDateofbirth());
+		patient.setMobileno(request.getMobileno());
+		patient.setBloodgroup(request.getBloodgroup());
+		patient.setEmail(request.getEmail());
+		patient.setAddress(request.getAddress());
+		patient.setEmergencycontact(request.getEmergencycontact());
 		
 		patient = patientRepo.save(patient);
 		
-		String token = jwtUtilService.generateToken(patient, patient.getId());
+		String token = jwtUtilService.generateToken(patient, patient.getPatientid());
 		return new AuthenticationResponse(token);
 	}
 	
@@ -44,7 +48,7 @@ public class PatientAuthenticationService {
 
 		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 		Patients patient = patientRepo.findByUsername(request.getUsername());
-		String token = jwtUtilService.generateToken(patient, patient.getId());
+		String token = jwtUtilService.generateToken(patient, patient.getPatientid());
 		
 		return new AuthenticationResponse(token);
 	}
