@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -31,16 +30,6 @@ public class PatientController {
 	
 	@Autowired
 	private JwtUtilService jwtUtilService;
-	
-	@GetMapping("/{name}")
-	public ResponseEntity<Patients> getPatientByName(@PathVariable("name") String name) {
-		Patients patient = userService.getPatientByName(name);
-		if(patient != null)
-			return ResponseEntity.ok(patient);
-		else
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-	}
-	
 	
 	
 	@PostMapping("/register")
@@ -68,7 +57,7 @@ public class PatientController {
 		
 		String jwt = token.substring(7);
 		String username = jwtUtilService.extractUsername(jwt);
-		Patients patient = userService.getPatientByName(username);
+		Patients patient = (Patients) userService.loadUserByUsername(username);
 		
 		if(patient != null) {
 			return ResponseEntity.ok(patient);
