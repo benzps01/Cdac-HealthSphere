@@ -36,8 +36,9 @@ public class DoctorController {
 	@Autowired
 	private JwtUtilService jwtUtilService;
 
-	@PostMapping(value = "/register", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE })
-	public ResponseEntity<AuthenticationResponse> registerDoctor(@RequestPart("doc") String doc, @RequestPart("image") MultipartFile image) throws java.io.IOException {
+	@PostMapping(value = "/register", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+	public ResponseEntity<AuthenticationResponse> registerDoctor(@RequestPart("doc") String doc,
+			@RequestPart("image") MultipartFile image) throws java.io.IOException {
 		try {
 			ObjectMapper objMapper = new ObjectMapper();
 			Doctors doctor = objMapper.readValue(doc, Doctors.class);
@@ -73,15 +74,15 @@ public class DoctorController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 	}
-	
+
 	@GetMapping("/picture/{doctorid}")
-	public ResponseEntity<byte[]> getProfilePic(@PathVariable int doctorid){
+	public ResponseEntity<byte[]> getProfilePic(@PathVariable int doctorid) {
 		try {
 			byte[] image = doctorAuthService.getProfilePic(doctorid);
 			return ResponseEntity.ok()
 					.contentType(MediaType.IMAGE_JPEG)
 					.body(image);
-		}catch(RuntimeException e) {
+		} catch (RuntimeException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 	}
