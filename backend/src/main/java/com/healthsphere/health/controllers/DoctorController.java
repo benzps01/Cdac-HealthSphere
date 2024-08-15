@@ -1,7 +1,11 @@
 package com.healthsphere.health.controllers;
 
+import java.util.Collection;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -37,8 +41,9 @@ public class DoctorController {
 	private JwtUtilService jwtUtilService;
 
 	@PostMapping(value = "/register", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-	public ResponseEntity<AuthenticationResponse> registerDoctor(@RequestPart("doc") String doc,
-			@RequestPart("image") MultipartFile image) throws java.io.IOException {
+	public ResponseEntity<AuthenticationResponse> registerDoctor(
+			@RequestPart("doctor") String doc,
+			@RequestPart("image") MultipartFile image) {
 		try {
 			ObjectMapper objMapper = new ObjectMapper();
 			Doctors doctor = objMapper.readValue(doc, Doctors.class);
@@ -83,6 +88,15 @@ public class DoctorController {
 					.contentType(MediaType.IMAGE_JPEG)
 					.body(image);
 		} catch (RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
+	
+	@GetMapping("/list")
+	public ResponseEntity<Collection<Doctors>> getAllDoctors(){
+		try {
+			return ResponseEntity.ok(doctorAuthService.getAllDoctors());
+		}catch(Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 	}
