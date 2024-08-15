@@ -1,11 +1,10 @@
 package com.healthsphere.health.controllers;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -91,12 +90,12 @@ public class DoctorController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 	}
-	
+
 	@GetMapping("/list")
-	public ResponseEntity<Collection<Doctors>> getAllDoctors(){
+	public ResponseEntity<Collection<Map<String, Object>>> getAllDoctors() {
 		try {
 			return ResponseEntity.ok(doctorAuthService.getAllDoctors());
-		}catch(Exception e) {
+		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 	}
