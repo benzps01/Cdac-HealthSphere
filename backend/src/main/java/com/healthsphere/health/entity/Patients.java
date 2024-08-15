@@ -1,5 +1,6 @@
 package com.healthsphere.health.entity;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
@@ -31,10 +32,10 @@ public class Patients implements UserDetails {
 	private String password;
 	
 	@Column(nullable = false)
-	private String firstname;
-	
+	private String name;
+
 	@Column(nullable = false)
-	private String lastname;
+	private String gender;
 	
 	@Column(nullable = false)
 	private Date dateofbirth;
@@ -53,6 +54,8 @@ public class Patients implements UserDetails {
 	
 	@Column(nullable = false)
 	private String emergencycontact;
+	
+	private byte[] profilepic;
 	
 	
 	public int getPatientid() {
@@ -79,20 +82,21 @@ public class Patients implements UserDetails {
 		this.password = password;
 	}
 
-	public String getFirstname() {
-		return firstname;
+
+	public String getName() {
+		return name;
 	}
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getGender() {
+		return gender;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
 	public Date getDateofbirth() {
@@ -144,6 +148,22 @@ public class Patients implements UserDetails {
 	}
 
 	
+	public byte[] getProfilepic() {
+		return profilepic;
+	}
+
+	public void setProfilepic(byte[] profilepic) {
+		this.profilepic = profilepic;
+	}
+
+	@Override
+	public String toString() {
+		return "Patients [patientid=" + patientid + ", username=" + username + ", password=" + password + ", name="
+				+ name + ", gender=" + gender + ", dateofbirth=" + dateofbirth + ", mobileno=" + mobileno
+				+ ", bloodgroup=" + bloodgroup + ", email=" + email + ", address=" + address + ", emergencycontact="
+				+ emergencycontact + ", profilepic=" + Arrays.toString(profilepic) + "]";
+	}
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
