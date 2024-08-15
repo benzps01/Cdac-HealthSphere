@@ -1,6 +1,7 @@
 package com.healthsphere.health.service;
 
 import java.io.IOException;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -59,5 +60,9 @@ public class DoctorAuthenticationService {
 	public byte[] getProfilePic(int doctorid) {
 		Doctors doctor = doctorRepo.findById(doctorid).orElseThrow(() -> new RuntimeException("Doctor not found"));
 		return doctor.getProfilepic();
+	}
+	
+	public Collection<Doctors> getAllDoctors(){
+		return doctorRepo.findAll();
 	}
 }
