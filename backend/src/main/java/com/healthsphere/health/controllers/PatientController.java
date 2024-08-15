@@ -2,15 +2,20 @@ package com.healthsphere.health.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.healthsphere.health.entity.AuthenticationResponse;
 import com.healthsphere.health.entity.Patients;
 import com.healthsphere.health.service.PatientAuthenticationService;
@@ -32,12 +37,17 @@ public class PatientController {
 	private JwtUtilService jwtUtilService;
 	
 	
-	@PostMapping("/register")
-	public ResponseEntity<AuthenticationResponse> registerPatient(@RequestBody Patients patient) {
+	@PostMapping(value = "/register", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+	public ResponseEntity<AuthenticationResponse> registerPatient(
+			@RequestPart("patient") String pat,
+			@RequestPart("image") MultipartFile image) {
 		try {
-			AuthenticationResponse response = patientAuthService.register(patient);
+			ObjectMapper objMapper = new ObjectMapper();
+			Patients patient = objMapper.readValue(pat, Patients.class);
+			AuthenticationResponse response = patientAuthService.register(patient, image);
 			return ResponseEntity.status(HttpStatus.CREATED).body(response);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new AuthenticationResponse("Error registering Patient"));
 		}
 	}
@@ -62,6 +72,18 @@ public class PatientController {
 		if(patient != null) {
 			return ResponseEntity.ok(patient);
 		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
+	
+	@GetMapping("/picture/{patientid}")
+	public ResponseEntity<byte[]> getProfilePic(@PathVariable int patientid){
+		try {
+			byte[] image = patientAuthService.getProfilePic(patientid);
+			return ResponseEntity.ok()
+					.contentType(MediaType.IMAGE_JPEG)
+					.body(image);
+		}catch(RuntimeException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 	}
