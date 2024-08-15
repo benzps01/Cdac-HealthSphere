@@ -2,6 +2,9 @@ package com.healthsphere.health.service;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -62,7 +65,16 @@ public class DoctorAuthenticationService {
 		return doctor.getProfilepic();
 	}
 	
-	public Collection<Doctors> getAllDoctors(){
-		return doctorRepo.findAll();
+	public Collection<Map<String, Object>> getAllDoctors(){
+		return doctorRepo.findAll().stream()
+				.map(doctor -> {
+					Map<String, Object> doctorMap = new HashMap<>();
+					doctorMap.put("doctorid", doctor.getDoctorid());
+	                doctorMap.put("firstname", doctor.getFirstname());
+	                doctorMap.put("specialization", doctor.getSpecialization());
+	                return doctorMap;
+				})
+				.collect(Collectors.toList());
+		
 	}
 }
