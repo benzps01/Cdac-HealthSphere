@@ -9,8 +9,9 @@ export default function PatientModal({ isOpen, onClose }) {
 
     const [ showRegister, setShowRegister ] = useState(false);
     const [ loginData, setLoginData ] = useState({"username":"","password":""})
-    const [ registerData, setRegisterData ] = useState({"firstname":"", "lastname":"", "username":"","mobileno":"","email":"", "bloodgroup":"", "password":"","address":"","emergencycontact":"","dateofbirth":""})
+    const [ registerData, setRegisterData ] = useState({"name":"", "username":"","mobileno":"","gender":"","email":"", "bloodgroup":"", "password":"","address":"","emergencycontact":"","dateofbirth":""})
     const [ successMessage, setSuccessMessage ] = useState("");
+    const [profilepic, setProfilePic] = useState(null);
     const navigate = useNavigate();
     const { setAuthState } = useAuth(); 
 
@@ -18,10 +19,12 @@ export default function PatientModal({ isOpen, onClose }) {
       'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-', 'Not Sure'
     ];
 
-    const url = 'http://localhost:7070/health';
+    const gender = ['Male','Female'];
+
+    const url = 'http://localhost:7070/health/patient/';
 
     const initialLoginState = {"username":"","password":""}
-    const initialRegisterState = {"firstname":"", "lastname":"", "username":"","mobileno":"","email":"", "bloodgroup":"", "password":"","address":"","emergencycontact":"", "dateofbirth":""};
+    const initialRegisterState = {"name":"", "username":"","mobileno":"","email":"", "bloodgroup":"", "gender":"", "password":"","address":"","emergencycontact":"", "dateofbirth":""};
 
     const handleRegisterClick = () => {
         setLoginData(initialLoginState);
@@ -42,7 +45,7 @@ export default function PatientModal({ isOpen, onClose }) {
     const handleSubmitLogin = async (e) => {
       e.preventDefault();
       try{
-        const response = await axios.post(url + '/patient/login', loginData);
+        const response = await axios.post(url + 'login', loginData);
         const token = response.data.token;
         localStorage.setItem('token', token);
 
@@ -52,22 +55,34 @@ export default function PatientModal({ isOpen, onClose }) {
         navigate('/patientdashboard');
         setLoginData(initialLoginState);
       } catch (error) {
+        setLoginData(initialLoginState);
         console.error('There was an error logging in!',error);
       }
     };
 
     const handleSubmitRegister = async (e) => {
       e.preventDefault();
-      await axios.post(url + '/patient/register',registerData)
-        .then(response => {
-          console.log(response.data);
+      if (registerData.password !== registerData.confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+    }
+
+    const { confirmPassword, ...newRegisterData } = registerData;
+      const formData = new FormData();
+      formData.append("patient",JSON.stringify(newRegisterData));
+      formData.append("image",profilepic);
+      try{
+        await axios.post(url + 'register',formData, {
+          headers: { 'Content-type': 'multipart/form-data'}
+        });
           setRegisterData(initialRegisterState);
           setShowRegister(false);
+          setProfilePic(null);
           setSuccessMessage("You have registered successfully. Please log in.")
-        })
-        .catch(error => {
+    } catch(error) {
+          setRegisterData(initialRegisterState)
           console.error("There was an error registering the patient!", error);
-        });
+        };
     };
 
     const handleLoginChange = (e) => {
@@ -86,6 +101,10 @@ export default function PatientModal({ isOpen, onClose }) {
       }));
     };
 
+    const handleFileChange = (e) =>{
+      setProfilePic(e.target.files[0]);
+    }
+
     if(!isOpen) return null;
 
   return (
@@ -98,26 +117,16 @@ export default function PatientModal({ isOpen, onClose }) {
             <h2>Register</h2>
             <input 
               type='text' 
-              placeholder='First Name' 
+              placeholder='Name' 
               autoFocus 
               required
-              value={registerData.firstname}
+              value={registerData.name}
               onChange={handleRegisterChange}
-              name='firstname'
+              name='name'
             />
             <input 
               type='text' 
-              placeholder='Last Name' 
-              autoFocus 
-              required
-              value={registerData.lastname}
-              onChange={handleRegisterChange}
-              name='lastname'
-            />
-            <input 
-              type='text' 
-              placeholder='Username' 
-              autoFocus 
+              placeholder='Username'  
               required
               value={registerData.username}
               onChange={handleRegisterChange}
@@ -157,6 +166,21 @@ export default function PatientModal({ isOpen, onClose }) {
                   ))}
                 </select>
               </div>
+              <div className='flex-item'>
+                <select
+                  name="gender"
+                  value={registerData.gender}
+                  onChange={handleRegisterChange}
+                  required
+                >
+                <option value="" disabled>Select Gender</option>
+                {gender.map(group => (
+                  <option key={group} value={group}>
+                    {group}
+                  </option>
+                ))}
+                </select>
+              </div>
             </div>
             <div className='passwordContainer'>
               <div className='flex-item'>
@@ -183,7 +207,6 @@ export default function PatientModal({ isOpen, onClose }) {
             <input 
                 type='text' 
                 placeholder='Address' 
-                autoFocus 
                 required
                 value={registerData.address}
                 onChange={handleRegisterChange}
@@ -194,7 +217,6 @@ export default function PatientModal({ isOpen, onClose }) {
               <input 
                 type='text' 
                 placeholder='Emergency Contact' 
-                autoFocus 
                 required
                 value={registerData.emergencycontact}
                 onChange={handleRegisterChange}
@@ -212,6 +234,12 @@ export default function PatientModal({ isOpen, onClose }) {
                 />
               </div>
             </div>
+            <input
+              type='file'
+              id='profilepic'
+              onChange={handleFileChange}
+              accept='image/*'
+            />
             <button>Submit</button>
             <button onClick={handleBackToLogin}>Already have an Account? Sign In</button>
             </form>
