@@ -2,7 +2,6 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    /* padding: 20px; */
 }
 
 .accordion-container{
@@ -32,6 +31,8 @@
     flex-direction: column;
     justify-content: space-between;
     margin-right: 20px;
+    position: sticky;
+    top: 0;
 }
 
 .profileImg {
@@ -78,14 +79,72 @@ button.appointment, button.records {
 .appointment-container{
     margin-top: 50px;
     background-color: rgb(255, 255, 255);
-    height: 550px;
-    width: 1000px;
+    height: auto;
+    width: 80%;
+    max-width: 90%;
     border-radius: 20px;
     margin-left: auto;
     margin-right: auto;
-    border: solid 1.5px black;
+    border: solid 2px rgb(0, 0, 0);
     box-shadow: 5px 5px;
     padding: 90px;
     font-size: 17px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
+
+@media (max-width: 768px) {
+    .appointment-container {
+        padding: 30px; 
+    }
+}
+
+@media (max-width: 576px) {
+    .appointment-container {
+        padding: 20px; 
+    }
+
+    .profile {
+        width: 100%; 
+        height: auto; 
+        margin-right: 0;
+        margin-bottom: 20px; 
+    }
+}
+
+.date-selection {
+    margin-top: 20px;
+  }
+  
+  .date-section {
+    margin-bottom: 20px;
+  }
+  
+  .time-slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px
+  }
+  
+  .time-slot {
+    margin: 5px;
+    padding: 5px 10px;
+    border: 1px solid #000000;
+    background-color: #a19e9e;
+    cursor: pointer;
+    font-size: 0.8rem;
+    text-align: center;
+    border-radius: 4px;
+    flex: 0 0 100px;
+    color: black;
+  }
+  
+  .time-slot.selected {
+    background-color: #4CAF50;
+    color: white;
+  }
+  .time-slot:disabled{
+    background-color: #9d0000;
+    color: white;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }

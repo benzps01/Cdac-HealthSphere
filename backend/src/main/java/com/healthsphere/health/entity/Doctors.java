@@ -1,5 +1,6 @@
 package com.healthsphere.health.entity;
 
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -50,6 +51,10 @@ public class Doctors implements UserDetails {
 	
 
 	private byte[] profilepic;
+	
+	private LocalTime startime;
+	
+	private LocalTime endtime;
 	
 
 	public int getDoctorid() {
