@@ -1,5 +1,7 @@
 package com.healthsphere.health.entity;
 
+import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -16,108 +18,156 @@ import jakarta.persistence.Table;
 @Table
 public class Doctors implements UserDetails {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
-	private int id;
-	
-	@Column
-	private String name;
+	private int doctorid;
 	
 	@Column
 	private String username;
 	
 	@Column
-	private long mobile;
+	private String password;
 	
 	@Column
-	private String password;
+	private String firstname;
+	
+	@Column
+	private String lastname;
 	
 	@Column
 	private String specialization;
 	
-	public int getId() {
-		return id;
+	@Column
+	private long mobileno;
+	
+	@Column
+	private String yearsofexperience;
+	
+	@Column
+	private String bio;
+	
+
+	private byte[] profilepic;
+	
+	private LocalTime startime;
+	
+	private LocalTime endtime;
+	
+
+	public int getDoctorid() {
+		return doctorid;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+
+	public void setDoctorid(int doctorid) {
+		this.doctorid = doctorid;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	public String getUsername() {
 		return username;
 	}
 
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
-	public long getMobile() {
-		return mobile;
-	}
-
-	public void setMobile(long mobile) {
-		this.mobile = mobile;
-	}
 
 	public String getPassword() {
 		return password;
 	}
 
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+
+	public String getLastname() {
+		return lastname;
+	}
+
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
 
 	public String getSpecialization() {
 		return specialization;
 	}
 
+
 	public void setSpecialization(String specialization) {
 		this.specialization = specialization;
 	}
-	
+
+
+	public long getMobileno() {
+		return mobileno;
+	}
+
+	public void setMobileno(long mobileno) {
+		this.mobileno = mobileno;
+	}
+
+
+	public String getYearsofexperience() {
+		return yearsofexperience;
+	}
+
+
+	public void setYearsofexperience(String yearsofexperience) {
+		this.yearsofexperience = yearsofexperience;
+	}
+
+
+	public String getBio() {
+		return bio;
+	}
+
+
+	public void setBio(String bio) {
+		this.bio = bio;
+	}
+
+
+	public byte[] getProfilepic() {
+		return profilepic;
+	}
+
+
+	public void setProfilepic(byte[] profilepic) {
+		this.profilepic = profilepic;
+	}
+
+
 	@Override
 	public String toString() {
-		return "Doctors [id=" + id + ", name=" + name + ", username=" + username + ", mobile=" + mobile + ", password="
-				+ password + ", specialization=" + specialization + "]";
+		return "Doctors [doctorid=" + doctorid + ", username=" + username + ", password=" + password + ", firstname="
+				+ firstname + ", lastname=" + lastname + ", specialization=" + specialization + ", mobileno=" + mobileno
+				+ ", yearsofexperience=" + yearsofexperience + ", bio=" + bio + ", profilepic="
+				+ Arrays.toString(profilepic) + "]";
 	}
+
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return null;
-	}
-	
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
-	
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
-	
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
-	
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
 	}
 
 }

@@ -2,11 +2,18 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
+import '../../styles/Dashboard.css'
+import BookAppointment from './patientModules/BookAppointment';
+import Records from './patientModules/Records';
+import PastAppointments from './patientModules/PastAppointments';
+import defaultImg from '../../images/default.jpg';
 
 export default function PatientDashboard() {
 
     const [patient, setPatient] = useState(null);
-    const baseUrl = 'http://localhost:7070/health';
+    const [profileImage, setProfileImage] = useState(null);
+    const [activeComponent,setActiveComponent] = useState(false);
+    const baseUrl = 'http://localhost:7070/health/patient';
     const navigate = useNavigate();
     const { setAuthState } = useAuth();
 
@@ -19,22 +26,69 @@ export default function PatientDashboard() {
     useEffect(() => {
         const fetchPatientDetails = async () => {
             const token = localStorage.getItem('token');
-            const response = await axios.get(baseUrl + "/patient",{
+            const response = await axios.get(baseUrl,{
                 headers: { Authorization: `Bearer ${token}`},
             });
             setPatient(response.data);
+            console.log(response.data);
+
+            if(response.data.profilepic){
+                const imageUrl = `data:image/png;base64,${response.data.profilepic}`;
+                setProfileImage(imageUrl);
+            }
         };
 
         fetchPatientDetails();
     },[]);
 
+    const handleShowBookAppointment = () => {
+        setActiveComponent(activeComponent === 'bookAppointment' ? null : 'bookAppointment');
+    }
+
+    const handleShowViewRecords = () => {
+        setActiveComponent(activeComponent === 'records' ? null : 'records');
+    }
+
+    const handleShowPastAppointments = () => {
+        setActiveComponent(activeComponent === 'pastAppointment' ? null : 'pastAppointment');
+    }
+
     if(!patient) return <div>Loading.....</div>
 
   return (
-    <div>
-        <h1>Welcome, {patient.name}</h1>
-        <p>Phone Number: {patient.mobile}</p>
-        <button onClick={handleLogout}>Logout</button>
+    <div className='dashboard-container'>
+        <div className='profile'>
+            <img src = {profileImage || defaultImg} alt={patient.name} className='profileImg' />
+            <div className='content'>
+            <h2>Hi, {patient.name}</h2>
+            <p><h5>BloodGroup: {patient.bloodgroup}</h5></p>
+            </div>
+            <hr/>
+            <br />
+            <button className='appointment' onClick={handleShowBookAppointment}>Book an Appointment</button>
+            <br/>
+            <button className='records' onClick={handleShowViewRecords}>View Records</button>
+            <br/>
+            <button className='appointment' onClick={handleShowPastAppointments}>Past Appointments</button>
+            <br/>
+            <br/>
+            <button onClick={handleLogout} className='logout'>Logout</button>
+        </div>
+        {activeComponent === 'bookAppointment' && (
+            <div className='patient-container'>
+                <BookAppointment />
+            </div>
+        )}
+        {activeComponent === 'records' && (
+            <div className='patient-container'>
+                <Records />
+            </div>
+        )}
+        {activeComponent === 'pastAppointment' && (
+            <div className='patient-container'>
+                <PastAppointments />
+            </div>
+        )}
     </div>
   );
 };

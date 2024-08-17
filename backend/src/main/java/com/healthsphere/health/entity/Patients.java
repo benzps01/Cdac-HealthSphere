@@ -1,6 +1,8 @@
 package com.healthsphere.health.entity;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,45 +18,52 @@ import jakarta.persistence.Table;
 @Table
 public class Patients implements UserDetails {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
-	private int id;
-	
-	@Column(nullable = false)
-	private String name;
+	private int patientid;
 	
 	@Column(nullable = false)
 	private String username;
 	
 	@Column(nullable = false)
-	private String bloodgroup;
+	private String password;
 	
 	@Column(nullable = false)
-	private long mobile;
+	private String name;
+
+	@Column(nullable = false)
+	private String gender;
+	
+	@Column(nullable = false)
+	private Date dateofbirth;
+	
+	@Column(nullable = false)
+	private long mobileno;
+	
+	@Column(nullable = false)
+	private String bloodgroup;
 	
 	@Column(nullable = false)
 	private String email;
 	
 	@Column(nullable = false)
-	private String password;
+	private String address;
+	
+	@Column(nullable = false)
+	private String emergencycontact;
+	
+	private byte[] profilepic;
 	
 	
-	public int getId() {
-		return id;
+	public int getPatientid() {
+		return patientid;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setPatientid(int patientid) {
+		this.patientid = patientid;
 	}
 
 	public String getUsername() {
@@ -65,20 +74,53 @@ public class Patients implements UserDetails {
 		this.username = username;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public Date getDateofbirth() {
+		return dateofbirth;
+	}
+
+	public void setDateofbirth(Date dateofbirth) {
+		this.dateofbirth = dateofbirth;
+	}
+
+	public long getMobileno() {
+		return mobileno;
+	}
+
+	public void setMobileno(long mobileno) {
+		this.mobileno = mobileno;
+	}
+
 	public String getBloodgroup() {
 		return bloodgroup;
 	}
 
 	public void setBloodgroup(String bloodgroup) {
 		this.bloodgroup = bloodgroup;
-	}
-
-	public long getMobile() {
-		return mobile;
-	}
-
-	public void setMobile(long mobile) {
-		this.mobile = mobile;
 	}
 
 	public String getEmail() {
@@ -89,39 +131,43 @@ public class Patients implements UserDetails {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setAddress(String address) {
+		this.address = address;
 	}
+
+	public String getEmergencycontact() {
+		return emergencycontact;
+	}
+
+	public void setEmergencycontact(String emergencycontact) {
+		this.emergencycontact = emergencycontact;
+	}
+
 	
-	
+	public byte[] getProfilepic() {
+		return profilepic;
+	}
+
+	public void setProfilepic(byte[] profilepic) {
+		this.profilepic = profilepic;
+	}
+
+	@Override
+	public String toString() {
+		return "Patients [patientid=" + patientid + ", username=" + username + ", password=" + password + ", name="
+				+ name + ", gender=" + gender + ", dateofbirth=" + dateofbirth + ", mobileno=" + mobileno
+				+ ", bloodgroup=" + bloodgroup + ", email=" + email + ", address=" + address + ", emergencycontact="
+				+ emergencycontact + ", profilepic=" + Arrays.toString(profilepic) + "]";
+	}
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-	
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
-	
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
-	
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
-	
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
 	}
 	
 }

@@ -9,8 +9,9 @@ export default function PatientModal({ isOpen, onClose }) {
 
     const [ showRegister, setShowRegister ] = useState(false);
     const [ loginData, setLoginData ] = useState({"username":"","password":""})
-    const [ registerData, setRegisterData ] = useState({"name":"", "username":"","mobile":"","email":"", "bloodgroup":"", "password":""})
+    const [ registerData, setRegisterData ] = useState({"name":"", "username":"","mobileno":"","gender":"","email":"", "bloodgroup":"", "password":"","address":"","emergencycontact":"","dateofbirth":""})
     const [ successMessage, setSuccessMessage ] = useState("");
+    const [profilepic, setProfilePic] = useState(null);
     const navigate = useNavigate();
     const { setAuthState } = useAuth(); 
 
@@ -18,10 +19,12 @@ export default function PatientModal({ isOpen, onClose }) {
       'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-', 'Not Sure'
     ];
 
-    const url = 'http://localhost:7070/health';
+    const gender = ['Male','Female'];
+
+    const url = 'http://localhost:7070/health/patient/';
 
     const initialLoginState = {"username":"","password":""}
-    const initialRegisterState = {"name":"", "username":"","mobile":"","email":"", "bloodgroup":"", "password":""};
+    const initialRegisterState = {"name":"", "username":"","mobileno":"","email":"", "bloodgroup":"", "gender":"", "password":"","address":"","emergencycontact":"", "dateofbirth":""};
 
     const handleRegisterClick = () => {
         setLoginData(initialLoginState);
@@ -42,32 +45,44 @@ export default function PatientModal({ isOpen, onClose }) {
     const handleSubmitLogin = async (e) => {
       e.preventDefault();
       try{
-        const response = await axios.post(url + '/patient/login', loginData);
+        const response = await axios.post(url + 'login', loginData);
         const token = response.data.token;
         localStorage.setItem('token', token);
 
         const patient = jwtDecode(token);
-        setAuthState({isAuthenticated: true, patient, doctor:null});
+        setAuthState({isAuthenticated: true, patient, doctor:null, admin:null});
         
         navigate('/patientdashboard');
         setLoginData(initialLoginState);
       } catch (error) {
+        setLoginData(initialLoginState);
         console.error('There was an error logging in!',error);
       }
     };
 
     const handleSubmitRegister = async (e) => {
       e.preventDefault();
-      await axios.post(url + '/patient/register',registerData)
-        .then(response => {
-          console.log(response.data);
+      if (registerData.password !== registerData.confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+    }
+
+    const { confirmPassword, ...newRegisterData } = registerData;
+      const formData = new FormData();
+      formData.append("patient",JSON.stringify(newRegisterData));
+      formData.append("image",profilepic);
+      try{
+        await axios.post(url + 'register',formData, {
+          headers: { 'Content-type': 'multipart/form-data'}
+        });
           setRegisterData(initialRegisterState);
           setShowRegister(false);
+          setProfilePic(null);
           setSuccessMessage("You have registered successfully. Please log in.")
-        })
-        .catch(error => {
+    } catch(error) {
+          setRegisterData(initialRegisterState)
           console.error("There was an error registering the patient!", error);
-        });
+        };
     };
 
     const handleLoginChange = (e) => {
@@ -85,6 +100,10 @@ export default function PatientModal({ isOpen, onClose }) {
         [name]: value,
       }));
     };
+
+    const handleFileChange = (e) =>{
+      setProfilePic(e.target.files[0]);
+    }
 
     if(!isOpen) return null;
 
@@ -107,8 +126,7 @@ export default function PatientModal({ isOpen, onClose }) {
             />
             <input 
               type='text' 
-              placeholder='Username' 
-              autoFocus 
+              placeholder='Username'  
               required
               value={registerData.username}
               onChange={handleRegisterChange}
@@ -129,8 +147,8 @@ export default function PatientModal({ isOpen, onClose }) {
                   placeholder='Mobile'
                   required
                   onChange={handleRegisterChange}
-                  value={registerData.mobile}
-                  name='mobile'
+                  value={registerData.mobileno}
+                  name='mobileno'
                 />
             </div>
               <div className='flex-item'>
@@ -146,6 +164,21 @@ export default function PatientModal({ isOpen, onClose }) {
                       {group}
                     </option>
                   ))}
+                </select>
+              </div>
+              <div className='flex-item'>
+                <select
+                  name="gender"
+                  value={registerData.gender}
+                  onChange={handleRegisterChange}
+                  required
+                >
+                <option value="" disabled>Select Gender</option>
+                {gender.map(group => (
+                  <option key={group} value={group}>
+                    {group}
+                  </option>
+                ))}
                 </select>
               </div>
             </div>
@@ -171,6 +204,42 @@ export default function PatientModal({ isOpen, onClose }) {
                 />
               </div>
             </div>
+            <input 
+                type='text' 
+                placeholder='Address' 
+                required
+                value={registerData.address}
+                onChange={handleRegisterChange}
+                name='address'
+            />
+            <div className='flex-container'>
+              <div className='flex-item'>
+              <input 
+                type='text' 
+                placeholder='Emergency Contact' 
+                required
+                value={registerData.emergencycontact}
+                onChange={handleRegisterChange}
+                name='emergencycontact'
+            />
+            </div>
+              <div className='flex-item'>
+                <input 
+                  type='date' 
+                  placeholder='Date Of Birth' 
+                  required
+                  onChange={handleRegisterChange}
+                  value={registerData.dateofbirth}
+                  name='dateofbirth'
+                />
+              </div>
+            </div>
+            <input
+              type='file'
+              id='profilepic'
+              onChange={handleFileChange}
+              accept='image/*'
+            />
             <button>Submit</button>
             <button onClick={handleBackToLogin}>Already have an Account? Sign In</button>
             </form>
