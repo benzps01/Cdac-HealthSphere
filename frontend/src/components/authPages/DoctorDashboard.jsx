@@ -4,12 +4,13 @@ import AccordionUsage from './AccordionUsage';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import '../../styles/Dashboard.css';
-import profile from '../../images/img1.jpg';
+import defaultImg from '../../images/default.jpg';
 
 export default function DoctorDashboard() {
 
     const [doctor, setDoctor] = useState(null);
     const [showAccordion, setShowAccordion] = useState(false)
+    const [profileImageUrl, setProfileImageUrl] = useState(null);
     const baseUrl = 'http://localhost:7070/health/doctor';
     const navigate = useNavigate();
     const { setAuthState } = useAuth();
@@ -37,6 +38,11 @@ export default function DoctorDashboard() {
                 headers: { Authorization: `Bearer ${token}`},
             });
             setDoctor(response.data);
+
+            if(response.data.profilepic){
+                const imageUrl = `data:image/png;base64,${response.data.profilepic}`;
+                setProfileImageUrl(imageUrl);
+            }
         };
 
         fetchDoctorDetails();
@@ -64,9 +70,9 @@ export default function DoctorDashboard() {
   return (
     <div className='dashboard-container'>
         <div className='profile'>
-            <img src={profile} alt="benson" className='profileImg'/> 
+            <img src={profileImageUrl || defaultImg} alt={doctor.firstname} className='profileImg'/> 
             <div className='content'>
-            <h2>Dr. {doctor.name}</h2>
+            <h2>Dr. {doctor.firstname}</h2>
             <p><h4>Specialization: {doctor.specialization}</h4></p>
             </div>
             <hr />

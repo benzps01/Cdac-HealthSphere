@@ -41,18 +41,18 @@ public class UserService implements UserDetailsService {
         	return admin;
         }
         
-        throw new UsernameNotFoundException("User not found");
-    }
-
-    public Doctors getDoctorByName(String name) {
-        return doctorRepo.findByName(name);
-    }
-
-    public Patients getPatientByName(String name) {
-        return patientRepo.findByName(name);
+        throw new UsernameNotFoundException("User not found");  
     }
     
-    public Admin getAdminByUsername(String username) {
+    public Doctors getDoctorByUserName(String username) {
+        return doctorRepo.findByUsername(username);
+    }
+
+    public Patients getPatientByUserName(String username) {
+        return patientRepo.findByUsername(username);
+    }
+    
+    public Admin getAdminByUserUserName(String username) {
     	return adminRepo.findByUsername(username);
     }
 }
