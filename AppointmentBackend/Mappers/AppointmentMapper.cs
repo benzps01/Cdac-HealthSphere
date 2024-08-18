@@ -26,10 +26,22 @@ namespace Test.Mappers
                 patientid = appointmentModel.PatientId,
                 patient_name = appointmentModel.Patient.Name,
                 patient_gender = appointmentModel.Patient.gender,
-                 patient_BGroup = appointmentModel.Patient.bloodgroup,
-                 patient_notes = appointmentModel.Notes
+                patient_BGroup = appointmentModel.Patient.bloodgroup,
+                patient_notes = appointmentModel.Notes
             };
 
+        }
+        public static Appointment CreateDtoToAppointment(this CreateAppointmentDto createDto)
+        {
+            return new Appointment
+            {
+                PatientId = createDto.PatientId,
+                DoctorId = createDto.DoctorId,
+                Notes = createDto.Notes,
+                AppointmentDate = createDto.Date,
+                AppointmentTime = createDto.Time,
+                Status = "Not Completed"
+            };
         }
     }
 }

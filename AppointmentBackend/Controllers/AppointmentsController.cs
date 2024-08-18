@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AppointmentBackend.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Test.Data;
 using Test.Interfaces;
+using Test.Mappers;
 using Test.Modals;
 
 namespace Test.Controllers
@@ -50,57 +52,17 @@ namespace Test.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Appointment>> PostAppointment(Appointment appointment)
+        public async Task<ActionResult> PostAppointment([FromBody] CreateAppointmentDto appointmentModel)
         {
-            _context.Appointments.Add(appointment);
+
+            _context.Appointments.Add(appointmentModel.CreateDtoToAppointment());
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetAppointment), new { id = appointment.AppointmentId }, appointment);
+            return  Ok();
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAppointment(int id, Appointment appointment)
-        {
-            if (id != appointment.AppointmentId)
-            {
-                return BadRequest();
-            }
+        
 
-            _context.Entry(appointment).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_context.Appointments.Any(a => a.AppointmentId == id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAppointment(int id)
-        {
-            var appointment = await _context.Appointments.FindAsync(id);
-            if (appointment == null)
-            {
-                return NotFound();
-            }
-
-            _context.Appointments.Remove(appointment);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
     }
 
 }

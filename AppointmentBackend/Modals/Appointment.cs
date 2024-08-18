@@ -33,8 +33,8 @@ namespace Test.Modals
         public string Notes { get; set; } = string.Empty;
 
         // Navigation properties
-        public Patient? Patient { get; set; } 
-        public Doctor? Doctor { get; set; }
+        public Patient Patient { get; set; } = new Patient();
+        public Doctor Doctor { get; set; } = new Doctor();
     }
 
 }
