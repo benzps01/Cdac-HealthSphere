@@ -10,7 +10,7 @@ namespace Test.Interfaces
     public interface IAppointment
     {
         Task<List<Appointment>> GetAllAsync();
-        Task<Appointment?> GetByIdAsync();
+        Task<Appointment?> GetByIdAsync(int id);
         Task<Appointment?> CreateAsync();
         Task<Appointment?> UpdateAsync();
         Task<Appointment?> Update();
