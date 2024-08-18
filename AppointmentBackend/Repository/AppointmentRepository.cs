@@ -30,7 +30,7 @@ namespace Test.Repository
        
         public async Task<List<Appointment>> GetAllAsync()
         {
-            var appointments = await _context.Appointments.Include(x=>x.Doctor).Include(x=>x.Patient).ToListAsync();
+            var appointments = await _context.Appointments.ToListAsync();
             return appointments;
         }
 
