@@ -40,7 +40,7 @@ namespace Test.Mappers
                 Notes = createDto.Notes,
                 AppointmentDate = createDto.Date,
                 AppointmentTime = createDto.Time,
-                Status = "Not Completed"
+                Status = createDto.Status
             };
         }
     }
