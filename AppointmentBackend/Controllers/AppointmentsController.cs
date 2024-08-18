@@ -16,18 +16,18 @@ namespace Test.Controllers
     [Route("api/[controller]")]
     public class AppointmentsController : ControllerBase
     {
-        private readonly IAppointment _appointment;
+        private readonly IAppointment _appointmentRepo;
         private readonly ApplicationDBContext _context;
         public AppointmentsController(ApplicationDBContext context,IAppointment appointment)
         {
-            _appointment = appointment;
+            _appointmentRepo = appointment;
             _context = context;
         }
 
         [HttpGet]
         public async Task<ActionResult> GetAppointments()
         {
-            var appointments = await _appointment.GetAllAsync();
+            var appointments = await _appointmentRepo.GetAllAsync();
             if(appointments==null)
             {
                 return NotFound();
@@ -38,17 +38,16 @@ namespace Test.Controllers
 
 
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Appointment>> GetAppointment(int id)
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<Appointment>> GetById(int id)
         {
-            var appointment = await _context.Appointments.Include(a => a.Patient).Include(a => a.Doctor).FirstOrDefaultAsync(a => a.AppointmentId == id);
-
-            if (appointment == null)
+                Appointment? appointmentModel = await _appointmentRepo.GetByIdAsync(id);
+            if (appointmentModel == null)
             {
                 return NotFound();
             }
 
-            return appointment;
+            return appointmentModel;
         }
 
         [HttpPost]
