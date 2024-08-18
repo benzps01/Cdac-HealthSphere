@@ -52,7 +52,7 @@ public class Doctors implements UserDetails {
 
 	private byte[] profilepic;
 	
-	private LocalTime startime;
+	private LocalTime starttime;
 	
 	private LocalTime endtime;
 	
@@ -156,12 +156,31 @@ public class Doctors implements UserDetails {
 	}
 
 
+	public LocalTime getStarttime() {
+		return starttime;
+	}
+
+
+	public void setStarttime(LocalTime starttime) {
+		this.starttime = starttime;
+	}
+
+
+	public LocalTime getEndtime() {
+		return endtime;
+	}
+
+
+	public void setEndtime(LocalTime endtime) {
+		this.endtime = endtime;
+	}
+
 	@Override
 	public String toString() {
 		return "Doctors [doctorid=" + doctorid + ", username=" + username + ", password=" + password + ", firstname="
 				+ firstname + ", lastname=" + lastname + ", specialization=" + specialization + ", mobileno=" + mobileno
 				+ ", yearsofexperience=" + yearsofexperience + ", bio=" + bio + ", profilepic="
-				+ Arrays.toString(profilepic) + "]";
+				+ Arrays.toString(profilepic) + ", starttime=" + starttime + ", endtime=" + endtime + "]";
 	}
 
 
