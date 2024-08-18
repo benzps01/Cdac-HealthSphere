@@ -16,6 +16,7 @@ public class EHRResponse {
     private int ehrId;
     private int doctorId;
     private String drName;
+    private String specialization;
     private int patientId;
     private Date visitDate;
     private String diagnosis;

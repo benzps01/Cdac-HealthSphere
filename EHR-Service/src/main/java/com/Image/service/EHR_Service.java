@@ -64,6 +64,7 @@ public class EHR_Service {
             String drName = doctor.getFirstname() + " " + doctor.getLastname();
 
             response.setDrName(drName);
+            response.setSpecialization(doctor.getSpecialization());
             response.setPatientId(ehr.getPatient().getPatientid());
             response.setVisitDate(ehr.getVisitdate());
             response.setDiagnosis(ehr.getDiagnosis());
