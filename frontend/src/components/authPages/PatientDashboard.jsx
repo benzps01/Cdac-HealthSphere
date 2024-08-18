@@ -25,16 +25,31 @@ export default function PatientDashboard() {
 
     useEffect(() => {
         const fetchPatientDetails = async () => {
-            const token = localStorage.getItem('token');
-            const response = await axios.get(baseUrl,{
-                headers: { Authorization: `Bearer ${token}`},
-            });
-            setPatient(response.data);
-            console.log(response.data);
+            try {
+                const token = localStorage.getItem('token');
+                const response = await axios.get(baseUrl, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                console.log(response.data);
+                setPatient(response.data);
 
-            if(response.data.profilepic){
-                const imageUrl = `data:image/png;base64,${response.data.profilepic}`;
-                setProfileImage(imageUrl);
+                if (response.data.patientid) {
+                    const imageResponse = await axios.get(`${baseUrl}/picture/${response.data.patientid}`, {
+                        headers: { Authorization: `Bearer ${token}` },
+                        responseType: 'arraybuffer',
+                    });
+
+                    const base64Image = btoa(
+                        new Uint8Array(imageResponse.data).reduce(
+                            (data, byte) => data + String.fromCharCode(byte),
+                            ''
+                        )
+                    );
+
+                    setProfileImage(`data:image/jpeg;base64,${base64Image}`);
+                }
+            } catch (error) {
+                console.error("Error fetching patient details or profile image:", error);
             }
         };
 
@@ -76,7 +91,7 @@ export default function PatientDashboard() {
         </div>
         {activeComponent === 'bookAppointment' && (
             <div className='patient-container'>
-                <BookAppointment />
+                <BookAppointment patientid={patient.patientid}/>
             </div>
         )}
         {activeComponent === 'records' && (
