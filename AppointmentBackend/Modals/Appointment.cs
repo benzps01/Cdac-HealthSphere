@@ -14,10 +14,10 @@ namespace Test.Modals
         [Column("appointment_id")]
         public int AppointmentId { get; set; }
 
-        [Column("patient_id")]
+        [Column("patientid")]
         public int PatientId { get; set; }
 
-        [Column("doctor_id")]
+        [Column("doctorid")]
         public int DoctorId { get; set; }
 
         [Column("appointment_date")]
@@ -27,14 +27,14 @@ namespace Test.Modals
         public TimeSpan AppointmentTime { get; set; }
 
         [Column("status")]
-        public string Status { get; set; }
+        public string Status { get; set; } = string.Empty;
 
         [Column("notes")]
-        public string Notes { get; set; }
+        public string Notes { get; set; } = string.Empty;
 
         // Navigation properties
-        public Patient Patient { get; set; }
-        public Doctor Doctor { get; set; }
+        public Patient? Patient { get; set; } 
+        public Doctor? Doctor { get; set; }
     }
 
 }

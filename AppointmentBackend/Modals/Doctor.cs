@@ -11,32 +11,42 @@ namespace Test.Modals
     public class Doctor
     {
         [Key]
-        [Column("doctor_id")]
+        [Column("doctorid")]
         public int DoctorId { get; set; }
 
+        [Required]
         [Column("username")]
         public string Username { get; set; }
-
-        [Column("password_hash")]
+        
+        [Required]
+        [Column("password")]
         public string PasswordHash { get; set; }
 
-        [Column("first_name")]
+        [Required]
+        [Column("firstname")]
         public string FirstName { get; set; }
-
-        [Column("last_name")]
+        [Required]
+        [Column("lastname")]
         public string LastName { get; set; }
 
         [Column("specialization")]
         public string Specialization { get; set; }
 
-        [Column("years_of_experience")]
-        public int YearsOfExperience { get; set; }
+        [Column("yearsofexperience")]
+        public string YearsOfExperience { get; set; }
+        [Column("mobileno")]
+        public string PhoneNumber {get;set;}
 
-        [Column("profile_picture")]
+        [Column("profilepic")]
         public byte[]? ProfilePicture { get; set; }
 
         [Column("bio")]
         public string Bio { get; set; }
+        
+        [Column("starttime")]
+        public TimeSpan StartTime;
+         [Column("endtime")]
+        public TimeSpan EndTime;
         public ICollection<Appointment> Appointments { get; set; }
     }
 
