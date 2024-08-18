@@ -12,7 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Admin implements UserDetails{
+public class Admins implements UserDetails{
 
 
 	private static final long serialVersionUID = 1L;

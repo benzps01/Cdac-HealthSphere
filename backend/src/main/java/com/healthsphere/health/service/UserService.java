@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.healthsphere.health.entity.Admin;
+import com.healthsphere.health.entity.Admins;
 import com.healthsphere.health.entity.Doctors;
 import com.healthsphere.health.entity.Patients;
 import com.healthsphere.health.repository.AdminRepository;
@@ -36,7 +36,7 @@ public class UserService implements UserDetailsService {
             return patient;
         }
         
-        Admin admin = adminRepo.findByUsername(username);
+        Admins admin = adminRepo.findByUsername(username);
         if(admin != null) {
         	return admin;
         }
@@ -52,7 +52,7 @@ public class UserService implements UserDetailsService {
         return patientRepo.findByUsername(username);
     }
     
-    public Admin getAdminByUserUserName(String username) {
+    public Admins getAdminByUserUserName(String username) {
     	return adminRepo.findByUsername(username);
     }
 }
