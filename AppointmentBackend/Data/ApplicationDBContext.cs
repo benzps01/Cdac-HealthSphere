@@ -32,65 +32,62 @@ namespace Test.Data
 
 
             //Patient Mapping
-            modelBuilder.Entity<Patient>()
-           .Property(p => p.Username)
-           .IsRequired()
-           .HasMaxLength(100);
+        //     modelBuilder.Entity<Patient>()
+        //    .Property(p => p.Username)
+        //    .IsRequired()
+        //    .HasMaxLength(100);
 
-            modelBuilder.Entity<Patient>()
-                .Property(p => p.PasswordHash)
-                .IsRequired();
+        //     modelBuilder.Entity<Patient>()
+        //         .Property(p => p.PasswordHash)
+        //         .IsRequired();
 
-            modelBuilder.Entity<Patient>()
-                .Property(p => p.FirstName)
-                .IsRequired()
-                .HasMaxLength(100);
+        //     modelBuilder.Entity<Patient>()
+        //         .Property(p => p.Name)
+        //         .IsRequired()
+        //         .HasMaxLength(100);
 
-            modelBuilder.Entity<Patient>()
-                .Property(p => p.LastName)
-                .IsRequired()
-                .HasMaxLength(100);
+    
 
-            modelBuilder.Entity<Patient>()
-                .Property(p => p.PhoneNumber)
-                .IsRequired()
-                .HasMaxLength(15);
+            // modelBuilder.Entity<Patient>()
+            //     .Property(p => p.PhoneNumber)
+            //     .IsRequired()
+            //     .HasMaxLength(15);
 
             // Configuring Doctor entity
             modelBuilder.Entity<Doctor>()
                 .HasKey(d => d.DoctorId);
 
-            modelBuilder.Entity<Doctor>()
-                .Property(d => d.Username)
-                .IsRequired()
-                .HasMaxLength(100);
+            // modelBuilder.Entity<Doctor>()
+            //     .Property(d => d.Username)
+            //     .IsRequired()
+            //     .HasMaxLength(100);
 
-            modelBuilder.Entity<Doctor>()
-                .Property(d => d.PasswordHash)
-                .IsRequired();
+            // modelBuilder.Entity<Doctor>()
+            //     .Property(d => d.PasswordHash)
+            //     .IsRequired();
 
-            modelBuilder.Entity<Doctor>()
-                .Property(d => d.FirstName)
-                .IsRequired()
-                .HasMaxLength(100);
+            // modelBuilder.Entity<Doctor>()
+            //     .Property(d => d.FirstName)
+            //     .IsRequired()
+            //     .HasMaxLength(100);
 
-            modelBuilder.Entity<Doctor>()
-                .Property(d => d.LastName)
-                .IsRequired()
-                .HasMaxLength(100);
+            // modelBuilder.Entity<Doctor>()
+            //     .Property(d => d.LastName)
+            //     .IsRequired()
+            //     .HasMaxLength(100);
 
-            modelBuilder.Entity<Doctor>()
-                .Property(d => d.Specialization)
-                .IsRequired()
-                .HasMaxLength(100);
+            // modelBuilder.Entity<Doctor>()
+            //     .Property(d => d.Specialization)
+            //     .IsRequired()
+            //     .HasMaxLength(100);
 
-            modelBuilder.Entity<Doctor>()
-                .Property(d => d.YearsOfExperience)
-                .IsRequired();
+            // modelBuilder.Entity<Doctor>()
+            //     .Property(d => d.YearsOfExperience)
+            //     .IsRequired();
 
-            modelBuilder.Entity<Doctor>()
-                .Property(d => d.Bio)
-                .HasMaxLength(1000);
+            // modelBuilder.Entity<Doctor>()
+            //     .Property(d => d.Bio)
+            //     .HasMaxLength(1000);
 
         }
     }
