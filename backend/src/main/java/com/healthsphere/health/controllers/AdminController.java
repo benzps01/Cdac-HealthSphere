@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.healthsphere.health.entity.Admin;
+import com.healthsphere.health.entity.Admins;
 import com.healthsphere.health.entity.AuthenticationResponse;
 import com.healthsphere.health.service.AdminAuthenticationService;
 import com.healthsphere.health.service.JwtUtilService;
@@ -32,7 +32,7 @@ public class AdminController {
 	private JwtUtilService jwtUtilService;
 	
 	@PostMapping("/register")
-	public ResponseEntity<AuthenticationResponse> registerAdmin(@RequestBody Admin admin){
+	public ResponseEntity<AuthenticationResponse> registerAdmin(@RequestBody Admins admin){
 		try {
 			AuthenticationResponse response = adminAuthService.register(admin);
 			return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -42,7 +42,7 @@ public class AdminController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<AuthenticationResponse> loginAdmin(@RequestBody Admin admin){
+	public ResponseEntity<AuthenticationResponse> loginAdmin(@RequestBody Admins admin){
 		try {
 			AuthenticationResponse response = adminAuthService.authenticate(admin);
 			return ResponseEntity.ok(response);
@@ -52,10 +52,10 @@ public class AdminController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<Admin> getAdmin(@RequestHeader("Authorization") String token){
+	public ResponseEntity<Admins> getAdmin(@RequestHeader("Authorization") String token){
 		String jwt = token.substring(7);
 		String username = jwtUtilService.extractUsername(jwt);
-		Admin admin = userService.getAdminByUserUserName(username);
+		Admins admin = userService.getAdminByUserUserName(username);
 		
 		if(admin != null) {
 			return ResponseEntity.ok(admin);

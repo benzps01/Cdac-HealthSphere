@@ -5,8 +5,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.healthsphere.health.entity.Admin;
+import com.healthsphere.health.entity.Admins;
 import com.healthsphere.health.entity.Doctors;
 import com.healthsphere.health.entity.Patients;
 import com.healthsphere.health.repository.AdminRepository;
@@ -25,6 +26,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     private AdminRepository adminRepo;
 
+    @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Doctors doctor = doctorRepo.findByUsername(username);
@@ -36,7 +38,7 @@ public class UserService implements UserDetailsService {
             return patient;
         }
         
-        Admin admin = adminRepo.findByUsername(username);
+        Admins admin = adminRepo.findByUsername(username);
         if(admin != null) {
         	return admin;
         }
@@ -44,15 +46,18 @@ public class UserService implements UserDetailsService {
         throw new UsernameNotFoundException("User not found");  
     }
     
+    @Transactional(readOnly = true)
     public Doctors getDoctorByUserName(String username) {
         return doctorRepo.findByUsername(username);
     }
 
+    @Transactional(readOnly = true)
     public Patients getPatientByUserName(String username) {
         return patientRepo.findByUsername(username);
     }
     
-    public Admin getAdminByUserUserName(String username) {
+    @Transactional(readOnly = true)
+    public Admins getAdminByUserUserName(String username) {
     	return adminRepo.findByUsername(username);
     }
 }
