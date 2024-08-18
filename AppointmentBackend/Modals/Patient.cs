@@ -16,7 +16,7 @@ namespace Test.Modals
 
         [Column("username")]
         [Required]
-        public string Username { get; set; }
+        public string Username { get; set;} = string.Empty;
 
         [Column("password")]
         public string PasswordHash { get; set; } = string.Empty;
@@ -45,7 +45,7 @@ namespace Test.Modals
         [Column("emergencycontact")]
         public string EmergencyContact { get; set; } = string.Empty;
 
-        public ICollection<Appointment> Appointments { get; set; }
+        public ICollection<Appointment?> Appointments { get; set; }
     }
 
 }
