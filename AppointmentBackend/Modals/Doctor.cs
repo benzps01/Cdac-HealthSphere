@@ -11,33 +11,43 @@ namespace Test.Modals
     public class Doctor
     {
         [Key]
-        [Column("doctor_id")]
+        [Column("doctorid")]
         public int DoctorId { get; set; }
 
+        [Required]
         [Column("username")]
-        public string Username { get; set; }
+        public string Username { get; set; } = string.Empty;
+        
+        [Required]
+        [Column("password")]
+        public string PasswordHash { get; set; } = string.Empty;
 
-        [Column("password_hash")]
-        public string PasswordHash { get; set; }
-
-        [Column("first_name")]
-        public string FirstName { get; set; }
-
-        [Column("last_name")]
-        public string LastName { get; set; }
+        [Required]
+        [Column("firstname")]
+        public string FirstName { get; set; } = string.Empty;
+        [Required]
+        [Column("lastname")]
+        public string LastName { get; set; } = string.Empty;
 
         [Column("specialization")]
-        public string Specialization { get; set; }
+        public string Specialization { get; set; } = string.Empty;
 
-        [Column("years_of_experience")]
-        public int YearsOfExperience { get; set; }
+        [Column("yearsofexperience")]
+        public string YearsOfExperience { get; set; } = string.Empty;
+        [Column("mobileno")]
+        public string PhoneNumber {get;set;} = string.Empty;
 
-        [Column("profile_picture")]
+        [Column("profilepic")]
         public byte[]? ProfilePicture { get; set; }
 
         [Column("bio")]
-        public string Bio { get; set; }
-        public ICollection<Appointment> Appointments { get; set; }
+        public string Bio { get; set; } = string.Empty;
+        
+        [Column("starttime")]
+        public TimeSpan StartTime;
+         [Column("endtime")]
+        public TimeSpan EndTime;
+        public ICollection<Appointment?> Appointments { get; set; }
     }
 
 }

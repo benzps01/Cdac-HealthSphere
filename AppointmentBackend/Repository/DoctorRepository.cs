@@ -20,9 +20,7 @@ namespace Test.Repository
         {
             throw new NotImplementedException();
         }
-        // public Task<IActionResult> AppointmentsToday(int id)
-        // {
-        //     var appointments = _context.Doctors.Select(x=>x.Appointments)
-        // }
+        
+      
     }
 }
