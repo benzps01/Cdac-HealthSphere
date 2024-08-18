@@ -17,10 +17,7 @@ namespace Test.Repository
             _context = context;
         }
 
-        public Task<List<Appointment>> AppointmentDateTime()
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public Task<Appointment> CreateAsync()
         {
@@ -30,13 +27,19 @@ namespace Test.Repository
        
         public async Task<List<Appointment>> GetAllAsync()
         {
-            var appointments = await _context.Appointments.Include(x=>x.Doctor).Include(x=>x.Patient).ToListAsync();
+            var appointments = await _context.Appointments.Include(x=>x.Patient).ToListAsync();
             return appointments;
         }
 
-        public Task<Appointment> GetByIdAsync()
+        public async Task<Appointment?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var appointment = await _context.Appointments.FindAsync(id); // search using primary key
+
+            if(appointment == null)
+            {
+                return null;
+            }
+            return appointment;
         }
 
         public Task<Appointment> Update()

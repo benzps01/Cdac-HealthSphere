@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AppointmentBackend.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Test.Data;
+using Test.Mappers;
 using Test.Modals;
 
 namespace Test.Controllers
@@ -12,124 +14,43 @@ namespace Test.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    public class DoctorsController : ControllerBase
+    public class DoctorController : ControllerBase
     {
         private readonly ApplicationDBContext _context;
 
-        public DoctorsController(ApplicationDBContext context)
+        public DoctorController(ApplicationDBContext context)
         {
             _context = context;
         }
 
-        // GET: api/Doctors
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Doctor>>> GetDoctors()
+        [HttpGet("/")]
+        public async Task<IActionResult> GetAllAsync()
         {
-            return await _context.Doctors.Include(x=>x.Appointments).ToListAsync();
+            var doctors = _context.Doctors.ToList();
+            return Ok(doctors);
         }
 
-        // GET: api/Doctors/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Doctor>> GetDoctor(int id)
+        [HttpGet("/appointments/{id}")]
+        public async Task<IActionResult> AppointmentsAtDate([FromRoute] int id,[FromQuery] DateTime date)
         {
-            var doctor = await _context.Doctors.FindAsync(id);
+            var doctor = _context.Doctors.Include(x=>x.Appointments).ThenInclude(x=>x.Patient).FirstOrDefault(d=>d.DoctorId==id);
 
-            if (doctor == null)
+            if(doctor==null)
             {
                 return NotFound();
             }
-
-            return doctor;
+            var doctorCards = doctor.Appointments.Where(x=>x.AppointmentDate == date).Select(x=>x.ToDoctorCardDto()).ToList();
+            return Ok(doctorCards);
+            // return Ok(new DoctorAppointments
+            // {
+                    
+            // });
+            
         }
-
-        // PUT: api/Doctors/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutDoctor(int id, Doctor doctor)
-        {
-            if (id != doctor.DoctorId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(doctor).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DoctorExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            
+            
         }
-
-        // POST: api/Doctors
-        [HttpPost]
-        public async Task<ActionResult<Doctor>> PostDoctor(Doctor doctor)
-        {
-            _context.Doctors.Add(doctor);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetDoctor), new { id = doctor.DoctorId }, doctor);
-        }
-
-        // DELETE: api/Doctors/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDoctor(int id)
-        {
-            var doctor = await _context.Doctors.FindAsync(id);
-            if (doctor == null)
-            {
-                return NotFound();
-            }
-
-            _context.Doctors.Remove(doctor);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool DoctorExists(int id)
-        {
-            return _context.Doctors.Any(e => e.DoctorId == id);
-        }
-
-        //Dcotor DateTime 
-       [HttpGet("{doctorId}/Appointments")]
-        public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointmentsForDoctor(int doctorId, [FromQuery] DateTime date)
-        {
-            var doctor = await _context.Doctors.FindAsync(doctorId);
-
-            if (doctor == null)
-            {
-                return NotFound("Doctor not found.");
-            }
-
-            // Ensure the date is in UTC
-            date = DateTime.SpecifyKind(date, DateTimeKind.Utc);
-
-            var appointments = await _context.Appointments
-                .Where(a => a.DoctorId == doctorId && a.AppointmentDate.Date == date.Date)
-                .Include(a => a.Patient)  // Include Patient details if needed
-                .ToListAsync();
-
-            if (appointments == null || appointments.Count == 0)
-            {
-                return NotFound("No appointments found for the specified date.");
-            }
-
-            return appointments;
-        }
-    }
+        
+}
        
     
-}
