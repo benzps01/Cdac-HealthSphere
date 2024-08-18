@@ -5,6 +5,7 @@ import com.Image.entity.EHR;
 import com.Image.service.EHR_Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -40,4 +41,14 @@ public class EHR_Controller {
         return ResponseEntity.ok().body(responses);
     }
 
+    @GetMapping("/xray/{ehrId}")
+    public ResponseEntity<byte[]> getXray(@PathVariable int ehrId) {
+        byte[] xray = service.getXray(ehrId);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG);
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(xray);
+    }
 }

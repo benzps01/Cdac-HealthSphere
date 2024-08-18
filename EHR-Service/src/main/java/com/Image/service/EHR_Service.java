@@ -75,4 +75,9 @@ public class EHR_Service {
         }).collect(Collectors.toList());
         return responseList;
     }
+
+    public byte[] getXray(int ehrId) {
+        EHR ehr = ehr_repository.findById(ehrId).orElseThrow(()->new RuntimeException("XRAY Not Found"));
+        return ehr.getXrayimage();
+    }
 }
