@@ -51,7 +51,7 @@ namespace Test.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create([FromBody] CreateAppointmentDto appointmentModel)
+        public async Task<IActionResult> Create([FromBody] CreateAppointmentDto appointmentModel)
         {
 
             var appointment = await _appointmentRepo.CreateAsync(appointmentModel);
@@ -60,6 +60,17 @@ namespace Test.Controllers
                 return BadRequest();
             }
             return CreatedAtAction(nameof(GetById),new {Id=appointment.AppointmentId},appointment);
+        }
+
+        [HttpGet("/{id}")]
+        public async Task<IActionResult> GetByDateAndId([FromRoute] int id,[FromQuery] DateTime date)
+        {
+            var appointments = await _appointmentRepo.GetByDateandId(id,date);
+            if(appointments==null)
+            {
+                return NotFound();
+            }
+            return Ok(appointments);
         }
 
         

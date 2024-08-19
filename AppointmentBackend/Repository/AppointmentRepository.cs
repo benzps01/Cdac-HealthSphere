@@ -36,6 +36,18 @@ namespace Test.Repository
             return appointments;
         }
 
+        public async Task<List<Appointment>?> GetByDateandId(int id, DateTime date)
+        {      
+            var dateKindUtc = DateTime.SpecifyKind(date,DateTimeKind.Utc); // converting to utc 
+
+            var appointments = await _context.Appointments.AsQueryable().Where(x=>x.AppointmentDate<=dateKindUtc && x.PatientId == id).ToListAsync();
+            if(appointments == null)
+            {
+                return null;
+            }
+            return appointments;
+        }
+
         public async Task<Appointment?> GetByIdAsync(int id)
         {
             var appointment = await _context.Appointments.FindAsync(id); // search using primary key
