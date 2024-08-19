@@ -33,16 +33,31 @@ export default function DoctorDashboard() {
 
     useEffect(() => {
         const fetchDoctorDetails = async () => {
+            try{
             const token = localStorage.getItem('token');
             const response = await axios.get(baseUrl,{
                 headers: { Authorization: `Bearer ${token}`},
             });
             setDoctor(response.data);
 
-            if(response.data.profilepic){
-                const imageUrl = `data:image/png;base64,${response.data.profilepic}`;
-                setProfileImageUrl(imageUrl);
+            if (response.data.doctorid) {
+                const imageResponse = await axios.get(`${baseUrl}/picture/${response.data.doctorid}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                    responseType: 'arraybuffer',
+                });
+
+                const base64Image = btoa(
+                    new Uint8Array(imageResponse.data).reduce(
+                        (data, byte) => data + String.fromCharCode(byte),
+                        ''
+                    )
+                );
+
+                setProfileImageUrl(`data:image/jpeg;base64,${base64Image}`);
             }
+        } catch (error) {
+            console.error("Error fetching doctor details or profile image:", error);
+        }
         };
 
         fetchDoctorDetails();

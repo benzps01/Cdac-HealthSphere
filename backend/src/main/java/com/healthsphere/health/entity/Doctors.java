@@ -41,7 +41,7 @@ public class Doctors implements UserDetails {
 	private String specialization;
 	
 	@Column
-	private long mobileno;
+	private String mobileno;
 	
 	@Column
 	private String yearsofexperience;
@@ -117,11 +117,11 @@ public class Doctors implements UserDetails {
 	}
 
 
-	public long getMobileno() {
+	public String getMobileno() {
 		return mobileno;
 	}
 
-	public void setMobileno(long mobileno) {
+	public void setMobileno(String mobileno) {
 		this.mobileno = mobileno;
 	}
 
