@@ -42,6 +42,8 @@ public class DoctorAuthenticationService {
 		doctor.setMobileno(request.getMobileno());
 		doctor.setYearsofexperience(request.getYearsofexperience());
 		doctor.setBio(request.getBio());
+		doctor.setStarttime(request.getStarttime());
+		doctor.setEndtime(request.getEndtime());
 		
 		if(profilepic != null && !profilepic.isEmpty()) {
 			doctor.setProfilepic(profilepic.getBytes());
@@ -72,6 +74,8 @@ public class DoctorAuthenticationService {
 					doctorMap.put("doctorid", doctor.getDoctorid());
 	                doctorMap.put("firstname", doctor.getFirstname());
 	                doctorMap.put("specialization", doctor.getSpecialization());
+	                doctorMap.put("starttime", doctor.getStarttime());
+	                doctorMap.put("endtime", doctor.getEndtime());
 	                return doctorMap;
 				})
 				.collect(Collectors.toList());

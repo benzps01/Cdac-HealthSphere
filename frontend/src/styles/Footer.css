@@ -54,6 +54,10 @@
     text-decoration: underline;
   } */
 
+  #abc{
+    margin-top:2%;
+    justify-content: space-between;
+}
 
 .footer {
     background-color: #000;

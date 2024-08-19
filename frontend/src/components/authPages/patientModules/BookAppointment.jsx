@@ -1,7 +1,7 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
-export default function BookAppointment() {
+export default function BookAppointment({patientid}) {
   const [doctors, setDoctors] = useState([]);
   const [selectedDoctorId, setSelectedDoctorId] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
@@ -9,8 +9,37 @@ export default function BookAppointment() {
   const [availableDates, setAvailableDates] = useState([]);
   const [timeSlots, setTimeSlots] = useState([]);
   const [bookedSlots, setBookedSlots] = useState({});
+  const [starttime, setStartTime] = useState('');
+  const [endtime, setEndTime] = useState('');
 
-  const fetchAllDoctors = async () => {
+  const formatTimeHHMMSStoHHMM = (time) => {
+    if (!time || typeof time !== 'string') {
+      console.error("Invalid time format:", time);
+      return ''; // Return an empty string or a default time like '00:00'
+    }
+    return time.slice(0, 5);
+  };
+
+  const formatTimeHHMMtoHHMMSS = (time) => {
+    // Match time format including period (AM/PM)
+    const match = time.match(/(\d{2}):(\d{2})([ap]m)/);
+    
+    if (!match) {
+        throw new Error('Invalid time format');
+    }
+    
+    let [_, hours, minutes, period] = match;
+    let hours24 = parseInt(hours, 10);
+    
+    // Convert to 24-hour format
+    if (period === 'pm' && hours24 !== 12) hours24 += 12;
+    if (period === 'am' && hours24 === 12) hours24 = 0;
+
+    // Return formatted time in 24-hour format with seconds as '00'
+    return `${hours24.toString().padStart(2, '0')}:${minutes}:00`;
+};
+
+  const fetchAllDoctors = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.get("http://localhost:7070/health/doctor/list", {
@@ -20,12 +49,14 @@ export default function BookAppointment() {
         doctorid: doctor.doctorid,
         firstname: doctor.firstname,
         specialization: doctor.specialization,
+        starttime: formatTimeHHMMSStoHHMM(doctor.starttime),
+        endtime: formatTimeHHMMSStoHHMM(doctor.endtime)
       }));
       setDoctors(doctorsList);
     } catch (error) {
       console.error("Error fetching doctors: ", error);
     }
-  };
+  }, []);
 
   const fetchTimeSlots = (startTime, endTime, interval = 30) => {
     let slots = [];
@@ -40,20 +71,6 @@ export default function BookAppointment() {
     setTimeSlots(slots);
   };
   
-
-  // const fetchBookedSlots = async () => {
-  //   try{
-  //     const token = localStorage.getItem('token');
-  //     const response = await axios.get("/",{
-  //       headers: { Authorization: `Bearer ${token}` },
-  //     });
-  //     const bookedData = response.data;
-  //     setBookedSlots(bookedData);
-  //   } catch (error){
-  //     console.error("Error fetching booked slots: ", error);
-  //   }
-  // };
-
   useEffect(() => {
     fetchAllDoctors();
 
@@ -66,11 +83,10 @@ export default function BookAppointment() {
     }
     setAvailableDates(days);
 
-    const startTime = '10:00';
-    const endTime = '15:00'
+    if(selectedDoctorId){
+      fetchTimeSlots(starttime,endtime);
+    }
 
-    fetchTimeSlots(startTime,endTime);
-    //fetchBookedSlots();
     setBookedSlots({
       "2024-08-17": ["09:00am", "10:30am", "01:00pm"],
       "2024-08-18": ["11:00am", "02:00pm", "03:30pm"],
@@ -78,10 +94,23 @@ export default function BookAppointment() {
       "2024-08-20": ["10:00am", "01:30pm", "03:00pm"],
       "2024-08-21": ["09:00am", "11:00am", "02:30pm"],
     });
-  }, []);
+  }, [fetchAllDoctors, selectedDoctorId, starttime, endtime]);
 
   const handleDoctorChange = (e) => {
-    setSelectedDoctorId(e.target.value);
+    const selectedDoctorId = e.target.value;
+    const selectedDoctor = doctors.find(doctor => doctor.doctorid === parseInt(selectedDoctorId));
+
+    if(selectedDoctor){
+      setSelectedDoctorId(selectedDoctor.doctorid);
+      setStartTime(selectedDoctor.starttime);
+      setEndTime(selectedDoctor.endtime);
+      fetchTimeSlots(selectedDoctor.starttime, selectedDoctor.endtime);
+    } else {
+      setSelectedDoctorId('');
+      setStartTime('');
+      setEndTime('');
+      setTimeSlots([]);
+    }
   };
 
   const handleDateChange = (date) => {
@@ -97,8 +126,28 @@ export default function BookAppointment() {
       alert('Please select a doctor, date, and time slot.');
       return;
     }
+    try{
+      const bookingDetails = {
+        doctorid: selectedDoctorId,
+        appointment_date: selectedDate,
+        appointment_time: formatTimeHHMMtoHHMMSS(selectedTimeSlot),
+        status: "scheduled",
+        patientid: patientid
+      };
+      alert(`Booking Details:\nDoctor ID: ${bookingDetails.doctorid}\nDate: ${bookingDetails.appointment_date}\nTime: ${selectedTimeSlot} \nAppointment Booked.`);
+      console.log("bookingDetails: ", bookingDetails);
+        setSelectedDoctorId('');
+        setSelectedDate('');
+        setSelectedTimeSlot('');
+        setTimeSlots([]);
+        setStartTime('');
+        setEndTime('');
+        setBookedSlots({});
+    } catch (error) {
+      console.error("Error booking appointment: ",error);
+      alert("Failed to book appointment. Please try again.");
+    }
 
-    console.log(`Booking Appointment for Doctor ID: ${selectedDoctorId}, Date: ${selectedDate}, Time Slot: ${selectedTimeSlot}`);
   };
 
   return (
@@ -153,4 +202,3 @@ export default function BookAppointment() {
     </div>
   );
 }
-
