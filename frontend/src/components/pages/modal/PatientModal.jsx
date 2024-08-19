@@ -82,6 +82,7 @@ export default function PatientModal({ isOpen, onClose }) {
     } catch(error) {
           setRegisterData(initialRegisterState)
           console.error("There was an error registering the patient!", error);
+          setSuccessMessage("Login failed. Please check your credentials and try again.");
         };
     };
 

@@ -100,7 +100,7 @@ export default function PatientDashboard() {
         )}
         {activeComponent === 'records' && (
             <div className='patient-container'>
-                <Records />
+                <Records patientid={patient.patientid}/>
             </div>
         )}
         {activeComponent === 'pastAppointment' && (

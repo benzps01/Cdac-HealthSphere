@@ -33,8 +33,8 @@ namespace Test.Modals
         public string Notes { get; set; } = string.Empty;
 
         // Navigation properties
-        public Patient Patient { get; set; } = new Patient();
-        public Doctor Doctor { get; set; } = new Doctor();
+        public Patient? Patient { get; set; }  // = new Patient(); by making this nullable remove error doctors_username_key duplication error4110
+        public Doctor? Doctor { get; set; }
     }
 
 }

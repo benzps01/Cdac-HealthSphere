@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AppointmentBackend.Dtos;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Test.Data;
 using Test.Interfaces;
+using Test.Mappers;
 using Test.Modals;
 
 namespace Test.Repository
@@ -19,15 +22,29 @@ namespace Test.Repository
 
         
 
-        public Task<Appointment> CreateAsync()
+        public async Task<Appointment> CreateAsync(CreateAppointmentDto createDto)
         {
-            throw new NotImplementedException();
+            await _context.AddAsync(createDto.CreateDtoToAppointment());
+            await _context.SaveChangesAsync();
+            return createDto.CreateDtoToAppointment();
         }
 
        
         public async Task<List<Appointment>> GetAllAsync()
         {
             var appointments = await _context.Appointments.Include(x=>x.Patient).ToListAsync();
+            return appointments;
+        }
+
+        public async Task<List<Appointment>?> GetByDateandId(int id, DateTime date)
+        {      
+            var dateKindUtc = DateTime.SpecifyKind(date,DateTimeKind.Utc); // converting to utc 
+
+            var appointments = await _context.Appointments.AsQueryable().Where(x=>x.AppointmentDate<=dateKindUtc && x.PatientId == id).ToListAsync();
+            if(appointments == null)
+            {
+                return null;
+            }
             return appointments;
         }
 
@@ -40,6 +57,16 @@ namespace Test.Repository
                 return null;
             }
             return appointment;
+        }
+
+        public async Task<List<Appointment>?> GetPatientAppointments(int id)
+        {
+            var appointments = await _context.Appointments.AsQueryable().Where(x=>x.PatientId == id).ToListAsync();
+            if(appointments == null)
+            {
+                return null;
+            }
+            return appointments;
         }
 
         public Task<Appointment> Update()
