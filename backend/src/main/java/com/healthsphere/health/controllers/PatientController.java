@@ -23,20 +23,19 @@ import com.healthsphere.health.service.JwtUtilService;
 import com.healthsphere.health.service.UserService;
 
 @RestController
-@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/health/patient")
 public class PatientController {
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private PatientAuthenticationService patientAuthService;
-	
+
 	@Autowired
 	private JwtUtilService jwtUtilService;
-	
-	
+
 	@PostMapping(value = "/register", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
 	public ResponseEntity<AuthenticationResponse> registerPatient(
 			@RequestPart("patient") String pat,
@@ -48,42 +47,44 @@ public class PatientController {
 			return ResponseEntity.status(HttpStatus.CREATED).body(response);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new AuthenticationResponse("Error registering Patient"));
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body(new AuthenticationResponse("Error registering Patient"));
 		}
 	}
-	
+
 	@PostMapping("/login")
-	public ResponseEntity<AuthenticationResponse> loginPatient(@RequestBody Patients patient){
+	public ResponseEntity<AuthenticationResponse> loginPatient(@RequestBody Patients patient) {
 		try {
 			AuthenticationResponse response = patientAuthService.authenticate(patient);
 			return ResponseEntity.ok(response);
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new AuthenticationResponse("Incorrect username or password"));
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+					.body(new AuthenticationResponse("Incorrect username or password"));
 		}
 	}
-	
+
 	@GetMapping
-	public ResponseEntity<Patients> getPatient(@RequestHeader("Authorization") String token){
-		
+	public ResponseEntity<Patients> getPatient(@RequestHeader("Authorization") String token) {
+
 		String jwt = token.substring(7);
 		String username = jwtUtilService.extractUsername(jwt);
 		Patients patient = userService.getPatientByUserName(username);
-		
-		if(patient != null) {
+
+		if (patient != null) {
 			return ResponseEntity.ok(patient);
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 	}
-	
+
 	@GetMapping("/picture/{patientid}")
-	public ResponseEntity<byte[]> getProfilePic(@PathVariable int patientid){
+	public ResponseEntity<byte[]> getProfilePic(@PathVariable int patientid) {
 		try {
 			byte[] image = patientAuthService.getProfilePic(patientid);
 			return ResponseEntity.ok()
 					.contentType(MediaType.IMAGE_JPEG)
 					.body(image);
-		}catch(RuntimeException e) {
+		} catch (RuntimeException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 	}

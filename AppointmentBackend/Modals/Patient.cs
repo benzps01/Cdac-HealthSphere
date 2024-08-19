@@ -11,34 +11,41 @@ namespace Test.Modals
     public class Patient
     {
         [Key]
-        [Column("patient_id")]
+        [Column("patientid")]
         public int PatientId { get; set; }
 
         [Column("username")]
-        public string Username { get; set; }
+        [Required]
+        public string Username { get; set;} = string.Empty;
 
-        [Column("password_hash")]
-        public string PasswordHash { get; set; }
+        [Column("password")]
+        public string PasswordHash { get; set; } = string.Empty;
+        
+        [Column("gender")]
+        public string gender {get;set;} = string.Empty;
 
-        [Column("first_name")]
-        public string FirstName { get; set; }
+        [Column("bloodgroup")]
+        public string bloodgroup {get;set;} = string.Empty;
 
-        [Column("last_name")]
-        public string LastName { get; set; }
+        [Column("name")]
+        public string Name { get; set; } = string.Empty;
 
-        [Column("date_of_birth")]
+        [Column("email")]
+        public string Email {get;set;} = string.Empty;
+
+        [Column("dateofbirth")]
         public DateTime DateOfBirth { get; set; }
 
-        [Column("phone_number")]
-        public string PhoneNumber { get; set; }
+        [Column("mobileno")]
+        public string PhoneNumber { get; set; } = string.Empty;
 
         [Column("address")]
-        public string Address { get; set; }
+        public string Address { get; set; } = string.Empty;
 
-        [Column("emergency_contact")]
-        public string EmergencyContact { get; set; }
+        [Column("emergencycontact")]
+        public string EmergencyContact { get; set; } = string.Empty;
 
-        public ICollection<Appointment> Appointments { get; set; }
+        public ICollection<Appointment?> Appointments { get; set; }
     }
 
 }
