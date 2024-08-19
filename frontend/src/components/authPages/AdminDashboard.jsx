@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
-import '../../styles/Dashboard.css'
+import '../../styles/AdminDashboard.css'
 import RegisterDoctor from './adminModules/RegisterDoctor';
 import defaultImg from '../../images/default.jpg';
 

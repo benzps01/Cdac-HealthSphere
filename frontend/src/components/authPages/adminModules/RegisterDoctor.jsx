@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import '../../../styles/AdminDashboard.css'
+import '../../../styles/Dashboard.css'
 
 const DoctorRegistrationForm = ({ onClose }) => {
   const [profilepic, setProfilePic] = useState(null);
