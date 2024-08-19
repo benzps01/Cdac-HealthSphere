@@ -14,18 +14,18 @@ namespace Test.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AppointmentsController : ControllerBase
+    public class AppointmentController : ControllerBase
     {
         private readonly IAppointment _appointmentRepo;
         private readonly ApplicationDBContext _context;
-        public AppointmentsController(ApplicationDBContext context,IAppointment appointment)
+        public AppointmentController(ApplicationDBContext context,IAppointment appointment)
         {
             _appointmentRepo = appointment;
             _context = context;
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAppointments()
+        public async Task<ActionResult> GetAll()
         {
             var appointments = await _appointmentRepo.GetAllAsync();
             if(appointments==null)
@@ -51,15 +51,18 @@ namespace Test.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> PostAppointment([FromBody] CreateAppointmentDto appointmentModel)
+        public async Task<ActionResult> Create([FromBody] CreateAppointmentDto appointmentModel)
         {
 
-            _context.Appointments.Add(appointmentModel.CreateDtoToAppointment());
-            await _context.SaveChangesAsync();
-
-            return  Ok();
+            var appointment = await _appointmentRepo.CreateAsync(appointmentModel);
+            if(appointment == null)
+            {
+                return BadRequest();
+            }
+            return CreatedAtAction(nameof(GetById),new {Id=appointment.AppointmentId},appointment);
         }
 
+        
         
 
     }
