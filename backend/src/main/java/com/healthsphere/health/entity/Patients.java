@@ -24,40 +24,39 @@ public class Patients implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
 	private int patientid;
-	
+
 	@Column(nullable = false)
 	private String username;
-	
+
 	@Column(nullable = false)
 	private String password;
-	
+
 	@Column(nullable = false)
 	private String name;
 
 	@Column(nullable = false)
 	private String gender;
-	
+
 	@Column(nullable = false)
 	private Date dateofbirth;
-	
+
 	@Column(nullable = false)
-	private long mobileno;
-	
+	private String mobileno;
+
 	@Column(nullable = false)
 	private String bloodgroup;
-	
+
 	@Column(nullable = false)
 	private String email;
-	
+
 	@Column(nullable = false)
 	private String address;
-	
+
 	@Column(nullable = false)
 	private String emergencycontact;
-	
+
 	private byte[] profilepic;
-	
-	
+
 	public int getPatientid() {
 		return patientid;
 	}
@@ -81,7 +80,6 @@ public class Patients implements UserDetails {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 
 	public String getName() {
 		return name;
@@ -107,11 +105,11 @@ public class Patients implements UserDetails {
 		this.dateofbirth = dateofbirth;
 	}
 
-	public long getMobileno() {
+	public String getMobileno() {
 		return mobileno;
 	}
 
-	public void setMobileno(long mobileno) {
+	public void setMobileno(String mobileno) {
 		this.mobileno = mobileno;
 	}
 
@@ -147,7 +145,6 @@ public class Patients implements UserDetails {
 		this.emergencycontact = emergencycontact;
 	}
 
-	
 	public byte[] getProfilepic() {
 		return profilepic;
 	}
@@ -169,5 +166,5 @@ public class Patients implements UserDetails {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 }

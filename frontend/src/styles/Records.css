@@ -1,0 +1,26 @@
+.record-container{
+    background-color: white;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+table{
+    border: solid 1px black;
+    border-radius: 5px;
+    border-collapse:separate;
+    width: 100%;
+    margin: 0 auto;
+}
+
+th, td {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  th {
+    background-color: #f2f2f2; 
+  }
