@@ -22,7 +22,7 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private PatientRepository patientRepo;
-    
+
     @Autowired
     private AdminRepository adminRepo;
 
@@ -37,15 +37,15 @@ public class UserService implements UserDetailsService {
         if (patient != null) {
             return patient;
         }
-        
+
         Admins admin = adminRepo.findByUsername(username);
-        if(admin != null) {
-        	return admin;
+        if (admin != null) {
+            return admin;
         }
-        
-        throw new UsernameNotFoundException("User not found");  
+
+        throw new UsernameNotFoundException("User not found");
     }
-    
+
     @Transactional(readOnly = true)
     public Doctors getDoctorByUserName(String username) {
         return doctorRepo.findByUsername(username);
@@ -55,9 +55,9 @@ public class UserService implements UserDetailsService {
     public Patients getPatientByUserName(String username) {
         return patientRepo.findByUsername(username);
     }
-    
+
     @Transactional(readOnly = true)
     public Admins getAdminByUserUserName(String username) {
-    	return adminRepo.findByUsername(username);
+        return adminRepo.findByUsername(username);
     }
 }
