@@ -39,7 +39,7 @@ public class Patients {
     @Column(name = "bloodgroup")
     private String bloodgroup;
     @Column(name = "profilepic")
-    private int[] profilepic;
+    private byte[] profilepic;
     @Column(name = "gender")
     private String gender;
 
@@ -134,11 +134,11 @@ public class Patients {
 		this.bloodgroup = bloodgroup;
 	}
 
-	public int[] getProfilepic() {
+	public byte[] getProfilepic() {
 		return profilepic;
 	}
 
-	public void setProfilepic(int[] profilepic) {
+	public void setProfilepic(byte[] profilepic) {
 		this.profilepic = profilepic;
 	}
 
