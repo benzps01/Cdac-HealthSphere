@@ -46,14 +46,17 @@ export default function DoctorDashboard() {
                     responseType: 'arraybuffer',
                 });
 
-                const base64Image = btoa(
-                    new Uint8Array(imageResponse.data).reduce(
-                        (data, byte) => data + String.fromCharCode(byte),
-                        ''
-                    )
-                );
-
-                setProfileImageUrl(`data:image/jpeg;base64,${base64Image}`);
+                if (imageResponse.data.byteLength > 0) { 
+                    const base64Image = btoa(
+                        new Uint8Array(imageResponse.data).reduce(
+                            (data, byte) => data + String.fromCharCode(byte),
+                            ''
+                        )
+                    );
+                    setProfileImageUrl(`data:image/jpeg;base64,${base64Image}`);
+                } else {
+                    setProfileImageUrl(null);
+                }
             }
         } catch (error) {
             console.error("Error fetching doctor details or profile image:", error);

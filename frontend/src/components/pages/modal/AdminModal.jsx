@@ -64,7 +64,7 @@ export default function AdminModal({ isOpen, onClose }) {
           value={loginData.password}
           name='password'
         />
-        <button id="submit">Submit</button>
+        <button>Submit</button>
         </form>
       </div>
     </div>
