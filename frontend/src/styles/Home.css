@@ -53,13 +53,16 @@
     display: none; 
   }
 
-  .custom-text-overlay {
+  .custom-text-overlay{
     position: absolute;
     top: 8%; 
     left: 10%;
-    color: #a8dadc; 
-    font-size: 24px; 
+    color: #fff; 
+    font-size: 25px; 
     font-weight: bold;
+    font-family: Georgia, serif;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
     z-index: 2; 
   }
+
+  
