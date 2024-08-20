@@ -6,6 +6,7 @@ import '../../styles/AdminDashboard.css'
 import RegisterDoctor from './adminModules/RegisterDoctor';
 import defaultImg from '../../images/default.jpg';
 
+
 export default function AdminDashboard() {  
 
     const [admin, setAdmin] = useState(null);
@@ -46,15 +47,14 @@ export default function AdminDashboard() {
     if(!admin) return <div>Loading.....</div>
 
   return (
-    <div className='admin-dashboard'>
-        <div className='profile'>
+    <div className='dashboard-container1'>
+        <div className='profile7'>
             <img src = {profileImage || defaultImg} alt={admin.name} className='profileImg' />
-            <div className='content'>
-                <h2>Hi, {admin.name}</h2>
+            <div className='content7'>
+                <h2 className='message7'>Hi Admin {admin.name}</h2>
             </div>
-            <hr/>
             <br />
-            <button className='register' onClick={handleShowRegisterDoctor}>Doctor Registration</button>
+            <button className='register7' onClick={handleShowRegisterDoctor}>Doctor Registration</button>
             <br/>
             <button onClick={handleLogout} className='logout'>Logout</button>
         </div>

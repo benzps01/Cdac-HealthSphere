@@ -24,7 +24,7 @@
 }
 
 .profile {
-    background-color: rgb(139, 209, 202);
+    background-color: #48cae4;
     width: 300px;
     height: 100vh;
     display: flex;
@@ -41,7 +41,7 @@
     margin-top: 50px;
     margin-left: 50px;
     border-radius: 100px;
-    border: 3px solid rgb(0, 146, 39);
+    border: 3px solid #03045e;
 }
 
 .content {
