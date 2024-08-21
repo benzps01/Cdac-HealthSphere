@@ -5,11 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import '../../styles/Dashboard.css';
 import profile from '../../images/img1.jpg';
+import AppointmentScheduler from './AppointmentScheduler';
+import '../../styles/Accordion.css';
+import '../../styles/Calendar.css'; 
 
 export default function DoctorDashboard() {
 
     const [doctor, setDoctor] = useState(null);
     const [showAccordion, setShowAccordion] = useState(false)
+    const [showCalendar, setShowCalendar] = useState(false)
     const baseUrl = 'http://localhost:7070/health/doctor';
     const navigate = useNavigate();
     const { setAuthState } = useAuth();
@@ -21,13 +25,17 @@ export default function DoctorDashboard() {
     }
 
     const viewAppointments = () => {
-        //navigate('/doctordashboard');
-       // navigate('/AccordionUsage')
+        if (showCalendar){
+            setShowCalendar(false);
+        }
         setShowAccordion(!showAccordion);
     }
 
     const setCalendar = () => {
-        navigate('/doctordashboard');
+        if(showAccordion){
+            setShowAccordion(false);
+        }
+        setShowCalendar(!showCalendar);
     }
 
     useEffect(() => {
@@ -77,10 +85,17 @@ export default function DoctorDashboard() {
             <br />
             <button onClick={handleLogout} className='logout'>Logout</button>
         </div>
-
+        
         {showAccordion && (
             <div className='accordion-container'>
+                <h2>Appointments</h2>
                 <AccordionUsage items={accordionItems} />
+            </div>
+        )}
+
+        {showCalendar &&(
+            <div className='calendar-container'>
+                <AppointmentScheduler />
             </div>
         )}
     </div>

@@ -1,26 +1,6 @@
 .dashboard-container{
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
-}
-
-.accordion-container{
-    width: 80%;
-}
-
-.accordion-item{
-    margin-bottom: 20px;
-}
-
-.accordion-content{
-    padding: 50px;
-    
-}
-
-.accordion-header{
-    padding: 10px;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .profile{
@@ -61,6 +41,4 @@ button.calendar{
     margin-left: 15%;
 }
 
-button.treated{
-    width: 200px;
-}
+
