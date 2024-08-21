@@ -41,7 +41,7 @@ namespace Test.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Appointment>> GetById(int id)
         {
-                Appointment? appointmentModel = await _appointmentRepo.GetByIdAsync(id);
+            Appointment? appointmentModel = await _appointmentRepo.GetByIdAsync(id);
             if (appointmentModel == null)
             {
                 return NotFound();
@@ -62,10 +62,11 @@ namespace Test.Controllers
             return CreatedAtAction(nameof(GetById),new {Id=appointment.AppointmentId},appointment);
         }
 
-        [HttpGet("/{id}")]
+        [HttpGet]
+        [Route("api/Patient/history/{id:int}")]
         public async Task<IActionResult> GetByDateAndId([FromRoute] int id,[FromQuery] DateTime date)
         {
-            var appointments = await _appointmentRepo.GetByDateandId(id,date);
+            var appointments = await _appointmentRepo.GetByDateAndId(id,date);
             if(appointments==null)
             {
                 return NotFound();
