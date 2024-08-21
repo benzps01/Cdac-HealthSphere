@@ -105,7 +105,7 @@ export default function PatientDashboard() {
         )}
         {activeComponent === 'pastAppointment' && (
             <div className='patient-container'>
-                <PastAppointments />
+                <PastAppointments patientid={patient.patientid}/>
             </div>
         )}
     </div>
