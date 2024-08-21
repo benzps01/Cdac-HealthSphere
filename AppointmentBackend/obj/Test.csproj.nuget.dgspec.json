@@ -1,22 +1,6 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
-    "D:\\Project\\cdac_project\\Cdac-HealthSphere\\AppointmentBackend\\Test.csproj": {}
-  },
-  "projects": {
-    "D:\\Project\\cdac_project\\Cdac-HealthSphere\\AppointmentBackend\\Test.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "D:\\Project\\cdac_project\\Cdac-HealthSphere\\AppointmentBackend\\Test.csproj",
-        "projectName": "Test",
-        "projectPath": "D:\\Project\\cdac_project\\Cdac-HealthSphere\\AppointmentBackend\\Test.csproj",
-        "packagesPath": "C:\\Users\\Nishant Deore\\.nuget\\packages\\",
-        "outputPath": "D:\\Project\\cdac_project\\Cdac-HealthSphere\\AppointmentBackend\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\Nishant Deore\\AppData\\Roaming\\NuGet\\NuGet.Config"
-=======
     "D:\\learning\\CdacProject\\Cdac-HealthSphere\\AppointmentBackend\\Test.csproj": {}
   },
   "projects": {
@@ -31,7 +15,6 @@
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\benzp\\AppData\\Roaming\\NuGet\\NuGet.Config"
->>>>>>> 0c678b80f0e5ce033aa2966bf80db4f41fa5709a
         ],
         "originalTargetFrameworks": [
           "net9.0"

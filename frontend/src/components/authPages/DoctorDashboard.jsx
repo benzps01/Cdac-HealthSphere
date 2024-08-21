@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import AppointmentScheduler from './AppointmentScheduler';
+import AppointmentScheduler from './AppointmentScheduler.jsx'
 import AccordionUsage from './AccordionUsage';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
@@ -8,7 +8,6 @@ import '../../styles/Dashboard.css';
 import '../../styles/Accordion.css';
 import '../../styles/Calendar.css';
 import defaultImg from '../../images/default.jpg';
-import AppointmentScheduler from './AppointmentScheduler.jsx'
 
 export default function DoctorDashboard() {
 

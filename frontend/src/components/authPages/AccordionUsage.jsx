@@ -37,7 +37,6 @@ function AccordionUsage({ doctorid }) {
             },
           });
           console.log("Response: ",response);
-        setSubmissionStatus("Form submitted successfully!");
       } catch (error) {
         console.error('There was an error registering the doctor!', error);
 
@@ -56,17 +55,17 @@ function AccordionUsage({ doctorid }) {
     setXray(e.target.files[0]);
   };
 
-  const date = new Date().toISOString().split("T")[0];
-  const date1 = "2024-01-02";
+  // const date = new Date().toISOString().split("T")[0];
+  const date1 = "2024-08-22";
 
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5241/api/Doctor/appointments/1",
+          "http://localhost:5241/api/Doctor/appointments/3",
           {
             params: {
-              date: "2024-01-02",
+              date: date1,
             },
           }
         );
