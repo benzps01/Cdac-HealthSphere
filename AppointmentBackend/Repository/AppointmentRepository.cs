@@ -36,7 +36,7 @@ namespace Test.Repository
             return appointments;
         }
 
-        public async Task<List<Appointment>?> GetByDateandId(int id, DateTime date)
+        public async Task<List<Appointment>?> GetByDateAndId(int id, DateTime date)
         {      
             var dateKindUtc = DateTime.SpecifyKind(date,DateTimeKind.Utc); // converting to utc 
 

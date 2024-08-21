@@ -16,6 +16,6 @@ namespace Test.Interfaces
         Task<Appointment?> UpdateAsync();
         Task<Appointment?> Update();
         Task<List<Appointment>> GetPatientAppointments(int id);
-       Task<List<Appointment>?> GetByDateandId(int id,DateTime date);
+       Task<List<Appointment>?> GetByDateAndId(int id,DateTime date);
     }
 }
