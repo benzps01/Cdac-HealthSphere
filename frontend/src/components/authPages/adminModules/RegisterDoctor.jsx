@@ -46,11 +46,7 @@ const DoctorRegistrationForm = ({ onClose }) => {
         },
       });
       setProfilePic(null);
-      if (response.status === 200) {
-        setSubmissionStatus('Doctor registered successfully!');
-      } else {
-        setSubmissionStatus('Failed to register doctor.');
-      }
+      setSubmissionStatus('Doctor registered successfully!');
     } catch (error) {
       setSubmissionStatus('An error occurred. Please try again.');
       console.error('There was an error registering the doctor!', error);
