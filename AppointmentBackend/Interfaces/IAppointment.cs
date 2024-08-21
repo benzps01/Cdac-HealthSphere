@@ -15,7 +15,7 @@ namespace Test.Interfaces
         Task<Appointment> CreateAsync(CreateAppointmentDto createAppointmentDto);
         Task<Appointment?> UpdateAsync();
         Task<Appointment?> Update();
-        Task<List<Appointment>> GetPatientAppointments(int id);
+        Task<List<Appointment>?> GetPatientAppointments(int id);
        Task<List<Appointment>?> GetByDateAndId(int id,DateTime date);
     }
 }

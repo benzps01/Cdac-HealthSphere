@@ -62,18 +62,6 @@ namespace Test.Controllers
             return CreatedAtAction(nameof(GetById),new {Id=appointment.AppointmentId},appointment);
         }
 
-        [HttpGet]
-        [Route("api/Patient/history/{id:int}")]
-        public async Task<IActionResult> GetByDateAndId([FromRoute] int id,[FromQuery] DateTime date)
-        {
-            var appointments = await _appointmentRepo.GetByDateAndId(id,date);
-            if(appointments==null)
-            {
-                return NotFound();
-            }
-            return Ok(appointments);
-        }
-
         
         
 
