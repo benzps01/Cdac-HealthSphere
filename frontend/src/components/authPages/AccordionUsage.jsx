@@ -1,49 +1,16 @@
 import { useState } from "react"
 import { Accordion, AccordionCollapse } from "react-bootstrap"
 
-// const AccordionItem = ({title, content, isOpen, onToggle}) => {
-//     return (
-//         <div className="accordion-item">
-//             <div className="accordion-header" onClick={onToggle}>
-//                 <h3>{title}</h3>
-//                 <span>{isOpen ? '-' : '+'}</span>
-//             </div>
-//             {isOpen && <div className="accordion-content">{content}</div>}
-//         </div>
-//     )
-// }
-
-// const AccordionUsage = ({items}) => {
-//     const [openIndex, setOpenIndex] = useState(null)
-
-//     const handleToggle = (index) => {
-//         setOpenIndex(index === openIndex ? null : index)
-//     }
-
-//     return(
-//         <div classname="Accordion">
-//             {items.map((item, index) => (
-//                 <AccordionItem 
-//                 key={index}
-//                 title={item.title}
-//                 content={item.content}
-//                 isOpen={index === openIndex}
-//                 onToggle={() => handleToggle(index)}
-//                 />
-//             ))}
-//         </div>
-//     )
-// }
-
 
 function AccordionUsage(){
     const treated = () =>{
-        AccordionCollapse.apply(this, arguments)
+        
+
     }
     return (
         <Accordion>
             <Accordion.Item eventKey="0"> 
-                <Accordion.Header>Accordion 1
+                <Accordion.Header>Appoitnment 1
                 </Accordion.Header>
                     <Accordion.Body>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -56,7 +23,7 @@ function AccordionUsage(){
                     </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="1">
-                <Accordion.Header>Accordion 2
+                <Accordion.Header>Appointment 2
                 </Accordion.Header>
                 <Accordion.Body>
                     Sed ut perspiciatis unde omnis iste natus error sit voluptatem
@@ -71,7 +38,7 @@ function AccordionUsage(){
                 </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="2">
-                <Accordion.Header>Accordion 3
+                <Accordion.Header>Appointment 3
                 </Accordion.Header>
                 <Accordion.Body>
                     At vero eos et accusamus et iusto odio dignissimos ducimus qui
@@ -86,7 +53,7 @@ function AccordionUsage(){
                 </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="3">
-                <Accordion.Header>Accordion 4
+                <Accordion.Header>Appointment 4
                 </Accordion.Header>
                 <Accordion.Body>
                     Quis autem vel eum iure reprehenderit qui in ea voluptate velit

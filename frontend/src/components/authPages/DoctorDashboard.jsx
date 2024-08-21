@@ -5,11 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import '../../styles/Dashboard.css';
 import defaultImg from '../../images/default.jpg';
+import AppointmentScheduler from './AppointmentScheduler.jsx'
 
 export default function DoctorDashboard() {
 
     const [doctor, setDoctor] = useState(null);
     const [showAccordion, setShowAccordion] = useState(false)
+    const [showCalendar, setShowCalendar] = useState(false)
     const [profileImageUrl, setProfileImageUrl] = useState(null);
     const baseUrl = 'http://localhost:7070/health/doctor';
     const navigate = useNavigate();
@@ -22,13 +24,17 @@ export default function DoctorDashboard() {
     }
 
     const viewAppointments = () => {
-        //navigate('/doctordashboard');
-       // navigate('/AccordionUsage')
+        if (showCalendar){
+            setShowCalendar(false);
+        }
         setShowAccordion(!showAccordion);
     }
 
     const setCalendar = () => {
-        navigate('/doctordashboard');
+        if(showAccordion){
+            setShowAccordion(false);
+        }
+        setShowCalendar(!showCalendar);
     }
 
     useEffect(() => {
@@ -101,10 +107,17 @@ export default function DoctorDashboard() {
             <br />
             <button onClick={handleLogout} className='logout'>Logout</button>
         </div>
-
+        
         {showAccordion && (
             <div className='accordion-container'>
+                <h2>Appointments</h2>
                 <AccordionUsage items={accordionItems} />
+            </div>
+        )}
+
+        {showCalendar &&(
+            <div className='calendar-container'>
+                <AppointmentScheduler />
             </div>
         )}
     </div>
