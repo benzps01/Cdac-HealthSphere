@@ -38,7 +38,7 @@ export default function Doctors() {
     },
     {
       name: 'Sr. Nishant Deore',
-      title: 'HR Director',
+      title: 'HR Director (Pune Region)',
       imgSrc: img5,
     },
     {
