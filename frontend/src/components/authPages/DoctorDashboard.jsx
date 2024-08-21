@@ -8,6 +8,7 @@ import '../../styles/Dashboard.css';
 import '../../styles/Accordion.css';
 import '../../styles/Calendar.css';
 import defaultImg from '../../images/default.jpg';
+import AppointmentScheduler from './AppointmentScheduler.jsx'
 
 export default function DoctorDashboard() {
 
