@@ -1,13 +1,14 @@
 import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import '../../styles/Doctors.css';
+import Building from '../../images/img1.jpg'
 
 export default function Doctors() {
   const teamMembers = [
     {
       name: 'Sr. Lissy',
       title: 'Executive Director',
-      imgSrc: 'path_to_image1', // Replace with actual image paths or URLs
+      imgSrc: {Building}, // Replace with actual image paths or URLs
     },
     {
       name: 'Dr. Susan',
