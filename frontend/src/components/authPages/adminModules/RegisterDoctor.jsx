@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import '../../../styles/Dashboard.css'
+import '../../../styles/RegisterDoctor.css'
 
 const DoctorRegistrationForm = ({ onClose }) => {
   const [profilepic, setProfilePic] = useState(null);
@@ -60,8 +60,8 @@ const DoctorRegistrationForm = ({ onClose }) => {
 
 
   return (
-    <div className="admin-dashboard">
-      <div className="modal-content1">
+    <div className="register-doctor1">
+      <div className="modal-content3">
         <div>
           <form onSubmit={handleSubmitRegister}>
             <button className="close-button" onClick={onClose}>×</button>
@@ -164,7 +164,7 @@ const DoctorRegistrationForm = ({ onClose }) => {
               onChange={handleFileChange}
               accept='image/*'
             />
-            <button type="submit">Submit</button>
+            <button type="submit" className='button7'>Submit</button>
           </form>
           {submissionStatus && <p>{submissionStatus}</p>}
         </div>

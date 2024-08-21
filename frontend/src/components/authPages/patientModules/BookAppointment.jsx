@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState, useCallback } from 'react';
 
-export default function BookAppointment({patientid}) {
+export default function BookAppointment({ patientid }) {
   const [doctors, setDoctors] = useState([]);
   const [selectedDoctorId, setSelectedDoctorId] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
@@ -11,6 +11,7 @@ export default function BookAppointment({patientid}) {
   const [bookedSlots, setBookedSlots] = useState({});
   const [starttime, setStartTime] = useState('');
   const [endtime, setEndTime] = useState('');
+  const [symptoms, setSymptoms] = useState('');
 
   const formatTimeHHMMSStoHHMM = (time) => {
     if (!time || typeof time !== 'string') {
@@ -21,23 +22,16 @@ export default function BookAppointment({patientid}) {
   };
 
   const formatTimeHHMMtoHHMMSS = (time) => {
-    // Match time format including period (AM/PM)
     const match = time.match(/(\d{2}):(\d{2})([ap]m)/);
-    
     if (!match) {
-        throw new Error('Invalid time format');
+      throw new Error('Invalid time format');
     }
-    
     let [_, hours, minutes, period] = match;
     let hours24 = parseInt(hours, 10);
-    
-    // Convert to 24-hour format
     if (period === 'pm' && hours24 !== 12) hours24 += 12;
     if (period === 'am' && hours24 === 12) hours24 = 0;
-
-    // Return formatted time in 24-hour format with seconds as '00'
     return `${hours24.toString().padStart(2, '0')}:${minutes}:00`;
-};
+  };
 
   const fetchAllDoctors = useCallback(async () => {
     try {
@@ -58,11 +52,48 @@ export default function BookAppointment({patientid}) {
     }
   }, []);
 
+  const fetchBookedAppointments = async () => {
+    try {
+      const response = await axios.get("http://localhost:5241/api/Appointment");
+      const appointments = response.data;
+      const doctorAppointments = generateDoctorAppointmentsData(appointments);
+      setBookedSlots(doctorAppointments);
+    } catch (error) {
+      console.error("Error fetching booked appointments: ", error);
+    }
+  };
+
+  const generateDoctorAppointmentsData = (appointments) => {
+    return appointments.reduce((acc, appointment) => {
+      const { doctorId, appointmentDate, appointmentTime } = appointment;
+      const date = new Date(appointmentDate).toISOString().split('T')[0];
+      const time = new Date(`1970-01-01T${appointmentTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }).replace(/\s/g, '');
+      if (!acc[date]) {
+        acc[date] = [];
+      }
+      acc[date].push(time);
+      return acc;
+    }, {});
+  };
+
+  function convertToISO8601(dateString) {
+    const date = new Date(dateString);
+    const currentTime = new Date();
+
+    // Set the time from the current date
+    date.setHours(currentTime.getHours());
+    date.setMinutes(currentTime.getMinutes());
+    date.setSeconds(currentTime.getSeconds());
+    date.setMilliseconds(currentTime.getMilliseconds());
+
+    // Convert to ISO 8601 string
+    return date.toISOString();
+}
+
   const fetchTimeSlots = (startTime, endTime, interval = 30) => {
     let slots = [];
     let currentTime = new Date(`1970-01-01T${startTime}:00`);
     const endTimeObj = new Date(`1970-01-01T${endTime}:00`);
-  
     while (currentTime < endTimeObj) {
       const formattedTime = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }).replace(/\s/g, '');
       slots.push(formattedTime);
@@ -70,9 +101,10 @@ export default function BookAppointment({patientid}) {
     }
     setTimeSlots(slots);
   };
-  
+
   useEffect(() => {
     fetchAllDoctors();
+    fetchBookedAppointments();
 
     const today = new Date();
     const days = [];
@@ -83,24 +115,16 @@ export default function BookAppointment({patientid}) {
     }
     setAvailableDates(days);
 
-    if(selectedDoctorId){
-      fetchTimeSlots(starttime,endtime);
+    if (selectedDoctorId) {
+      fetchTimeSlots(starttime, endtime);
     }
-
-    setBookedSlots({
-      "2024-08-17": ["09:00am", "10:30am", "01:00pm"],
-      "2024-08-18": ["11:00am", "02:00pm", "03:30pm"],
-      "2024-08-19": ["09:30am", "12:00pm", "04:00pm"],
-      "2024-08-20": ["10:00am", "01:30pm", "03:00pm"],
-      "2024-08-21": ["09:00am", "11:00am", "02:30pm"],
-    });
   }, [fetchAllDoctors, selectedDoctorId, starttime, endtime]);
 
   const handleDoctorChange = (e) => {
     const selectedDoctorId = e.target.value;
     const selectedDoctor = doctors.find(doctor => doctor.doctorid === parseInt(selectedDoctorId));
 
-    if(selectedDoctor){
+    if (selectedDoctor) {
       setSelectedDoctorId(selectedDoctor.doctorid);
       setStartTime(selectedDoctor.starttime);
       setEndTime(selectedDoctor.endtime);
@@ -121,34 +145,43 @@ export default function BookAppointment({patientid}) {
     setSelectedTimeSlot(timeSlot);
   };
 
-  const handleBooking = () => {
+  const handleSymptomsChange = (e) => {
+    setSymptoms(e.target.value);
+  };
+
+  const handleBooking = async () => {
     if (!selectedDoctorId || !selectedDate || !selectedTimeSlot) {
       alert('Please select a doctor, date, and time slot.');
       return;
     }
-    try{
+    try {
       const bookingDetails = {
-        doctorid: selectedDoctorId,
-        appointment_date: selectedDate,
-        appointment_time: formatTimeHHMMtoHHMMSS(selectedTimeSlot),
+        doctorId: selectedDoctorId,
+        date: convertToISO8601(selectedDate),
+        time: formatTimeHHMMtoHHMMSS(selectedTimeSlot),
+        notes: symptoms, 
         status: "scheduled",
-        patientid: patientid
+        patientId: patientid
       };
-      alert(`Booking Details:\nDoctor ID: ${bookingDetails.doctorid}\nDate: ${bookingDetails.appointment_date}\nTime: ${selectedTimeSlot} \nAppointment Booked.`);
-      console.log("bookingDetails: ", bookingDetails);
-        setSelectedDoctorId('');
-        setSelectedDate('');
-        setSelectedTimeSlot('');
-        setTimeSlots([]);
-        setStartTime('');
-        setEndTime('');
-        setBookedSlots({});
+      alert(`Booking Details:\nDoctor ID: ${bookingDetails.doctorId}\nDate: ${bookingDetails.date}\nTime: ${bookingDetails.time}\nSymptoms: ${bookingDetails.notes}\nAppointment Booked.`);
+
+      await axios.post('http://localhost:5241/api/Appointment', bookingDetails);
+
+      setSelectedDoctorId('');
+      setSelectedDate('');
+      setSelectedTimeSlot('');
+      setSymptoms(''); // Clear symptoms input
+      setTimeSlots([]);
+      setStartTime('');
+      setEndTime('');
+      setBookedSlots({});
     } catch (error) {
-      console.error("Error booking appointment: ",error);
+      console.error("Error booking appointment: ", error);
       alert("Failed to book appointment. Please try again.");
     }
-
   };
+
+  console.log(bookedSlots);
 
   return (
     <div className='appointment'>
@@ -165,7 +198,12 @@ export default function BookAppointment({patientid}) {
         <br/>
         <br/>
         <div>
-          <input type='text' placeholder='Explain your symptoms (Optional)'></input>
+          <input
+            type='text'
+            placeholder='Explain your symptoms (Optional)'
+            value={symptoms}
+            onChange={handleSymptomsChange}
+          />
         </div>
         <hr/>
         <div className="date-selection">
@@ -178,20 +216,20 @@ export default function BookAppointment({patientid}) {
                   const isSelected = selectedDate === date && selectedTimeSlot === timeSlot;
                   return (
                     <button
-                    key={timeSlot}
-                    className={`time-slot ${isSelected ? 'selected' : ''}`}
-                    disabled={isBooked}
-                    onClick={() => {
-                      if(!isBooked) {
-                        handleDateChange(date);
-                        handleTimeSlotChange(timeSlot);
-                      }
-                    }}
-                  >
-                    {timeSlot}
-                  </button>
+                      key={timeSlot}
+                      className={`time-slot ${isSelected ? 'selected' : ''}`}
+                      disabled={isBooked}
+                      onClick={() => {
+                        if (!isBooked) {
+                          handleDateChange(date);
+                          handleTimeSlotChange(timeSlot);
+                        }
+                      }}
+                    >
+                      {timeSlot}
+                    </button>
                   );
-              })}
+                })}
               </div>
               <hr/>
             </div>
