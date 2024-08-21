@@ -6,7 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.healthsphere.health.entity.Admin;
+import com.healthsphere.health.entity.Admins;
 import com.healthsphere.health.entity.AuthenticationResponse;
 import com.healthsphere.health.repository.AdminRepository;
 
@@ -25,22 +25,22 @@ public class AdminAuthenticationService {
 	@Autowired
 	private AuthenticationManager authManager;
 	
-	public AuthenticationResponse register(Admin request) {
-		Admin admin = new Admin();
+	public AuthenticationResponse register(Admins request) {
+		Admins admin = new Admins();
 		admin.setUsername(request.getUsername());
 		admin.setPassword(passwordEncoder.encode(request.getPassword()));
 		
 		admin = adminRepo.save(admin);
 		
-		String token = jwtUtilService.generateToken(admin, admin.getId());
+		String token = jwtUtilService.generateToken(admin, admin.getAdminid());
 		return new AuthenticationResponse(token);
 	}
 	
-	public AuthenticationResponse authenticate(Admin request) {
+	public AuthenticationResponse authenticate(Admins request) {
 		authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-		Admin admin = adminRepo.findByUsername(request.getUsername());
+		Admins admin = adminRepo.findByUsername(request.getUsername());
 		
-		String token = jwtUtilService.generateToken(admin, admin.getId());
+		String token = jwtUtilService.generateToken(admin, admin.getAdminid());
 		return new AuthenticationResponse(token);
 	}
 	

@@ -1,31 +1,110 @@
 import React from 'react'
 import {Container, Row} from 'react-bootstrap';
-import about from '../../images/about.jpg';
-import about2 from '../../images/about.jpg';
+import Building from '../../images/aboutus.jpg';
+
 
 export default function About() {
   return (
     <>
-    <Container style={{justifyContent: "space-evenly", marginTop: '30px'}}>
-    <img src={about} alt="Image1" style={{width: '580px', height: '400px' , borderRadius:"30px"}} />
-    <img src={about2} alt="Image2" style={{width: '580px', height: '400px',  borderRadius:"30px"}} />
-    </Container>
+    <div>
+    <img
+            src={Building}
+            alt='Doctor'
+            className='d-block w-100'
+            style={{ height: '500px', maxWidth: '50%', marginLeft: '400px', marginTop: '20px' }}
+          />
+    </div>
     <Container style={{marginTop: "30px"}}>
       <Row>
-      <p>
-      Society of the Servants of the HealthSphere Hospital, a Charitable Trust Hospital located at Bandra Reclamation, Mumbai, was established in the year 2000. It is owned and managed by the Missionary Sisters Servants of the HealthSphere. The Missionary Sisters, Servants of the HealthSphere is a congregation founded by Shisheed Ghutugade in 2016, with the assistance of Sisters Tejal Salunkhe and Sneha Sonawane. From a humble origin in a remote village in Satara, Pune, the Order has now branched out to over 10 States with around 800 Sisters forming a network of over 225 communities. The first group of 4 sisters arrived in Mumbai in 2023. Considering the impoverished health condition of the people then, Sr. Benson Sabu promptly set up a dispensary in Mumbai, in 2020.
-      </p>
+     <h4> 
 
-      <p>
-        Over the years, the mission continued to expand and the number of ministries grew. The main apostolate of the Sisters is education, health care, socio-pastoral care, defending the rights & dignity of women and children, providing homes for the mentally & physically challenged for the aged and the underprivileged. Starting as an out-patient clinic in 2002, HealthSphere Hospital turned into a 100-bed hospital in 2005.
-      </p>
+     <p>
 
-      <p>
-        Gradually it has transformed into a tertiary care hospital with large spacious outpatient departments and in-patient wards, surrounded by a lush green landscape, conducive to healing. Today our Hospital stands proudly as an upgraded 300-bed multi-specialty-tertiary care hospital catering to comprehensive health care of approximately two million people. In Mumbai, where quality healthcare is only available at a premium, our hospital offers state-of-the-art and up-to-date facilities at unbelievably subsidized rates. We incessantly strive to bring quality medical care within the reach of the common people.
-      </p>
-      <p>
-        Our clientele comprises 15% of patients who are marginalized getting free treatment, 65% belonging to the low-income group, treated at a concessional rate and only 20% constitutes paying patients. We are deeply committed to our vision, mission, and motto. Spreading the healing love of God to all without any distinction of caste, creed, religion, or economic status. We are grateful to donors from India and abroad for their generous contributions towards translating our dream into a reality. Also, we are obliged to honorable Sisters, Doctors, Staff, Clients, Government authorities, and well-wishers who have enabled the hospital to maintain its commitment to provide quality medical service to the common people.
-      </p>
+Welcome to HealthSphere, a pioneering health management system committed to revolutionizing the way individuals and healthcare providers manage health and wellness.
+At HealthSphere, our mission is to deliver an innovative platform that simplifies and enhances the process of health monitoring, 
+enabling better outcomes and a healthier future for everyone.
+
+Our system is designed with the user in mind, offering intuitive features that cater to both patients and healthcare professionals.
+We leverage advanced technology to provide accurate, real-time health data, ensuring you stay on top of your health journey.
+</p>
+
+  <p>
+  At HealthSphere, we blend cutting-edge technology with a user-centric approach,
+  providing a wide array of features that cater to both patients and healthcare professionals.
+
+Key Features of HealthSphere
+Personal Health Dashboard: Get a complete overview of your health with real-time data on vital signs, 
+activity levels, and more, all in one easy-to-use dashboard.
+
+Appointment Scheduling: Seamlessly book and manage appointments with healthcare providers, 
+with reminders and follow-up notifications.
+
+Medication Management: Keep track of prescriptions, 
+set reminders for medication, and receive alerts for refills.
+
+Health Records Storage: Securely store and access your medical history, 
+lab results, and other important health documents.
+
+Telemedicine Integration: Connect with healthcare providers for virtual consultations,
+ ensuring you get the care you need from the comfort of your home.
+
+Data Analytics & Insights: Gain insights into your health trends and progress with advanced data analytics,
+ helping you make informed decisions.
+
+Customizable Alerts: Set personalized alerts for various health metrics,
+ such as heart rate, blood pressure, and glucose levels, to stay proactive about your health.
+
+Multi-Device Access: Access your health data anytime, anywhere, from any device,
+ ensuring continuity of care no matter where you are.
+
+
+  </p>
+  
+<p>
+Meet Our Team
+HealthSphere is brought to life by a dedicated team of professionals, each bringing unique expertise to the table:
+
+  <hr/>
+<strong>Mr. Nilesh Shirke (Guide) </strong>– Nilesh serves as our guide and mentor,
+leading the team with his extensive experience in healthcare technology and strategic vision. 
+His leadership ensures that HealthSphere remains at the forefront of innovation.
+</p>
+<hr/>
+<strong>Mr. Abhishek Desai</strong> – Abhishek is the technical backbone of HealthSphere, specializing in software development and system architecture.
+His focus on building a secure, scalable, and user-friendly platform is key to our system’s success.
+<p>
+<hr/>
+<strong>Mr. Benson Sabu </strong> – Benson brings deep insights into healthcare operations and patient management.
+His role is crucial in ensuring that HealthSphere meets the practical needs of users and healthcare providers alike.
+</p>
+<hr/>
+<strong>Mr. Dinesh Pukale</strong> – Dinesh is our project management expert, coordinating efforts across the team to ensure that our projects are delivered on time and with the highest quality.
+His organizational skills keep everything running smoothly.
+<hr/>
+<p>
+<strong>Mr. Nishant  </strong> – Nishant specializes in user experience and interface design.
+His commitment to creating an intuitive and engaging user interface ensures that HealthSphere is easy to navigate and use.
+</p>
+<hr/>
+<strong>Mr. Rajul Dubey </strong> – Rajul is responsible for quality assurance, ensuring that HealthSphere meets the highest standards of reliability and performance. 
+His attention to detail guarantees a seamless user experience.
+<hr/>
+<p>
+<strong>Mr. Shisheer Ghutugade </strong>– Shisheer is our data analytics expert, focusing on making sense of complex health data.
+His work helps transform raw data into actionable insights that users can rely on.
+</p>
+<hr/>
+<strong>Mr. Hrishikesh Shedge</strong> – Hrishikesh handles our customer support and outreach, ensuring that our users have the assistance they need.
+His dedication to user satisfaction is key to maintaining HealthSphere’s positive reputation.
+<br/>
+<br/>
+<p>
+Together, we are HealthSphere—a team united by our passion for improving health outcomes through technology.
+We are dedicated to providing you with the tools and support you need to manage your health with confidence.
+
+ </p> 
+ 
+ </h4>
       </Row>
     </Container>
     </>

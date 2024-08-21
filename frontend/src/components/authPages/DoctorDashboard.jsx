@@ -4,16 +4,14 @@ import AccordionUsage from './AccordionUsage';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import '../../styles/Dashboard.css';
-import profile from '../../images/img1.jpg';
-import AppointmentScheduler from './AppointmentScheduler';
-import '../../styles/Accordion.css';
-import '../../styles/Calendar.css'; 
+import defaultImg from '../../images/default.jpg';
 
 export default function DoctorDashboard() {
 
     const [doctor, setDoctor] = useState(null);
     const [showAccordion, setShowAccordion] = useState(false)
     const [showCalendar, setShowCalendar] = useState(false)
+    const [profileImageUrl, setProfileImageUrl] = useState(null);
     const baseUrl = 'http://localhost:7070/health/doctor';
     const navigate = useNavigate();
     const { setAuthState } = useAuth();
@@ -40,11 +38,34 @@ export default function DoctorDashboard() {
 
     useEffect(() => {
         const fetchDoctorDetails = async () => {
+            try{
             const token = localStorage.getItem('token');
             const response = await axios.get(baseUrl,{
                 headers: { Authorization: `Bearer ${token}`},
             });
             setDoctor(response.data);
+
+            if (response.data.doctorid) {
+                const imageResponse = await axios.get(`${baseUrl}/picture/${response.data.doctorid}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                    responseType: 'arraybuffer',
+                });
+
+                if (imageResponse.data.byteLength > 0) { 
+                    const base64Image = btoa(
+                        new Uint8Array(imageResponse.data).reduce(
+                            (data, byte) => data + String.fromCharCode(byte),
+                            ''
+                        )
+                    );
+                    setProfileImageUrl(`data:image/jpeg;base64,${base64Image}`);
+                } else {
+                    setProfileImageUrl(null);
+                }
+            }
+        } catch (error) {
+            console.error("Error fetching doctor details or profile image:", error);
+        }
         };
 
         fetchDoctorDetails();
@@ -72,9 +93,9 @@ export default function DoctorDashboard() {
   return (
     <div className='dashboard-container'>
         <div className='profile'>
-            <img src={profile} alt="benson" className='profileImg'/> 
+            <img src={profileImageUrl || defaultImg} alt={doctor.firstname} className='profileImg'/> 
             <div className='content'>
-            <h2>Dr. {doctor.name}</h2>
+            <h2>Dr. {doctor.firstname}</h2>
             <p><h4>Specialization: {doctor.specialization}</h4></p>
             </div>
             <hr />
