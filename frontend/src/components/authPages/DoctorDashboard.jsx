@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import '../../styles/Dashboard.css';
 import defaultImg from '../../images/default.jpg';
+import AppointmentScheduler from './AppointmentScheduler.jsx'
 
 export default function DoctorDashboard() {
 
