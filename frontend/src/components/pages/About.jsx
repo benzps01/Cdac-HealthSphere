@@ -82,7 +82,7 @@ His role is crucial in ensuring that HealthSphere meets the practical needs of u
 His organizational skills keep everything running smoothly.
 <hr/>
 <p>
-<strong>Mr. Nishant  </strong> – Nishant specializes in user experience and interface design.
+<strong>Mr. Nishant Deore </strong> – Nishant specializes in user experience and interface design.
 His commitment to creating an intuitive and engaging user interface ensures that HealthSphere is easy to navigate and use.
 </p>
 <hr/>

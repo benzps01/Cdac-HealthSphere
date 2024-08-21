@@ -6169,26 +6169,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\HP\\.nuget\\packages\\": {}
+    "C:\\Users\\Nishant Deore\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\HP\\Desktop\\PROJECT\\Cdac-HealthSphere\\AppointmentBackend\\Test.csproj",
+      "projectUniqueName": "D:\\Project\\cdac_project\\Cdac-HealthSphere\\AppointmentBackend\\Test.csproj",
       "projectName": "Test",
-      "projectPath": "C:\\Users\\HP\\Desktop\\PROJECT\\Cdac-HealthSphere\\AppointmentBackend\\Test.csproj",
-      "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\HP\\Desktop\\PROJECT\\Cdac-HealthSphere\\AppointmentBackend\\obj\\",
+      "projectPath": "D:\\Project\\cdac_project\\Cdac-HealthSphere\\AppointmentBackend\\Test.csproj",
+      "packagesPath": "C:\\Users\\Nishant Deore\\.nuget\\packages\\",
+      "outputPath": "D:\\Project\\cdac_project\\Cdac-HealthSphere\\AppointmentBackend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\Nishant Deore\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

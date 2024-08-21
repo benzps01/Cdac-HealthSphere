@@ -1,41 +1,7 @@
-.dashboard-container{
+.dashboard-container {
     display: flex;
     align-items: flex-start;
-    padding: 20px;
-}
-
-.profile{
-    background-color: rgb(139, 209, 202);
-    width: 300px;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-right: 20px;
-}
-
-.profileImg {
-    margin-top: 50px;
-    margin-left: 50px;
-    width: 200px;
-    height: 200px;
-    border-radius: 100px;
-    border: 3px solid rgb(0, 146, 39);
-}
-
-.content {
-    margin-top: 10px;
-    margin-left: 30px;
-    width: 240px;
-    font-size: 20px;
-}
-
-button.logout {
-    margin-top: auto;
-    margin-bottom: 10px;
-    width: 200px;
-    margin-left: 15%;
-}
+} 
 
 button.appointment, button.records, button.view, button.calendar, button.treated {
     width: 200px;
@@ -44,6 +10,13 @@ button.appointment, button.records, button.view, button.calendar, button.treated
 
 button.appointment, button.records {
     margin-bottom: 10px;
+}
+
+button.logout {
+    margin-top: auto;
+    margin-bottom: 10px;
+    width: 200px;
+    margin-left: 15%;
 }
 
 
@@ -68,43 +41,19 @@ button.appointment, button.records {
     padding: 90px;
     font-size: 17px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', Verdana, sans-serif;
-} */
-
-.dashboard-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.accordion-container {
-    width: 80%;
-}
-
-.accordion-item {
-    margin-bottom: 20px;
-}
-
-.accordion-content {
-    padding: 50px;
-}
-
-.accordion-header {
-    padding: 10px;
-    justify-content: space-between;
-    align-items: center;
-}
+} 
 
 .profile {
     background-color: rgb(139, 209, 202);
     width: 300px;
-    height: 100vh; /* Ensure it spans the full height of the viewport */
+    height: 100vh; 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     margin-right: 20px;
     position: sticky;
     top: 0;
-    overflow: hidden; /* Prevents content from scrolling */
+    overflow: hidden; 
 }
 
 .profileImg {
@@ -121,13 +70,6 @@ button.appointment, button.records {
     margin-left: 30px;
     width: 240px;
     font-size: 20px;
-}
-
-button.logout {
-    margin-top: auto;
-    margin-bottom: 10px;
-    width: 200px;
-    margin-left: 15%;
 }
 
 

@@ -2,7 +2,7 @@
     width: 70%;
     margin-top: 10%;
     margin-right: 20px;
-    margin-left: 80px;
+    margin-left: 20px;
 }
 
 .accordion-item{
@@ -16,7 +16,7 @@
 
 .accordion-header{
     padding: 10px;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
 }
 
