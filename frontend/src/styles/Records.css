@@ -2,14 +2,20 @@
     background-color: white;
     border-radius: 15px;
     padding: 20px; 
-    height: auto; /* Adjust height to fit content */
-    max-height: 500px; /* Limit height to avoid overflow */
+    height: 550px; /* Adjust height to fit content */
+    max-height: 900px; /* Limit height to avoid overflow */
     width: 100%; /* Full width within the parent container */
     max-width: 150vh; /* Limit the maximum width */
     overflow-y: auto; /* Add scroll if content exceeds max height */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
     margin: 20px auto; /* Center the container */
     position: relative; /* Position relative for internal alignment */
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+}
+
+.record-container::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for WebKit-based browsers */
 }
 
 .head {
@@ -65,18 +71,8 @@ hr {
     margin: 20px 0;
 }
 
-
 .title-line {
     border: none;
     border-top: 5px solid #000000;
     margin: 10px 0 20px;
 }
-/* {
-    "visitdate":"2024-04-02",
-    "diagnosis":"test",
-    "treatment":"test",
-    "prescriptions":"test",
-    "notes":"test",
-    "doctorid":8,
-    "patientid":8
-} */

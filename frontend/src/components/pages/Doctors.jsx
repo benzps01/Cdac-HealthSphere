@@ -1,75 +1,86 @@
 import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import '../../styles/Doctors.css';
+import img1 from '../../images/img1.jpg';
+import img2 from '../../images/img2.JPG';
+import img3 from '../../images/img3.JPG';
+import img4 from '../../images/img4.jpg';
+import img5 from '../../images/img5.JPG';
+import img6 from '../../images/img6.JPG';
+import img7 from '../../images/img7.JPG';
+import img8 from '../../images/img8.jpg';
+import img9 from '../../images/img9.JPG';
+import img10 from '../../images/img10.JPG';
+import img11 from '../../images/img11.JPG';
+import img12 from '../../images/img12.JPG';
 
 export default function Doctors() {
   const teamMembers = [
     {
-      name: 'Sr. Lissy',
+      name: 'Dr. Benson Sabu',
       title: 'Executive Director',
-      imgSrc: 'path_to_image1', // Replace with actual image paths or URLs
+      imgSrc: img1,
     },
     {
-      name: 'Dr. Susan',
+      name: 'Dr. Rajul Dubey',
       title: 'Medical Director',
-      imgSrc: 'path_to_image2',
+      imgSrc: img2,
     },
     {
-      name: 'Sr Felcy',
+      name: 'Dr. Hrishikesh Shedge',
       title: 'Asst. Executive Director',
-      imgSrc: 'path_to_image3',
+      imgSrc: img3,
     },
     {
-      name: 'Dr Anuja',
+      name: 'Dr Shishir Ghutugale',
       title: 'Asst. Medical Director',
-      imgSrc: 'path_to_image4',
+      imgSrc: img4,
     },
     {
-      name: 'Sr. Julie',
-      title: 'HR Director',
-      imgSrc: 'path_to_image5',
+      name: 'Sr. Nishant Deore',
+      title: 'HR Director (Pune Region)',
+      imgSrc: img5,
     },
     {
-      name: 'Sr Usha Thomas',
+      name: 'Sr Dinesh Pukale',
       title: 'Nursing Director',
-      imgSrc: 'path_to_image6',
+      imgSrc: img6,
     },
     {
-      name: 'Sr Shruti',
+      name: 'Sr Abhishek Desai',
       title: 'Finance Director & Head of IT',
-      imgSrc: 'path_to_image7',
+      imgSrc: img7,
     },
     {
-      name: 'Sr Elsy',
+      name: 'Sr Rushikesh Ghughe',
       title: 'Director Supportive Services & Head of Community Centre',
-      imgSrc: 'path_to_image8',
+      imgSrc: img8,
     },
     {
-      name: 'Sr Vasanthi',
+      name: 'Sr Pratik Bhoir',
       title: 'Head of OT and NABH',
-      imgSrc: 'path_to_image9',
+      imgSrc: img9,
     },
     {
-      name: 'Sr Prema',
+      name: 'Sr Sahil Lad',
       title: 'Clinical Counsellor',
-      imgSrc: 'path_to_image10',
+      imgSrc: img10,
     },
     {
-      name: 'Sr Lalita',
+      name: 'Sr Abhijeet Pawar',
       title: 'Principal Of Nursing College',
-      imgSrc: 'path_to_image11',
+      imgSrc: img11,
     },
     {
-      name: 'Sr Lalita',
-      title: 'Principal Of Nursing College',
-      imgSrc: 'path_to_image11',
+      name: 'Sr Ajay Sonawale',
+      title: 'Vice-Principal Of Nursing College',
+      imgSrc: img12,
     },
   ];
 
   return (
-    
     <Container className="my-5">
-      {/* <h2 className="text-center mb-4">Team</h2> */}
+      
       <Row>
       <h2 className="text-center mb-4">Management Team</h2>
         {teamMembers.map((member, index) => (
@@ -87,4 +98,3 @@ export default function Doctors() {
     </Container>
   );
 }
-

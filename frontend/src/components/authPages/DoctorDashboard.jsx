@@ -1,16 +1,22 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import AppointmentScheduler from './AppointmentScheduler.jsx'
 import AccordionUsage from './AccordionUsage';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import '../../styles/Dashboard.css';
+import '../../styles/Accordion.css';
+import '../../styles/Calendar.css';
 import defaultImg from '../../images/default.jpg';
+import Appointment from '../../images/docDash1.jpg';
 
 export default function DoctorDashboard() {
 
     const [doctor, setDoctor] = useState(null);
     const [showAccordion, setShowAccordion] = useState(false)
+    const [showCalendar, setShowCalendar] = useState(false)
     const [profileImageUrl, setProfileImageUrl] = useState(null);
+    const [appointments, setAppointments] = useState([]);
     const baseUrl = 'http://localhost:7070/health/doctor';
     const navigate = useNavigate();
     const { setAuthState } = useAuth();
@@ -22,13 +28,17 @@ export default function DoctorDashboard() {
     }
 
     const viewAppointments = () => {
-        //navigate('/doctordashboard');
-       // navigate('/AccordionUsage')
+        if (showCalendar){
+            setShowCalendar(false);
+        }
         setShowAccordion(!showAccordion);
     }
 
     const setCalendar = () => {
-        navigate('/doctordashboard');
+        if(showAccordion){
+            setShowAccordion(false);
+        }
+        setShowCalendar(!showCalendar);
     }
 
     useEffect(() => {
@@ -39,7 +49,6 @@ export default function DoctorDashboard() {
                 headers: { Authorization: `Bearer ${token}`},
             });
             setDoctor(response.data);
-
             if (response.data.doctorid) {
                 const imageResponse = await axios.get(`${baseUrl}/picture/${response.data.doctorid}`, {
                     headers: { Authorization: `Bearer ${token}` },
@@ -57,6 +66,12 @@ export default function DoctorDashboard() {
                 } else {
                     setProfileImageUrl(null);
                 }
+
+                const appointmentsResponse = await axios.get(`${baseUrl}/appointments/${response.data.doctorid}` ,{
+                    headers: { Authorization: `Bearer ${token}` },
+                })
+
+                setAppointments(appointmentsResponse.data)
             }
         } catch (error) {
             console.error("Error fetching doctor details or profile image:", error);
@@ -68,25 +83,14 @@ export default function DoctorDashboard() {
 
     if(!doctor) return <div>Loading.....</div>
 
-    const accordionItems = [
-        {
-            title: 'Appointment 1',
-            content: 'View all appointments for this doctor',
-        },
-        {
-            title: 'Appointment 2',
-            content: 'Update your profile details',
-            
-        },
-        {
-            title: 'Appointment 3',
-            content: 'Update your account settings',
-            
-        },
-    ]
+    const accordionItems = appointments.map((appointment,index) => ({
+        title: `Appointment ${index + 1}`,
+        content: `Name: ${appointment.name}, Blood Group: ${appointment.bloodgroup}, Gender: ${appointment.gender}`,
+    }))
 
   return (
     <div className='dashboard-container'>
+        <img src={Appointment} alt='body' className='back-img'/>
         <div className='profile'>
             <img src={profileImageUrl || defaultImg} alt={doctor.firstname} className='profileImg'/> 
             <div className='content'>
@@ -101,10 +105,17 @@ export default function DoctorDashboard() {
             <br />
             <button onClick={handleLogout} className='logout'>Logout</button>
         </div>
-
+        
         {showAccordion && (
             <div className='accordion-container'>
-                <AccordionUsage items={accordionItems} />
+                <h2 style={{color:"white"}}>Appointments</h2>
+                <AccordionUsage items={accordionItems} doctorid={doctor.doctorid}/>
+            </div>
+        )}
+
+        {showCalendar &&(
+            <div className='calendar-container'>
+                <AppointmentScheduler doctorid={doctor.doctorid}/>
             </div>
         )}
     </div>

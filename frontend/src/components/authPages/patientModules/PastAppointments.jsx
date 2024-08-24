@@ -8,7 +8,7 @@ const PastAppointments = ({ patientid }) => {
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const response = await axios.get(`http://localhost:5241/api/Appointment/${patientid}`);
+        const response = await axios.get(`http://localhost:5241/api/Patient/appointments/${patientid}`);
         
         // Log the response to see what is returned
         console.log(response.data);

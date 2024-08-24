@@ -29,7 +29,19 @@ namespace Test.Repository
             return createDto.CreateDtoToAppointment();
         }
 
-       
+        public async Task<Appointment?> DeleteAsync(int id)
+        {
+            var appointment = await _context.Appointments.FirstOrDefaultAsync(x=>x.AppointmentId == id);
+            if(appointment == null)
+            {
+                return null;
+            }
+            _context.Remove(appointment);
+            await _context.SaveChangesAsync();
+            return appointment;
+
+        }
+
         public async Task<List<Appointment>> GetAllAsync()
         {
             var appointments = await _context.Appointments.Include(x=>x.Patient).ToListAsync();

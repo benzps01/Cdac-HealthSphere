@@ -40,17 +40,13 @@ const DoctorRegistrationForm = ({ onClose }) => {
   formData.append("image",profilepic);
 
     try {
-      const response = await axios.post('http://localhost:7070/health/doctor/register', formData, {
+      await axios.post('http://localhost:7070/health/doctor/register', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
       setProfilePic(null);
-      if (response.status === 200) {
-        setSubmissionStatus('Doctor registered successfully!');
-      } else {
-        setSubmissionStatus('Failed to register doctor.');
-      }
+      setSubmissionStatus('Doctor registered successfully!');
     } catch (error) {
       setSubmissionStatus('An error occurred. Please try again.');
       console.error('There was an error registering the doctor!', error);
@@ -64,7 +60,6 @@ const DoctorRegistrationForm = ({ onClose }) => {
       <div className="modal-content3">
         <div>
           <form onSubmit={handleSubmitRegister}>
-            <button className="close-button" onClick={onClose}>×</button>
             <h2>Doctor Registration</h2>
             <div className='nameContainer'>
               <div className='flex-item'>
@@ -75,6 +70,7 @@ const DoctorRegistrationForm = ({ onClose }) => {
                   value={registerData.firstname}
                   name='firstname'
                   required
+                  autoFocus
                 />
               </div>
               <div className='flex-item'>
@@ -91,7 +87,6 @@ const DoctorRegistrationForm = ({ onClose }) => {
             <input 
               type='text' 
               placeholder='Username' 
-              autoFocus 
               required
               onChange={handleRegisterChange}
               value={registerData.username}

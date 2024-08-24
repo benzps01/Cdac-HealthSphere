@@ -10,21 +10,24 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
-builder.Services.AddCors(options=>{
-options.AddPolicy("AllowAll",policy=>{
-    policy.AllowAnyOrigin()
-    .AllowAnyMethod()
-    .AllowAnyHeader();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+    });
 });
-});
-builder.Services.AddControllers().AddNewtonsoftJson(options => 
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 });
-builder.Services.AddDbContext<ApplicationDBContext>(options=>{
+builder.Services.AddDbContext<ApplicationDBContext>(options =>
+{
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-builder.Services.AddScoped<IAppointment,AppointmentRepository>();
+builder.Services.AddScoped<IAppointment, AppointmentRepository>();
 builder.Services.AddControllers();
 
 var app = builder.Build();
@@ -37,6 +40,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowAll");
 
 app.MapControllers();
 

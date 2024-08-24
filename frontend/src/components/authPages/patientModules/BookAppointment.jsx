@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState, useCallback } from 'react';
+import '../../../styles/BookAppointment.css';
 
 export default function BookAppointment({ patientid }) {
   const [doctors, setDoctors] = useState([]);
@@ -57,24 +58,46 @@ export default function BookAppointment({ patientid }) {
       const response = await axios.get("http://localhost:5241/api/Appointment");
       const appointments = response.data;
       const doctorAppointments = generateDoctorAppointmentsData(appointments);
+
+      console.log("Generated doctor appointments data:", doctorAppointments);
       setBookedSlots(doctorAppointments);
     } catch (error) {
       console.error("Error fetching booked appointments: ", error);
     }
   };
+  
 
   const generateDoctorAppointmentsData = (appointments) => {
-    return appointments.reduce((acc, appointment) => {
+    return appointments.reduce((acc, appointment, index) => {
       const { doctorId, appointmentDate, appointmentTime } = appointment;
-      const date = new Date(appointmentDate).toISOString().split('T')[0];
+  
+      // Create a date object from the appointment date
+      const localDate = new Date(appointmentDate);
+  
+      // Convert the local date to a string in YYYY-MM-DD format
+      const date = localDate.toLocaleDateString('en-CA'); // 'en-CA' gives a format of YYYY-MM-DD
+  
+      // Convert the time to a 12-hour format without spaces (e.g., "12:30pm")
       const time = new Date(`1970-01-01T${appointmentTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }).replace(/\s/g, '');
+  
+      console.log(`Processing appointment ${index + 1}/${appointments.length}:`, appointment);
+  
+      // Initialize the array for this date if it doesn't exist
       if (!acc[date]) {
         acc[date] = [];
       }
+  
+      // Add the time slot to the corresponding date
       acc[date].push(time);
+  
+      console.log(`acc after processing appointment ${index + 1}:`, JSON.stringify(acc, null, 2));
+  
       return acc;
     }, {});
   };
+  
+  
+  
 
   function convertToISO8601(dateString) {
     const date = new Date(dateString);
@@ -105,6 +128,8 @@ export default function BookAppointment({ patientid }) {
   useEffect(() => {
     fetchAllDoctors();
     fetchBookedAppointments();
+
+    console.log("Updated booked slots after fetch:", bookedSlots);
 
     const today = new Date();
     const days = [];
@@ -181,7 +206,7 @@ export default function BookAppointment({ patientid }) {
     }
   };
 
-  console.log(bookedSlots);
+  console.log("Booked Slots: ",bookedSlots);
 
   return (
     <div className='appointment'>

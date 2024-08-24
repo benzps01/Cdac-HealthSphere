@@ -29,7 +29,7 @@
     border-radius: 5px;
   }
   
-  .imgs img {
+  .imgs, .card-img {
     height: auto;
     max-width: 100%;
   }
