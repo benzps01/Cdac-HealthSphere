@@ -8,6 +8,7 @@ import '../../styles/Dashboard.css';
 import '../../styles/Accordion.css';
 import '../../styles/Calendar.css';
 import defaultImg from '../../images/default.jpg';
+import Appointment from '../../images/docDash1.jpg';
 
 export default function DoctorDashboard() {
 
@@ -66,7 +67,7 @@ export default function DoctorDashboard() {
                     setProfileImageUrl(null);
                 }
 
-                const appointmentsResponse = await axios.get('${baseUrl}/appointments/${response.data.doctorid}' ,{
+                const appointmentsResponse = await axios.get(`${baseUrl}/appointments/${response.data.doctorid}` ,{
                     headers: { Authorization: `Bearer ${token}` },
                 })
 
@@ -89,6 +90,7 @@ export default function DoctorDashboard() {
 
   return (
     <div className='dashboard-container'>
+        <img src={Appointment} alt='body' className='back-img'/>
         <div className='profile'>
             <img src={profileImageUrl || defaultImg} alt={doctor.firstname} className='profileImg'/> 
             <div className='content'>
@@ -106,14 +108,14 @@ export default function DoctorDashboard() {
         
         {showAccordion && (
             <div className='accordion-container'>
-                <h2>Appointments</h2>
+                <h2 style={{color:"white"}}>Appointments</h2>
                 <AccordionUsage items={accordionItems} doctorid={doctor.doctorid}/>
             </div>
         )}
 
         {showCalendar &&(
             <div className='calendar-container'>
-                <AppointmentScheduler />
+                <AppointmentScheduler doctorid={doctor.doctorid}/>
             </div>
         )}
     </div>

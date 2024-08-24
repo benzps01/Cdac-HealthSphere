@@ -35,7 +35,17 @@ namespace Test.Controllers
             return Ok(appointments);
         }
         
-
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            var appointment = await _appointmentRepo.DeleteAsync(id);
+            if(appointment==null)
+            {
+                return NotFound();
+            }
+            return Ok(appointment);
+        }
 
 
         [HttpGet("{id:int}")]

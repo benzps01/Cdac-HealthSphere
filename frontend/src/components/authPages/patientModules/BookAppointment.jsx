@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState, useCallback } from 'react';
+import '../../../styles/BookAppointment.css';
 
 export default function BookAppointment({ patientid }) {
   const [doctors, setDoctors] = useState([]);

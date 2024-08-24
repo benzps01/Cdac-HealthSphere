@@ -79,6 +79,14 @@ public class DoctorAuthenticationService {
 	                return doctorMap;
 				})
 				.collect(Collectors.toList());
+	}
+	
+	public String updateDoctorTime(int doctorid, Doctors request) {
+		Doctors doctor = doctorRepo.findById(doctorid).orElseThrow();
+		doctor.setStarttime(request.getStarttime());
+		doctor.setEndtime(request.getEndtime());
+		doctorRepo.save(doctor);
 		
+		return "Doctor Time updated successfully";
 	}
 }

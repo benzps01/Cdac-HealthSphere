@@ -1,20 +1,25 @@
+import axios from "axios";
 import React, { useState } from "react"
 
-const AppointmentScheduler = () =>{
+const AppointmentScheduler = ({doctorid}) =>{
 
-    const [startTime, setStartTime] = useState('')
-    const [endTime, setEndTime] = useState('')
-    const [slots, setSlots] = useState([])
+    const baseUrl = 'http://localhost:7070/health/doctor'
+    const token = localStorage.getItem('token');
+    const [ time, setTime] = useState({
+        starttime: '',
+        endtime: ''
+    })
 
-    const handleAddSlot = () => {
-        if(startTime && endTime && startTime < endTime){
-            const newSlot = {
-                start: startTime,
-                end: endTime
-            }
-            setSlots([...slots, newSlot])
-            setStartTime('')
-            setEndTime('')
+    const handleAddSlot = async () => {
+        if(time.starttime && time.endtime && time.starttime < time.endtime){
+            console.log("time: ", time);
+            await axios.patch(`${baseUrl}/time/${doctorid}`,time,{
+                headers: {Authorization: `Bearer ${token}`},
+            });
+            setTime({
+                starttime: '',
+                endtime: ''
+            })
         }
         else{
             alert('Invalid time range or end time is earlier than start time.')
@@ -30,8 +35,11 @@ const AppointmentScheduler = () =>{
                     <label>Start Time:</label>
                     <input 
                         type="time"
-                        value={startTime}
-                        onChange={(e) => setStartTime(e.target.value)}
+                        value={time.starttime}
+                        onChange={(e) => setTime(prevtime => ({
+                            ...prevtime,
+                            starttime: e.target.value
+                        }))}
                         required
                     />
                 </div>
@@ -40,24 +48,17 @@ const AppointmentScheduler = () =>{
                     <label>End Time:</label>
                     <input 
                         type="time"
-                        value={endTime}
-                        onChange={(e) => setEndTime(e.target.value)}
+                        value={time.endtime}
+                        onChange={(e) => setTime(prevtime => ({
+                            ...prevtime,
+                            endtime: e.target.value
+                        }))}
                         required
                     />
                 </div>
             </div>
 
         <button className="add-slot-button" onClick={handleAddSlot}>Add Slot</button>
-
-        <div className="slots-list">
-            <h3>Current Slots:</h3>
-            {slots.map((slot, index) => (
-                <div key={index} className="slot-item">
-                    {`${slot.start} - ${slot.end}`}
-                </div>
-            ))}
-        </div>
-
         </div>
     )
 }

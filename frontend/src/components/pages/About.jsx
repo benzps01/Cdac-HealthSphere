@@ -1,6 +1,6 @@
 import React from 'react'
 import {Container, Row} from 'react-bootstrap';
-import Building from '../../images/aboutus.jpg';
+import Building from '../../images/AboutUsImg.jpg';
 
 
 export default function About() {

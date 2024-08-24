@@ -7,6 +7,7 @@ import BookAppointment from './patientModules/BookAppointment';
 import Records from './patientModules/Records';
 import PastAppointments from './patientModules/PastAppointments';
 import defImg from '../../images/default.jpg';
+import patDash from '../../images/patDash1.jpg';
 
 export default function PatientDashboard() {
 
@@ -76,6 +77,7 @@ export default function PatientDashboard() {
 
   return (
     <div className='dashboard-container'>
+        <img src={patDash} alt='patient' className='back-img'/>
         <div className='profile'>
             <img src ={profileImage || defImg} alt={patient.name} className='profileImg' />
             <div className='content'>
