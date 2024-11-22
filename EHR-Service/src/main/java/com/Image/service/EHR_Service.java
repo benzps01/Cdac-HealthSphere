@@ -39,7 +39,7 @@ public class EHR_Service {
             ehr.setXrayimage(xray.getBytes());
         }
         ehr.setNotes(request.getNotes());
-
+        System.out.println("Request Id: " + request.getPatient().getPatientid());
         Doctors doctor = doctorsRepository.findById(request.getDoctor().getDoctorid()).orElseThrow(() -> new RuntimeException("not found"));
         Patients patient = patientRepository.findById(request.getPatient().getPatientid()).orElseThrow(() -> new RuntimeException("not found"));
 

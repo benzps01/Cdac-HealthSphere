@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -97,6 +98,16 @@ public class DoctorController {
 			return ResponseEntity.ok(doctorAuthService.getAllDoctors());
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
+	
+	@PatchMapping("/time/{doctorid}")
+	public ResponseEntity<AuthenticationResponse> updateDoctorTime(@PathVariable int doctorid, @RequestBody Doctors doctor) {
+		try {
+			String response = doctorAuthService.updateDoctorTime(doctorid, doctor);
+			return ResponseEntity.ok().body(new AuthenticationResponse(response));
+		} catch(Exception e) {
+			return ResponseEntity.ok().body(new AuthenticationResponse("Error updating time."));
 		}
 	}
 }

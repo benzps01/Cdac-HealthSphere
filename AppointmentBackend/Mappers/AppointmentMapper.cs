@@ -14,9 +14,9 @@ namespace Test.Mappers
         {
             return new AppointmentDateTimeDto
             {
-              AppointmentDate = appointmentModel.AppointmentDate,
+                AppointmentDate = appointmentModel.AppointmentDate,
 
-              AppointmentTime = appointmentModel.AppointmentTime
+                AppointmentTime = appointmentModel.AppointmentTime
             };
         }
         public static DoctorCardDto ToDoctorCardDto(this Appointment appointmentModel)
@@ -27,7 +27,8 @@ namespace Test.Mappers
                 patient_name = appointmentModel.Patient.Name,
                 patient_gender = appointmentModel.Patient.gender,
                 patient_BGroup = appointmentModel.Patient.bloodgroup,
-                patient_notes = appointmentModel.Notes
+                patient_notes = appointmentModel.Notes,
+                appointment_id = appointmentModel.AppointmentId
             };
 
         }

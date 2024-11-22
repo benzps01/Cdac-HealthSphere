@@ -23,23 +23,24 @@ namespace Test.Controllers
             _context = context;
         }
 
-        [HttpGet("/")]
+        [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
             var doctors = _context.Doctors.ToList();
             return Ok(doctors);
         }
 
-        [HttpGet("/appointments/{id}")]
+        [HttpGet]
+        [Route("appointments/{id}")]
         public async Task<IActionResult> AppointmentsAtDate([FromRoute] int id,[FromQuery] DateTime date)
         {
-            var doctor = _context.Doctors.Include(x=>x.Appointments).ThenInclude(x=>x.Patient).FirstOrDefault(d=>d.DoctorId==id);
+            var doctor = await _context.Doctors.Include(x=>x.Appointments).ThenInclude(x=>x.Patient).FirstOrDefaultAsync(d=>d.DoctorId==id);
 
             if(doctor==null)
             {
                 return NotFound();
             }
-            var doctorCards = doctor.Appointments.Where(x=>x.AppointmentDate == date).Select(x=>x.ToDoctorCardDto()).ToList();
+            var doctorCards =  doctor.Appointments.Where(x=>x.AppointmentDate == date).Select(x=>x.ToDoctorCardDto()).ToList();
             return Ok(doctorCards);
             // return Ok(new DoctorAppointments
             // {

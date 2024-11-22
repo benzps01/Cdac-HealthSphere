@@ -1,102 +1,394 @@
-import { useState } from "react"
-import { Accordion, AccordionCollapse } from "react-bootstrap"
+// import { useEffect, useState } from "react";
+// import { Accordion } from "react-bootstrap";
+// import axios from "axios";
 
-// const AccordionItem = ({title, content, isOpen, onToggle}) => {
-//     return (
-//         <div className="accordion-item">
-//             <div className="accordion-header" onClick={onToggle}>
-//                 <h3>{title}</h3>
-//                 <span>{isOpen ? '-' : '+'}</span>
-//             </div>
-//             {isOpen && <div className="accordion-content">{content}</div>}
-//         </div>
-//     )
-// }
-
-// const AccordionUsage = ({items}) => {
-//     const [openIndex, setOpenIndex] = useState(null)
-
-//     const handleToggle = (index) => {
-//         setOpenIndex(index === openIndex ? null : index)
+// function AccordionUsage({ doctorid }) {
+//   const [appointmentsData, setAppointmentsData] = useState([]);
+//   const [formData, setFormData] = useState({
+//     diagnosis: '',
+//     prescriptions: '',
+//     treatment: '',
+//     visitdate: '2024-08-21',
+//     notes: '',
+//     patient: {
+//       patientid: '',
+//     },
+//     doctor: {
+//       doctorid: doctorid,
 //     }
+//   });
+//   const [xray, setXray] = useState(null);
+//   const [successMessage, setSuccessMessage] = useState(''); // New state for success message
 
-//     return(
-//         <div classname="Accordion">
-//             {items.map((item, index) => (
-//                 <AccordionItem 
-//                 key={index}
-//                 title={item.title}
-//                 content={item.content}
-//                 isOpen={index === openIndex}
-//                 onToggle={() => handleToggle(index)}
-//                 />
-//             ))}
-//         </div>
-//     )
+//   const handleSubmitEhr = async (e) => {
+//     e.preventDefault();
+//     const form = new FormData();
+//     form.append('ehrdata', JSON.stringify(formData));
+//     form.append('xray', xray);
+
+//     try {
+//       const response = await axios.post(
+//         "http://localhost:9090/ehr",
+//         form,
+//         {
+//           headers: {
+//             "Content-Type": "multipart/form-data",
+//           },
+//         }
+//       );
+//       console.log("Response: ", response);
+//       setSuccessMessage("EHR data submitted successfully!"); // Set success message on successful response
+//     } catch (error) {
+//       console.error('There was an error submitting the EHR data!', error);
+//       setSuccessMessage("Failed to submit EHR data."); // Optionally set an error message
+//     }
+//   };
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData((prevState) => ({
+//       ...prevState,
+//       [name]: value,
+//     }));
+//   };
+
+//   const handleFileChange = (e) => {
+//     setXray(e.target.files[0]);
+//   };
+
+//   const date1 = "2024-08-23";
+
+//   useEffect(() => {
+//     const fetchAppointments = async () => {
+//       try {
+//         const response = await axios.get(
+//           `http://localhost:5241/api/Doctor/appointments/${doctorid}`,
+//           {
+//             params: {
+//               date: date1,
+//             },
+//           }
+//         );
+//         console.log("response:", response);
+//         setAppointmentsData(Array.isArray(response.data) ? response.data : []);
+//         console.log("Fetched appointments:", response.data);
+//       } catch (error) {
+//         console.error("Error fetching appointments:", error);
+//         setAppointmentsData([]);
+//       }
+//     };
+//     fetchAppointments();
+//   }, [doctorid, date1]);
+
+//   useEffect(() => {
+//     console.log("Appointments Data Updated:", appointmentsData);
+//   }, [appointmentsData]);
+
+//   const handleAccordionClick = (patientid) => {
+//     setFormData((prevState) => ({
+//       ...prevState,
+//       patient: {
+//         patientid: patientid,
+//       },
+//     }));
+
+//     console.log(appointmentsData);
+//   };
+
+//   return (
+//     <>
+//       {successMessage && <div className="alert alert-success">{successMessage}</div>} {/* Display success message */}
+//       <Accordion>
+//         {appointmentsData && appointmentsData.length > 0 ? (
+//           appointmentsData.map((item, index) => (
+//             <Accordion.Item eventKey={index.toString()} key={index}>
+//               <Accordion.Header onClick={() => handleAccordionClick(item.patientid)}>
+//                 {item.patient_name} - {item.patientid}
+//               </Accordion.Header>
+//               <Accordion.Body>
+//                 <table className="table">
+//                   <thead>
+//                     <tr>
+//                       <th>Name</th>
+//                       <th>Blood Group</th>
+//                       <th>Gender</th>
+//                       <th>Notes</th>
+//                     </tr>
+//                   </thead>
+//                   <tbody>
+//                     <tr key={item.patientid}>
+//                       <td>{item.patient_name}</td>
+//                       <td>{item.patient_BGroup}</td>
+//                       <td>{item.patient_gender}</td>
+//                       <td>{item.patient_notes}</td>
+//                     </tr>
+//                   </tbody>
+//                 </table>
+//                 <form onSubmit={handleSubmitEhr}>
+//                   <div>
+//                     <input 
+//                       type="text" 
+//                       placeholder="Diagnosis" 
+//                       name="diagnosis" 
+//                       value={formData.diagnosis} 
+//                       onChange={handleChange} 
+//                       required 
+//                     />
+//                   </div>
+//                   <div>
+//                     <input 
+//                       type="text" 
+//                       placeholder="Prescriptions" 
+//                       name="prescriptions" 
+//                       value={formData.prescriptions} 
+//                       onChange={handleChange} 
+//                       required 
+//                     />
+//                   </div>
+//                   <div>
+//                     <input 
+//                       type="text" 
+//                       placeholder="Treatment" 
+//                       name="treatment" 
+//                       value={formData.treatment} 
+//                       onChange={handleChange} 
+//                       required 
+//                     />
+//                   </div>
+//                   <div>
+//                     <label>Upload X-ray Image</label>
+//                     <input 
+//                       type="file" 
+//                       onChange={handleFileChange} 
+//                       accept="image/*" 
+//                       required 
+//                     />
+//                   </div>
+//                   <div className="button container">
+//                     <button type="submit" className="appSubmit">Submit</button>
+//                     <button type="delete" className="appDelete">Delete</button>
+//                   </div>
+//                 </form>
+//               </Accordion.Body>
+//             </Accordion.Item>
+//           ))
+//         ) : (
+//           <div>No Appointments Found</div>
+//         )}
+//       </Accordion>
+//     </>
+//   );
 // }
 
+// export default AccordionUsage;
 
-function AccordionUsage(){
-    const treated = () =>{
-        AccordionCollapse.apply(this, arguments)
+
+import { useEffect, useState } from "react";
+import { Accordion } from "react-bootstrap";
+import axios from "axios";
+
+function AccordionUsage({ doctorid }) {
+  const [appointmentsData, setAppointmentsData] = useState([]);
+  const [formData, setFormData] = useState({
+    diagnosis: '',
+    prescriptions: '',
+    treatment: '',
+    visitdate: '2024-08-21',
+    notes: '',
+    patient: {
+      patientid: '',
+    },
+    doctor: {
+      doctorid: doctorid,
     }
-    return (
-        <Accordion>
-            <Accordion.Item eventKey="0"> 
-                <Accordion.Header>Accordion 1
-                </Accordion.Header>
-                    <Accordion.Body>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum.
-                    </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="1">
-                <Accordion.Header>Accordion 2
-                </Accordion.Header>
-                <Accordion.Body>
-                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                    accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-                    quae ab illo inventore veritatis et quasi architecto beatae vitae
-                    dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-                    aspernatur aut odit aut fugit, sed quia consequuntur magni
-                    dolores eos qui ratione voluptatem sequi nesciunt. Neque porro
-                    quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
-                    adipisci velit, sed quia non numquam eius modi tempora incidunt
-                    ut labore et dolore magnam aliquam quaerat voluptatem.
-                </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="2">
-                <Accordion.Header>Accordion 3
-                </Accordion.Header>
-                <Accordion.Body>
-                    At vero eos et accusamus et iusto odio dignissimos ducimus qui
-                    blanditiis praesentium voluptatum deleniti atque corrupti quos
-                    dolores et quas molestias excepturi sint occaecati cupiditate non
-                    provident, similique sunt in culpa qui officia deserunt mollitia
-                    animi, id est laborum et dolorum fuga. Et harum quidem rerum
-                    facilis est et expedita distinctio. Nam libero tempore, cum
-                    soluta nobis est eligendi optio cumque nihil impedit quo
-                    minus id quod maxime placeat facere possimus, omnis voluptas
-                    assumenda est, omnis dolor repellendus.
-                </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="3">
-                <Accordion.Header>Accordion 4
-                </Accordion.Header>
-                <Accordion.Body>
-                    Quis autem vel eum iure reprehenderit qui in ea voluptate velit
-                    esse quam nihil molestiae consequatur, vel illum qui dolorem eum
-                    fugiat quo voluptas nulla pariatur?
-                    <button onClick={treated} className="treated">Treated</button>
-                </Accordion.Body>
-            </Accordion.Item>
+  });
+  const [xray, setXray] = useState(null);
+  const [successMessage, setSuccessMessage] = useState('');
 
-        </Accordion>
-    )
+  const handleSubmitEhr = async (e) => {
+    e.preventDefault();
+    const form = new FormData();
+    form.append('ehrdata', JSON.stringify(formData));
+    form.append('xray', xray);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:9090/ehr",
+        form,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log("Response: ", response);
+      setSuccessMessage("EHR data submitted successfully!");
+    } catch (error) {
+      console.error('There was an error submitting the EHR data!', error);
+      setSuccessMessage("Failed to submit EHR data.");
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleDelete = async (appointmentId) => {
+    try {
+      await axios.delete(`http://localhost:5241/api/Appointment/${appointmentId}`);
+      setSuccessMessage("Appointment deleted successfully!");
+      
+      // Refetch appointments to refresh the list
+      const response = await axios.get(
+        `http://localhost:5241/api/Doctor/appointments/${doctorid}`,
+        {
+          params: {
+            date: date1,
+          },
+        }
+      );
+      setAppointmentsData(Array.isArray(response.data) ? response.data : []);
+    } catch (error) {
+      console.error('There was an error deleting the appointment!', error);
+      setSuccessMessage("Failed to delete appointment.");
+    }
+  };
+  
+
+  const handleFileChange = (e) => {
+    setXray(e.target.files[0]);
+  };
+
+  const date1 = "2024-08-23";
+
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5241/api/Doctor/appointments/${doctorid}`,
+          {
+            params: {
+              date: date1,
+            },
+          }
+        );
+        console.log("response:", response);
+        setAppointmentsData(Array.isArray(response.data) ? response.data : []);
+        console.log("Fetched appointments:", response.data);
+      } catch (error) {
+        console.error("Error fetching appointments:", error);
+        setAppointmentsData([]);
+      }
+    };
+    fetchAppointments();
+  }, [doctorid, date1]);
+
+  useEffect(() => {
+    console.log("Appointments Data Updated:", appointmentsData);
+  }, [appointmentsData]);
+
+  const handleAccordionClick = (patientid) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      patient: {
+        patientid: patientid,
+      },
+    }));
+  };
+
+  return (
+    <>
+      {successMessage && <div className="alert alert-success">{successMessage}</div>}
+      <Accordion>
+        {appointmentsData && appointmentsData.length > 0 ? (
+          appointmentsData.map((item, index) => (
+            <Accordion.Item eventKey={index.toString()} key={index}>
+              <Accordion.Header onClick={() => handleAccordionClick(item.patientid)}>
+                {item.patient_name} - {item.patientid}
+              </Accordion.Header>
+              <Accordion.Body>
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Blood Group</th>
+                      <th>Gender</th>
+                      <th>Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr key={item.patientid}>
+                      <td>{item.patient_name}</td>
+                      <td>{item.patient_BGroup}</td>
+                      <td>{item.patient_gender}</td>
+                      <td>{item.patient_notes}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <form onSubmit={handleSubmitEhr}>
+                  <div>
+                    <input 
+                      type="text" 
+                      placeholder="Diagnosis" 
+                      name="diagnosis" 
+                      value={formData.diagnosis} 
+                      onChange={handleChange} 
+                      required 
+                    />
+                  </div>
+                  <div>
+                    <input 
+                      type="text" 
+                      placeholder="Prescriptions" 
+                      name="prescriptions" 
+                      value={formData.prescriptions} 
+                      onChange={handleChange} 
+                      required 
+                    />
+                  </div>
+                  <div>
+                    <input 
+                      type="text" 
+                      placeholder="Treatment" 
+                      name="treatment" 
+                      value={formData.treatment} 
+                      onChange={handleChange} 
+                      required 
+                    />
+                  </div>
+                  <div>
+                    <label>Upload X-ray Image</label>
+                    <input 
+                      type="file" 
+                      onChange={handleFileChange} 
+                      accept="image/*" 
+                      required 
+                    />
+                  </div>
+                  <div className="button-container">
+                    <button type="submit" className="appSubmit">Submit</button>
+                    <button 
+                      type="button" 
+                      className="appDelete" 
+                      onClick={() => handleDelete(item.appointment_id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </form>
+              </Accordion.Body>
+            </Accordion.Item>
+          ))
+        ) : (
+          <div>No Appointments Found</div>
+        )}
+      </Accordion>
+    </>
+  );
 }
-export default AccordionUsage
+
+export default AccordionUsage;

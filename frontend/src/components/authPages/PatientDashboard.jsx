@@ -6,7 +6,8 @@ import '../../styles/Dashboard.css'
 import BookAppointment from './patientModules/BookAppointment';
 import Records from './patientModules/Records';
 import PastAppointments from './patientModules/PastAppointments';
-import defaultImg from '../../images/default.jpg';
+import defImg from '../../images/default.jpg';
+import patDash from '../../images/patDash1.jpg';
 
 export default function PatientDashboard() {
 
@@ -32,29 +33,33 @@ export default function PatientDashboard() {
                 });
                 console.log(response.data);
                 setPatient(response.data);
-
+    
                 if (response.data.patientid) {
                     const imageResponse = await axios.get(`${baseUrl}/picture/${response.data.patientid}`, {
                         headers: { Authorization: `Bearer ${token}` },
                         responseType: 'arraybuffer',
                     });
-
-                    const base64Image = btoa(
-                        new Uint8Array(imageResponse.data).reduce(
-                            (data, byte) => data + String.fromCharCode(byte),
-                            ''
-                        )
-                    );
-
-                    setProfileImage(`data:image/jpeg;base64,${base64Image}`);
+    
+                    if (imageResponse.data.byteLength > 0) { 
+                        const base64Image = btoa(
+                            new Uint8Array(imageResponse.data).reduce(
+                                (data, byte) => data + String.fromCharCode(byte),
+                                ''
+                            )
+                        );
+                        setProfileImage(`data:image/jpeg;base64,${base64Image}`);
+                    } else {
+                        setProfileImage(null);
+                    }
                 }
             } catch (error) {
                 console.error("Error fetching patient details or profile image:", error);
             }
         };
-
+    
         fetchPatientDetails();
-    },[]);
+    }, []);
+    
 
     const handleShowBookAppointment = () => {
         setActiveComponent(activeComponent === 'bookAppointment' ? null : 'bookAppointment');
@@ -72,8 +77,9 @@ export default function PatientDashboard() {
 
   return (
     <div className='dashboard-container'>
+        <img src={patDash} alt='patient' className='back-img'/>
         <div className='profile'>
-            <img src = {profileImage || defaultImg} alt={patient.name} className='profileImg' />
+            <img src ={profileImage || defImg} alt={patient.name} className='profileImg' />
             <div className='content'>
             <h2>Hi, {patient.name}</h2>
             <p><h5>BloodGroup: {patient.bloodgroup}</h5></p>
@@ -96,12 +102,12 @@ export default function PatientDashboard() {
         )}
         {activeComponent === 'records' && (
             <div className='patient-container'>
-                <Records />
+                <Records patientid={patient.patientid}/>
             </div>
         )}
         {activeComponent === 'pastAppointment' && (
             <div className='patient-container'>
-                <PastAppointments />
+                <PastAppointments patientid={patient.patientid}/>
             </div>
         )}
     </div>

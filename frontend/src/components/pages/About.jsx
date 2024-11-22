@@ -1,15 +1,19 @@
 import React from 'react'
 import {Container, Row} from 'react-bootstrap';
-import about from '../../images/about.jpg';
-import about2 from '../../images/about.jpg';
+import Building from '../../images/AboutUsImg.jpg';
+
 
 export default function About() {
   return (
     <>
-    <Container style={{justifyContent: "space-evenly", marginTop: '30px'}}>
-    <img src={about} alt="Image1" style={{width: '580px', height: '400px' , borderRadius:"30px"}} />
-    <img src={about2} alt="Image2" style={{width: '580px', height: '400px',  borderRadius:"30px"}} />
-    </Container>
+    <div>
+    <img
+            src={Building}
+            alt='Doctor'
+            className='d-block w-100'
+            style={{ height: '500px', maxWidth: '50%', marginLeft: '400px', marginTop: '20px' }}
+          />
+    </div>
     <Container style={{marginTop: "30px"}}>
       <Row>
      <h4> 
@@ -78,7 +82,7 @@ His role is crucial in ensuring that HealthSphere meets the practical needs of u
 His organizational skills keep everything running smoothly.
 <hr/>
 <p>
-<strong>Mr. Nishant  </strong> – Nishant specializes in user experience and interface design.
+<strong>Mr. Nishant Deore </strong> – Nishant specializes in user experience and interface design.
 His commitment to creating an intuitive and engaging user interface ensures that HealthSphere is easy to navigate and use.
 </p>
 <hr/>

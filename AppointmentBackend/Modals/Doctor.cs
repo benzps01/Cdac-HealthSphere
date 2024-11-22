@@ -14,18 +14,18 @@ namespace Test.Modals
         [Column("doctorid")]
         public int DoctorId { get; set; }
 
-        [Required]
+       
         [Column("username")]
         public string Username { get; set; } = string.Empty;
         
-        [Required]
+       
         [Column("password")]
         public string PasswordHash { get; set; } = string.Empty;
 
-        [Required]
+     
         [Column("firstname")]
         public string FirstName { get; set; } = string.Empty;
-        [Required]
+      
         [Column("lastname")]
         public string LastName { get; set; } = string.Empty;
 
